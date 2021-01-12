@@ -1,5 +1,5 @@
 {
-  "name": "CoCreate-crdt",
+  "name": "@CoCreate/crdt",
   "version": "1.0.0",
   "description": "Yjs Quill binding demo",
   "main": "index.js",

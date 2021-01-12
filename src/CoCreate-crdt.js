@@ -1,11 +1,12 @@
 
 import * as Y from 'yjs'
-import { WebsocketProvider } from './lib/y-websocket'
+// import { WebsocketProvider } from './lib/y-websocket'
+import { WebsocketProvider } from 'y-websocket'
 import { fetchUpdates, storeState, IndexeddbPersistence} from 'y-indexeddb'
 // import { UserCursor } from './utils/cursor/userCursor_class'
 
 // Connect to the web worker
-const debug = false;
+const debug = true;
 const g_yDoc = new Y.Doc();
 
 export class CoCreateYSocket {
@@ -224,9 +225,10 @@ export class CoCreateYSocket {
 	getWholeString(id) {
 		const info = this.parseType(id)
 		if (this.docs[info.id]) {
+			console.log("!Get data")
 			return this.docs[info.id].doc.getText(id).toString();
 		} else {
-			return "";
+			return "--";
 		}
 	}
 	
@@ -384,24 +386,26 @@ export class CoCreateYSocket {
 		if (!this.docs[info.id]) {
 			return null;
 		}
+		
 		this.docs[info.id].socket.awareness.setLocalStateField('cursor', null);
 	}
 	
 	setPositionYJS(id, from, to) {
 		const info = this.parseType(id)
 		const type = this.getType(id);
+		//console.log("Type ",type)
 		if (!type) {
 			return;
 		}
 		var anchor = Y.createRelativePositionFromTypeIndex(type, from)
 		var head = Y.createRelativePositionFromTypeIndex(type, to)
-		/*
+		
 		if(debug)
 			console.log("Sending Cursor ",{
 				anchor,
 				head
-			},{'to':to,'from':from})
-		*/
+			},{'to':to,'from':from,'info.id':info.id})
+		
 		this.docs[info.id].socket.awareness.setLocalStateField('cursor', {
 			anchor,
 			head

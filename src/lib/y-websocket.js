@@ -84,6 +84,7 @@ const setupWS = provider => {
     provider.wsconnecting = true
     provider.wsconnected = false
     provider.synced = false
+
     websocket.onmessage = event => {
       provider.wsLastMessageReceived = time.getUnixTime()
       const encoder = readMessage(provider, new Uint8Array(event.data), true)
@@ -97,8 +98,8 @@ const setupWS = provider => {
       if (provider.wsconnected) {
         provider.wsconnected = false
         provider.synced = false
-        // update awareness (all users left)
-        awarenessProtocol.removeAwarenessStates(provider.awareness, Array.from(provider.awareness.getStates().keys()), provider)
+        // update awareness (all users except local left)
+        awarenessProtocol.removeAwarenessStates(provider.awareness, Array.from(provider.awareness.getStates().keys()).filter(client => client !== provider.doc.clientID), provider)
         provider.emit('status', [{
           status: 'disconnected'
         }])
@@ -132,6 +133,10 @@ const setupWS = provider => {
         websocket.send(encoding.toUint8Array(encoderAwarenessState))
       }
     }
+
+    provider.emit('status', [{
+      status: 'connecting'
+    }])
   }
 }
 
@@ -146,7 +151,7 @@ const broadcastMessage = (provider, buf) => {
   }
   if (provider.bcconnected) {
     provider.mux(() => {
-      bc.publish(provider.url, buf)
+      bc.publish(provider.bcChannel, buf)
     })
   }
 }
@@ -188,10 +193,6 @@ export class WebsocketProvider extends Observable {
     this.roomname = roomname
     this.doc = doc
     this._WS = WebSocketPolyfill
-    /**
-     * @type {Object<string,Object>}
-     */
-    this._localAwarenessState = {}
     this.awareness = awareness
     this.wsconnected = false
     this.wsconnecting = false
@@ -291,6 +292,7 @@ export class WebsocketProvider extends Observable {
   set synced (state) {
     if (this._synced !== state) {
       this._synced = state
+      this.emit('synced', [state])
       this.emit('sync', [state])
     }
   }
