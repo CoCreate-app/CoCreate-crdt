@@ -1,15 +1,14 @@
 {
   "name": "@CoCreate/crdt",
   "version": "1.0.0",
-  "description": "Yjs Quill binding demo",
-  "main": "index.js",
-  "author": "Kevin Jahns <kevin.jahns@pm.me>",
-  "license": "UNLICENSE",
+  "description": "CoCreatejs and yjs binding",
+  "author": "CoCreate LLC",
+  "license": "MIT",
   "scripts": {
-    "start": "webpack --mode=production",
-    "develop": "webpack --mode=develop",
+    "start": "npx webpack --config webpack.config.js --watch",
+    "build": "NODE_ENV=production npx webpack --config webpack.config.js",
     "watch": "webpack --watch",
-    "postinstall": "npm run dist"
+    "postinstall": "npm run start"
   },
   "dependencies": {
     "y-indexeddb": "^9.0.5",
@@ -18,8 +17,14 @@
     "yjs": "^13.0.0-89"
   },
   "devDependencies": {
-    "webpack": "^4.42.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^3.0.0",
+    "html-webpack-plugin": "^4.5.0",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^5.14.0",
+    "webpack-cli": "^4.3.1",
+    "webpack-log": "^3.0.1"
   }
 }

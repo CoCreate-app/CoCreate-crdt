@@ -1,12 +1,11 @@
 
 import * as Y from 'yjs'
-// import { WebsocketProvider } from './lib/y-websocket'
-import { WebsocketProvider } from 'y-websocket'
+import { WebsocketProvider } from './lib/y-websocket'
 import { fetchUpdates, storeState, IndexeddbPersistence} from 'y-indexeddb'
 // import { UserCursor } from './utils/cursor/userCursor_class'
 
 // Connect to the web worker
-const debug = true;
+const debug = false;
 const g_yDoc = new Y.Doc();
 
 export class CoCreateYSocket {
@@ -55,8 +54,9 @@ export class CoCreateYSocket {
 		let indexeddbProvider = null;
 		if (newInfo.document_id != "null") {
 			indexeddbProvider = new IndexeddbPersistence(newId, g_yDoc)
-			indexeddbProvider.whenSynced.then(() => {
+			indexeddbProvider.whenSynced.then((__index) => {
 			  console.log('loaded data from indexed db')
+			  console.log(__index)
 			})
 		}	
 		
@@ -125,18 +125,18 @@ export class CoCreateYSocket {
 			w_host = document.referrer;
 		}
 		let protocol = w_protocol === 'http:' ? 'ws' : 'wss';
-
+		return `${protocol}://server.cocreate.app:8080/`;
+		
 		let url_socket = `${protocol}://${w_host}:8080/`;
 		if (window.config && window.config.host) {
 			if (window.config.host.includes("://")) {
-				url_socket = `${window.config.host}/`;
+				url_socket = `${window.config.host}:8080/`;
 			} else {
-				url_socket = `${protocol}://${window.config.host}/`;
+				url_socket = `${protocol}://${window.config.host}:8080/`;
 			}
 		}
 		
 		console.log(url_socket)
-		url_socket += "crdt/";
 		
 		return url_socket;
 
@@ -157,7 +157,7 @@ export class CoCreateYSocket {
 			detail: eventDelta
 		})
 		elements.forEach((el) => {
-			if (CoCreateUtils.isReadValue(el) && el.getAttribute('name') === info.name) {
+			if (CoCreate.utils.isReadValue(el) && el.getAttribute('name') === info.name) {
 				el.dispatchEvent(update_event)
 			}
 		})
@@ -176,7 +176,7 @@ export class CoCreateYSocket {
 			})
 
 			if (is_save_value) {
-				CoCreate.updateDocument({
+				CoCreate.crud.updateDocument({
 					collection: info.collection,
 					document_id: info.document_id,
 					data: {
@@ -225,10 +225,9 @@ export class CoCreateYSocket {
 	getWholeString(id) {
 		const info = this.parseType(id)
 		if (this.docs[info.id]) {
-			console.log("!Get data")
 			return this.docs[info.id].doc.getText(id).toString();
 		} else {
-			return "--";
+			return "";
 		}
 	}
 	
@@ -302,7 +301,7 @@ export class CoCreateYSocket {
 				
 					  const anchor = Y.createAbsolutePositionFromRelativePosition(Y.createRelativePositionFromJSON(cursor.anchor), y)
 					  const head = Y.createAbsolutePositionFromRelativePosition(Y.createRelativePositionFromJSON(cursor.head), y)
-					  //draw_cursor(1,11,12,66,{},true);
+					  //CoCreateCursors.draw_cursor(1,11,12,66,{},true);
 					  if(debug){
 						  console.log("PRE Draw Cursor ")
 						  console.log("anchor  ",anchor , " head ",head,' Type ',type)
@@ -323,7 +322,7 @@ export class CoCreateYSocket {
 						}
 						if(debug)
 							console.log("Draw Cursor ",from,to,clientId,aw.user)
-						let t_info = CoCreateYSocket.parseTypeName(cursor.anchor['tname']);
+						let t_info = CoCreate.crdt.parseTypeName(cursor.anchor['tname']);
 						let id_mirror = t_info.document_id + t_info.name+'--mirror-div';
 						let json = {};
 						let selector = '[data-collection="'+t_info.collection+'"][data-document_id="'+t_info.document_id+'"][name="'+t_info.name+'"]'
@@ -342,7 +341,7 @@ export class CoCreateYSocket {
 									'name':user.name
 									},
 							}
-							draw_cursor(json);
+							CoCreateCursors.draw_cursor(json);
 							//sent custom position
 							that.listen(json);
 						});
@@ -386,26 +385,24 @@ export class CoCreateYSocket {
 		if (!this.docs[info.id]) {
 			return null;
 		}
-		
 		this.docs[info.id].socket.awareness.setLocalStateField('cursor', null);
 	}
 	
 	setPositionYJS(id, from, to) {
 		const info = this.parseType(id)
 		const type = this.getType(id);
-		//console.log("Type ",type)
 		if (!type) {
 			return;
 		}
 		var anchor = Y.createRelativePositionFromTypeIndex(type, from)
 		var head = Y.createRelativePositionFromTypeIndex(type, to)
-		
+		/*
 		if(debug)
 			console.log("Sending Cursor ",{
 				anchor,
 				head
-			},{'to':to,'from':from,'info.id':info.id})
-		
+			},{'to':to,'from':from})
+		*/
 		this.docs[info.id].socket.awareness.setLocalStateField('cursor', {
 			anchor,
 			head
@@ -423,7 +420,7 @@ export class CoCreateYSocket {
 		let name = json['name'];
 		let from = json['startPosition'];
 		let to = json['endPositon'];
-		let id = CoCreateYSocket.generateID(config.organization_Id, collection, document_id, name);
+		let id = CoCreate.crdt.generateID(config.organization_Id, collection, document_id, name);
 		this.setPositionYJS(id,from,to);
 	}
 	
