@@ -3,7 +3,7 @@ import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { fetchUpdates, storeState, IndexeddbPersistence} from 'y-indexeddb'
 
-const debug = false;
+const debug = true;
 
 class CoCreateYSocket {
 	constructor(org, ydoc) {
@@ -300,7 +300,7 @@ class CoCreateYSocket {
 				
 					  const anchor = Y.createAbsolutePositionFromRelativePosition(Y.createRelativePositionFromJSON(cursor.anchor), y)
 					  const head = Y.createAbsolutePositionFromRelativePosition(Y.createRelativePositionFromJSON(cursor.head), y)
-					  //CoCreateCursors.draw_cursor(1,11,12,66,{},true);
+					  //CoCreate.cursors.draw_cursor(1,11,12,66,{},true);
 					  if(debug){
 						  console.log("PRE Draw Cursor ")
 						  console.log("anchor  ",anchor , " head ",head,' Type ',type)
@@ -340,7 +340,9 @@ class CoCreateYSocket {
 									'name':user.name
 									},
 							}
-							CoCreateCursors.draw_cursor(json);
+							
+							console.log(json)
+							CoCreate.cursors.draw_cursor(json);
 							//sent custom position
 							that.listen(json);
 						});
