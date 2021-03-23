@@ -1,9 +1,11 @@
 
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
-import { fetchUpdates, storeState, IndexeddbPersistence} from 'y-indexeddb'
+import { fetchUpdates, storeState, IndexeddbPersistence } from 'y-indexeddb'
+import {crud, utils} from '../../../CoCreateJS/src';
+import CoCreateCursors from '../../CoCreate-cursors/src'
 
-const debug = true;
+const debug = false;
 
 class CoCreateYSocket {
 	constructor(org, ydoc) {
@@ -98,8 +100,6 @@ class CoCreateYSocket {
 		let _this = this;
 		
 		shardType.observe((event) => {
-			console.log('share error')
-			console.log(event)
 			_this.__setTypeObserveEvent(event, docObject.elements, id);
 		})
 	}
@@ -145,6 +145,7 @@ class CoCreateYSocket {
 
 		const eventDelta = event.delta;
 		const info = JSON.parse(atob(id));
+		let is_save_value = false
 		
 		const wholestring = event.target.toString()
 		const store_event = new CustomEvent('store-content-db', {
@@ -155,17 +156,20 @@ class CoCreateYSocket {
 			detail: eventDelta
 		})
 		elements.forEach((el) => {
-			if (CoCreate.utils.isReadValue(el) && el.getAttribute('name') === info.name) {
+			if (utils.isReadValue(el) && el.getAttribute('name') === info.name) {
 				el.dispatchEvent(update_event)
 			}
 		})
 			
-		let is_save_value = false
+		
 		if (typeof info !== 'object') {
 			return;
 		}
 
 		if (event.transaction.local) {
+			if (elements.length == 0) {
+				is_save_value = true;
+			}
 			elements.forEach((el) => {
 				if (el.getAttribute('data-save_value') != 'false' && el.getAttribute('name') === info.name && info.document_id != "null") {
 					is_save_value = true;
@@ -174,7 +178,7 @@ class CoCreateYSocket {
 			})
 
 			if (is_save_value) {
-				CoCreate.crud.updateDocument({
+				crud.updateDocument({
 					collection: info.collection,
 					document_id: info.document_id,
 					data: {
@@ -325,7 +329,7 @@ class CoCreateYSocket {
 						let id_mirror = t_info.document_id + t_info.name+'--mirror-div';
 						let json = {};
 						let selector = '[data-collection="'+t_info.collection+'"][data-document_id="'+t_info.document_id+'"][name="'+t_info.name+'"]'
-						selector += ':not(.codemirror):not(.quill)';
+						selector += ':not(.codemirror):not(.quill):not(.monaco)';
 						let elements = document.querySelectorAll(selector);
 						let that = this;
 						elements.forEach(function (element, index, array) {
@@ -342,7 +346,7 @@ class CoCreateYSocket {
 							}
 							
 							console.log(json)
-							CoCreate.cursors.draw_cursor(json);
+							CoCreateCursors.draw_cursor(json);
 							//sent custom position
 							that.listen(json);
 						});

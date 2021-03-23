@@ -1,5 +1,6 @@
 import CoCreateYSocket from "./core.js"
 import * as Y from 'yjs'
+import {utils, crud} from '../../../CoCreateJS/src';
 
 
 class CoCreateCRDTClass extends CoCreateYSocket 
@@ -9,7 +10,7 @@ class CoCreateCRDTClass extends CoCreateYSocket
   }
 
   /*
-  CoCreate.crdt.init({
+  crdt.init({
     collection: "module",
     document_id: "",
     name: "",
@@ -32,7 +33,7 @@ class CoCreateCRDTClass extends CoCreateYSocket
   }
 
   /*. init data function
-  CoCreate.crdt.replaceText({
+  crdt.replaceText({
     collection: "module",
     document_id: "",
     name: "",
@@ -53,14 +54,14 @@ class CoCreateCRDTClass extends CoCreateYSocket
     
     if (this.getType(id) ) {
       let oldData = this.getType(id).toString();
-      
+      let textValue = info.value.toString();
       if (oldData && oldData.length > 0) {
-        this.deleteData(id, 0, Math.max(oldData.length, info.value.length));
+        this.deleteData(id, 0, Math.max(oldData.length, textValue.length));
       }
-      this.insertData(id, 0, info.value);
+      this.insertData(id, 0, textValue);
     }
     if (info.updateCrud) {
-      CoCreate.crud.updateDocument({
+      crud.updateDocument({
         collection: info.collection,
         document_id: info.document_id,
         data: {[info.name]: info.value},
@@ -76,7 +77,7 @@ class CoCreateCRDTClass extends CoCreateYSocket
   }
   
   /*
-  CoCreate.crdt.insertText({
+  crdt.insertText({
   	collection: 'module_activities',
   	document_id: '5e4802ce3ed96d38e71fc7e5',
   	name: 'name',
@@ -90,17 +91,17 @@ class CoCreateCRDTClass extends CoCreateYSocket
         this.__validateKeysJson(info,['collection','document_id','name','value','position']);
         let id = this.__getYDocId(info['collection'], info['document_id'], info['name'])
         if (id) {
-          this.insertData(id, info['position'], info['value'], info['attributes']);
+          this.insertData(id, info['position'], info['value'].toString(), info['attributes']);
         }
       }
       catch (e) {
-         console.error(e); 
+        console.error(e); 
       }
   }
   
   
   /*
-  CoCreate.crdt.deleteText({
+  crdt.deleteText({
   	collection: 'module_activities',
   	document_id: '5e4802ce3ed96d38e71fc7e5',
   	name: 'name',
@@ -117,13 +118,13 @@ class CoCreateCRDTClass extends CoCreateYSocket
       }
     }
     catch (e) {
-       console.error(e); 
+      console.error(e); 
     }
   }
   
   
   /*
-  CoCreate.crdt.getText({
+  crdt.getText({
   	collection: 'module_activities',
   	document_id: '5e4802ce3ed96d38e71fc7e5',
   	name: 'name'
@@ -140,27 +141,27 @@ class CoCreateCRDTClass extends CoCreateYSocket
       }
     }
     catch (e) {
-       console.error(e); 
-       return "";
+      console.error(e); 
+      return "";
     }
   }
 
   
   /* 
-  CoCreate.crdt.getPosition(function(data))
-  CoCreate.crdt.getPosition(function(data){console.log(" EScuchando ahora  ",data)})
+  crdt.getPosition(function(data))
+  crdt.getPosition(function(data){console.log(" EScuchando ahora  ",data)})
   */
   getPosition(callback){
-   if(typeof miFuncion === 'function')
+  if(typeof miFuncion === 'function')
     this.changeListenAwereness(callback);
-   else
+  else
     console.error('Callback should be a function')
   }
  
   __getYDocId(collection, document_id, name) {
-    if (!CoCreate.utils.checkValue(collection) || 
-        !CoCreate.utils.checkValue(document_id) || 
-        !CoCreate.utils.checkValue(name)) 
+    if (!utils.checkValue(collection) || 
+        !utils.checkValue(document_id) || 
+        !utils.checkValue(name)) 
     {
       return null;
     }
@@ -181,6 +182,7 @@ class CoCreateCRDTClass extends CoCreateYSocket
 
 const g_yDoc = new Y.Doc();
 let CoCreateCrdt = new CoCreateCRDTClass(config.organization_Id, g_yDoc);
+window.Y = Y;
 
 export default CoCreateCrdt;
 
