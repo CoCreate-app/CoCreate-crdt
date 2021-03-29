@@ -4,7 +4,9 @@
   "description": "CoCreatejs and yjs binding",
   "author": "CoCreate LLC",
   "license": "UNLICENSED",
-  "publishConfig": { "access": "restricted" },
+  "publishConfig": {
+    "access": "restricted"
+  },
   "scripts": {
     "start": "npx webpack --config webpack.config.js --watch",
     "build": "NODE_ENV=production npx webpack --config webpack.config.js",
