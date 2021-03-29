@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.1...v1.0.2) (2021-03-29)
+
+
+### Bug Fixes
+
+* script commands ([fd61f17](https://github.com/CoCreate-app/CoCreate-crdt/commit/fd61f1766c6302c0b93319dd389cbb1b472e841d))
+
 ## [1.0.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.0...v1.0.1) (2021-03-29)
 
 
