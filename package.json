@@ -1,5 +1,5 @@
 {
-  "name": "@CoCreate/crdt",
+  "name": "@cocreate/crdt",
   "version": "1.0.0",
   "description": "CoCreatejs and yjs binding",
   "author": "CoCreate LLC",
