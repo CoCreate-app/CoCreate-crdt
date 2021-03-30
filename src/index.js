@@ -1,6 +1,7 @@
 import CoCreateYSocket from "./core.js"
 import * as Y from 'yjs'
-import {utils, crud} from '@cocreate/cocreatejs';
+import utils from '@cocreate/utils';
+import crud from '@cocreate/crud';
 
 
 class CoCreateCRDTClass extends CoCreateYSocket 
