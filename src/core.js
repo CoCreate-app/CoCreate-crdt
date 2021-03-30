@@ -2,7 +2,7 @@
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { fetchUpdates, storeState, IndexeddbPersistence } from 'y-indexeddb'
-import {crud, utils} from '../../../CoCreateJS/src';
+import {crud, utils} from '@cocreate/cocreatejs';
 import CoCreateCursors from '@cocreate/cursors'
 
 const debug = false;
