@@ -1,3 +1,11 @@
+## [1.0.5](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.4...v1.0.5) (2021-03-30)
+
+
+### Bug Fixes
+
+* import from npm ([b6f1f42](https://github.com/CoCreate-app/CoCreate-crdt/commit/b6f1f429b654ccbdce709000728b994503d258c6))
+* package.json ([d7e2885](https://github.com/CoCreate-app/CoCreate-crdt/commit/d7e28858550f969e0e944ef98f8febce24040c44))
+
 ## [1.0.4](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.3...v1.0.4) (2021-03-30)
 
 
