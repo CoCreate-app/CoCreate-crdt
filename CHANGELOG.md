@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.2...v1.0.3) (2021-03-30)
+
+
+### Bug Fixes
+
+* webpack compiler ([c67cf07](https://github.com/CoCreate-app/CoCreate-crdt/commit/c67cf07d0d63acb8524067d12f056eb0493d5858))
+
 ## [1.0.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.1...v1.0.2) (2021-03-29)
 
 
