@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.6...v1.0.7) (2021-03-31)
+
+
+### Bug Fixes
+
+* remove yarn.lock and package-lock.json ([4bb0e7f](https://github.com/CoCreate-app/CoCreate-crdt/commit/4bb0e7f4455ef9b195d1c02625506135b373d12b))
+
 ## [1.0.6](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.5...v1.0.6) (2021-03-30)
 
 
