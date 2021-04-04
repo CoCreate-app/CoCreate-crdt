@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.7...v1.0.8) (2021-04-04)
+
+
+### Bug Fixes
+
+* update socket to socket-lient and crud to crud client" ([9eceb17](https://github.com/CoCreate-app/CoCreate-crdt/commit/9eceb1725ee664315960c4b36df9e7f5c710825d))
+
 ## [1.0.7](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.6...v1.0.7) (2021-03-31)
 
 
