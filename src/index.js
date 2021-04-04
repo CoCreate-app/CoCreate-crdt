@@ -1,7 +1,6 @@
 import CoCreateYSocket from "./core.js"
 import * as Y from 'yjs'
-import utils from '@cocreate/utils';
-import crud from '@cocreate/crud';
+import crud from '@cocreate/crud-client';
 
 
 class CoCreateCRDTClass extends CoCreateYSocket 
@@ -160,9 +159,9 @@ class CoCreateCRDTClass extends CoCreateYSocket
   }
  
   __getYDocId(collection, document_id, name) {
-    if (!utils.checkValue(collection) || 
-        !utils.checkValue(document_id) || 
-        !utils.checkValue(name)) 
+    if (!crud.checkValue(collection) || 
+        !crud.checkValue(document_id) || 
+        !crud.checkValue(name)) 
     {
       return null;
     }

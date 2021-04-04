@@ -2,8 +2,7 @@
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { fetchUpdates, storeState, IndexeddbPersistence } from 'y-indexeddb'
-import crud from '@cocreate/crud';
-import utils from '@cocreate/utils';
+import crud from '@cocreate/crud-client';
 import CoCreateCursors from '@cocreate/cursors'
 
 const debug = false;
@@ -153,11 +152,11 @@ class CoCreateYSocket {
 			detail: wholestring
 		})
 		
-		const update_event = new CustomEvent('cocreate-y-update', {
+		const update_event = new CustomEvent('cocreate-crdt-update', {
 			detail: eventDelta
 		})
 		elements.forEach((el) => {
-			if (utils.isReadValue(el) && el.getAttribute('name') === info.name) {
+			if (crud.isReadAttr(el) && el.getAttribute('name') === info.name) {
 				el.dispatchEvent(update_event)
 			}
 		})
@@ -172,7 +171,7 @@ class CoCreateYSocket {
 				is_save_value = true;
 			}
 			elements.forEach((el) => {
-				if (el.getAttribute('data-save_value') != 'false' && el.getAttribute('name') === info.name && info.document_id != "null") {
+				if (crud.isSaveAttr(el) && el.getAttribute('name') === info.name && info.document_id != "null") {
 					is_save_value = true;
 					el.dispatchEvent(store_event)
 				}
