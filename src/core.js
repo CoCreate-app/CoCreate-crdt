@@ -144,6 +144,10 @@ class CoCreateYSocket {
 		if (!id) return;
 
 		const eventDelta = event.delta;
+		
+		if (eventDelta.length == 0) {
+			return;
+		}
 		const info = JSON.parse(atob(id));
 		let is_save_value = false
 		
