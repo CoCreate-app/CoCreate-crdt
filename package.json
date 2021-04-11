@@ -14,7 +14,7 @@
     "docs": "node ./node_modules/@cocreate/docs/src/index.js"
   },
   "dependencies": {
-    "mini-css-extract-plugin": "^1.4.0",
+    "mini-css-extract-plugin": "^1.4.1",
     "y-indexeddb": "^9.0.5",
     "y-webrtc": "^10.1.5",
     "y-websocket": "^1.2.5",
@@ -38,7 +38,6 @@
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.1.1",
     "typescript": "^4.1.5",
-    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^5.24.4",
     "webpack-cli": "^4.5.0",
     "webpack-log": "^3.0.1",
