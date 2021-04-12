@@ -1,3 +1,10 @@
+## [1.0.9](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.8...v1.0.9) (2021-04-12)
+
+
+### Bug Fixes
+
+* add new crud-client ([92fc774](https://github.com/CoCreate-app/CoCreate-crdt/commit/92fc7749f07d8f0e16cab2e80ee8eec5a92bd8b8))
+
 ## [1.0.8](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.7...v1.0.8) (2021-04-04)
 
 
