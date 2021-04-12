@@ -141,6 +141,7 @@ class CoCreateYSocket {
 	}
 	
 	__setTypeObserveEvent(event, elements, id) {
+		console.log('set crdt event', event.delta)
 		if (!id) return;
 
 		const eventDelta = event.delta;
