@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.9...v1.0.10) (2021-04-13)
+
+
+### Bug Fixes
+
+* getText object returning empty value ([7e355fb](https://github.com/CoCreate-app/CoCreate-crdt/commit/7e355fb3f9f3372a670e7098dd79cd30325a8752))
+
 ## [1.0.9](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.8...v1.0.9) (2021-04-12)
 
 
