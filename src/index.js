@@ -180,9 +180,15 @@ class CoCreateCRDTClass extends CoCreateYSocket
   }
 }
 
-const g_yDoc = new Y.Doc();
-let CoCreateCrdt = new CoCreateCRDTClass(config.organization_Id, g_yDoc);
-window.Y = Y;
+let CoCreateCrdt = null;
+if (!window.CoCreateCrdt) {
+  const crdtDoc = new Y.Doc();
+  CoCreateCrdt = new CoCreateCRDTClass(config.organization_Id, crdtDoc);
+  window.Y = Y;
+  window.CoCreateCrdt = CoCreateCrdt;
+} else {
+  CoCreateCrdt = window.CoCreateCrdt;
+}
 
 export default CoCreateCrdt;
 
