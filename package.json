@@ -1,7 +1,7 @@
 {
   "name": "@cocreate/crdt",
   "version": "1.0.10",
-  "description": "CoCreatejs and yjs binding",
+  "description": "CoCreate crdt",
   "author": "CoCreate LLC",
   "license": "UNLICENSED",
   "publishConfig": {
@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@cocreate/crud-client": "^1.0.3",
+    "@cocreate/cursors": "^1.1.5",
     "mini-css-extract-plugin": "^1.4.1",
     "y-indexeddb": "^9.0.5",
     "y-webrtc": "^10.1.5",
