@@ -16,7 +16,6 @@
   "dependencies": {
     "@cocreate/crud-client": "^1.0.3",
     "@cocreate/cursors": "^1.1.5",
-    "mini-css-extract-plugin": "^1.5.0",
     "y-indexeddb": "^9.0.5",
     "y-webrtc": "^10.1.5",
     "y-websocket": "^1.2.5",
@@ -36,6 +35,7 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^4.5.0",
     "http-server": "^0.12.3",
+    "mini-css-extract-plugin": "^1.5.0",
     "standard": "^14.3.4",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.1.1",
