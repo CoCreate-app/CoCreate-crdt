@@ -16,7 +16,7 @@
   "dependencies": {
     "@cocreate/crud-client": "^1.0.3",
     "@cocreate/cursors": "^1.1.5",
-    "mini-css-extract-plugin": "^1.4.1",
+    "mini-css-extract-plugin": "^1.5.0",
     "y-indexeddb": "^9.0.5",
     "y-webrtc": "^10.1.5",
     "y-websocket": "^1.2.5",
