@@ -1,4 +1,3 @@
-
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { fetchUpdates, storeState, IndexeddbPersistence } from 'y-indexeddb'
