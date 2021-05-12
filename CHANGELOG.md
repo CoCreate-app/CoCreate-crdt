@@ -1,3 +1,13 @@
+## [1.0.12](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.11...v1.0.12) (2021-05-08)
+
+
+### Bug Fixes
+
+* add css auto parse and save to docs. ([587ed76](https://github.com/CoCreate-app/CoCreate-crdt/commit/587ed761df706db502dd2fb786edb5565743bd5f))
+* add missing packages ([6ac7a0c](https://github.com/CoCreate-app/CoCreate-crdt/commit/6ac7a0ca911df3622c472ff07856533c148ed30a))
+* ci and build process ([d88ed0a](https://github.com/CoCreate-app/CoCreate-crdt/commit/d88ed0ad8fe6a71483537509cc0cb5634cbf262f))
+* npm publish and cdn deployment ([01c20a3](https://github.com/CoCreate-app/CoCreate-crdt/commit/01c20a3d903f27ba876c2c9d107cd86a1c0fe094))
+
 ## [1.0.11](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.10...v1.0.11) (2021-04-14)
 
 
