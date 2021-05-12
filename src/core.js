@@ -151,6 +151,8 @@ class CoCreateYSocket {
 		const info = JSON.parse(atob(id));
 		let is_save_value = false
 		
+		// let is_crud = eventDelta.attributes && eventDelta.attributes.crud === false ? false : true;
+		
 		const wholestring = event.target.toString()
 		const store_event = new CustomEvent('store-content-db', {
 			detail: wholestring
@@ -181,16 +183,16 @@ class CoCreateYSocket {
 				}
 			})
 
-			if (is_save_value) {
-				crud.updateDocument({
-					collection: info.collection,
-					document_id: info.document_id,
-					data: {
-						[info.name]: wholestring
-					},
-					metadata: 'yjs-change'
-				})
-			}
+			// if (is_save_value && is_crud) {
+			// 	crud.updateDocument({
+			// 		collection: info.collection,
+			// 		document_id: info.document_id,
+			// 		data: {
+			// 			[info.name]: wholestring
+			// 		},
+			// 		metadata: 'yjs-change'
+			// 	})
+			// }
 		} else {
 
 		}
