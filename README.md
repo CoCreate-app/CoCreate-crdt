@@ -72,4 +72,4 @@ We appreciate your continued support, thank you!
 
 # License
 
-[The MIT License (MIT)](https://github.com/CoCreate-app/CoCreate-crdt/blob/master/LICENSE)
+[UNLICENSED](https://github.com/CoCreate-app/CoCreate-crdt/blob/master/LICENSE)
