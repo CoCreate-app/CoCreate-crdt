@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.12...v1.1.0) (2021-05-12)
+
+
+### Features
+
+* add crud:flase option to not save toString to db ([3cd23b5](https://github.com/CoCreate-app/CoCreate-crdt/commit/3cd23b536effd1ba0244c2e066c63f156bfeb492))
+
 ## [1.0.12](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.0.11...v1.0.12) (2021-05-08)
 
 
