@@ -60,7 +60,7 @@ class CoCreateCRDTClass extends CoCreateYSocket
 			}
 			this.insertData(id, 0, textValue);
 		}
-		if (info.updateCrud) {
+		if (info.crud != false) {
 			crud.updateDocument({
 				collection: info.collection,
 				document_id: info.document_id,

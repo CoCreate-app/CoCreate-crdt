@@ -158,9 +158,15 @@ class CoCreateYSocket {
 			detail: wholestring
 		})
 		
+
 		const update_event = new CustomEvent('cocreate-crdt-update', {
-			detail: eventDelta
+			detail: eventDelta, 
 		})
+				const update_event2 = new CustomEvent('cocreate-crdt-update', {
+			detail: {eventDelta,...info}, 
+		})
+		
+		window.dispatchEvent(update_event2);
 		elements.forEach((el) => {
 			if (crud.isReadAttr(el) && el.getAttribute('name') === info.name) {
 				el.dispatchEvent(update_event)
