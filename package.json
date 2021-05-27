@@ -20,7 +20,7 @@
     "y-indexeddb": "^9.0.5",
     "y-webrtc": "^10.1.5",
     "y-websocket": "^1.2.5",
-    "yjs": "^13.0.0-89"
+    "yjs": "^13.5.8"
   },
   "funding": {
     "type": "GitHub Sponsors ❤",
