@@ -26,7 +26,7 @@ class CoCreateCRDTClass extends CoCreateYSocket
 
 			if (!id) return;
 			const status = this.createDoc(id, info.element)
-			console.log("InitCrdt")
+			// console.log("InitCrdt")
 		} catch(e) {
 			console.log('Invalid param', e);
 		}

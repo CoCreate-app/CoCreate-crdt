@@ -4,7 +4,7 @@ import { fetchUpdates, storeState, IndexeddbPersistence } from 'y-indexeddb'
 import crud from '@cocreate/crud-client';
 import CoCreateCursors from '@cocreate/cursors'
 
-const debug = false;
+const debug = true;
 
 class CoCreateYSocket {
 	constructor(org, ydoc) {
@@ -63,9 +63,9 @@ class CoCreateYSocket {
 		
 		this._awarenessListener = event => {
 		  const f = clientId => {
-			if (clientId !== this.doc.clientID) {
+		//	if (clientId !== this.doc.clientID) {
 			  this.updateRemoteSelection(yDoc, id, yDoc.getText(id), this._cursors, clientId, awareness)
-			}
+		//	}
 		  }
 		  event.added.forEach(f)
 		  event.removed.forEach(f)
@@ -140,7 +140,7 @@ class CoCreateYSocket {
 	}
 	
 	__setTypeObserveEvent(event, elements, id) {
-		console.log('set crdt event', event.delta)
+		console.log('set crdt event .', event.delta)
 		if (!id) return;
 
 		const eventDelta = event.delta;
@@ -239,7 +239,7 @@ class CoCreateYSocket {
 	getWholeString(id) {
 		const info = this.parseType(id)
 		if (this.docs[info.id]) {
-			console.log("!Get data")
+			// console.log("!Get data")
 			return this.docs[info.id].doc.getText(id).toString();
 		} else {
 			return "--";
@@ -409,7 +409,7 @@ class CoCreateYSocket {
 	setPositionYJS(id, from, to) {
 		const info = this.parseType(id)
 		const type = this.getType(id);
-		//console.log("Type ",type)
+		console.log("Type ",type)
 		if (!type) {
 			return;
 		}
