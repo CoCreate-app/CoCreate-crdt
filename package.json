@@ -1,6 +1,6 @@
 {
   "name": "@cocreate/crdt",
-  "version": "1.1.2",
+  "version": "1.1.1",
   "description": "CoCreate crdt",
   "author": "CoCreate LLC",
   "license": "UNLICENSED",
@@ -16,11 +16,11 @@
   },
   "dependencies": {
     "@cocreate/crud-client": "^1.0.3",
-    "@cocreate/cursors": "^1.1.5",
+    "@cocreate/cursors": "^1.1.8",
     "y-indexeddb": "^9.0.5",
     "y-webrtc": "^10.1.5",
     "y-websocket": "^1.2.5",
-    "yjs": "^13.5.8"
+    "yjs": "^13.5.9"
   },
   "funding": {
     "type": "GitHub Sponsors ❤",

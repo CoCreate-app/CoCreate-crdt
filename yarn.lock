@@ -875,7 +875,7 @@
     "@cocreate/docs" "^1.0.3"
     "@cocreate/socket-client" "^1.0.9"
 
-"@cocreate/cursors@^1.1.5":
+"@cocreate/cursors@^1.1.8":
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/@cocreate/cursors/-/cursors-1.1.8.tgz#d9f6b532eb4f59fb037a87597a8585191f7d697c"
   integrity sha512-nG4z6O8UswKSVdkTye0kmJQgqyRaKsUS7AUk+PYs/6G0jYO/P0eZYx48RJI6CvA1VOpIwlQzXy/66rBaVEwEgg==
@@ -4412,10 +4412,10 @@ y-websocket@^1.2.5:
     ws "^6.2.1"
     y-leveldb "^0.1.0"
 
-yjs@^13.5.8:
-  version "13.5.8"
-  resolved "https://registry.yarnpkg.com/yjs/-/yjs-13.5.8.tgz#5bfcb2f8855bf8ee980f246a7fd7b0212559f105"
-  integrity sha512-Szd+FHlcJnx/M56Oyle7Q20hSdoQeZPRXx55Z/JXfcaW2Y8/oQIFL/mnHiWdNo7xrhIIxV01v2jVI3tcYnXHAA==
+yjs@^13.5.9:
+  version "13.5.9"
+  resolved "https://registry.yarnpkg.com/yjs/-/yjs-13.5.9.tgz#c903ae15f07bf72db397b04cafb3edccf21b5696"
+  integrity sha512-uK0W0gUG2ORgzpwkVReKqBkleYDUwoKhyxyMWSbtid2VOghyBPlU4MEDpbO25i9DmqDoqdwoamCR4FvRrIYqrA==
   dependencies:
     lib0 "^0.2.41"
 
