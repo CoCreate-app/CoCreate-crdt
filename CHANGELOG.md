@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.3...v1.1.4) (2021-06-06)
+
+
+### Bug Fixes
+
+* update packages, add uuid, add data-parse to demos ([e718869](https://github.com/CoCreate-app/CoCreate-crdt/commit/e718869904121232b33f018106774d34fea7bee7))
+
 ## [1.1.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.2...v1.1.3) (2021-06-04)
 
 
