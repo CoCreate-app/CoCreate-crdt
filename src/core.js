@@ -4,7 +4,7 @@ import { fetchUpdates, storeState, IndexeddbPersistence } from 'y-indexeddb'
 import crud from '@cocreate/crud-client';
 import CoCreateCursors from '@cocreate/cursors'
 
-const debug = true;
+const debug = false;
 
 class CoCreateYSocket {
 	constructor(org, ydoc) {

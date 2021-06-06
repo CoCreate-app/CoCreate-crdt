@@ -2,6 +2,7 @@
 /* eslint-env browser */
 // @ts-ignore
 
+import uuid from '@cocreate/uuid'
 import { userColor } from './usercolor.js'
 
 export class UserCursor {
@@ -20,8 +21,8 @@ export class UserCursor {
             console.log(" INIT cursor_user = ",cursor_user)
           var user_id = localStorage.getItem('user_id')
           if (cursor_user == null){
-            var uuid = this.generateUUID(4)
-            let cursor_user = 'User : ' + uuid;
+            var randomid = uuid.generate(4)
+            let cursor_user = 'User : ' + randomid;
             localStorage.setItem('cursor_user',cursor_user)
             if(this.debug)
               console.log("update name From __init__USERCURSORQUILL "+cursor_user)
@@ -60,27 +61,4 @@ export class UserCursor {
       }
     }
     
-    generateUUID(length=null) {
-      var d = new Date().getTime();
-      var d2 = (performance && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
-      var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-          var r = Math.random() * 16;
-          if(d > 0){
-              var r = (d + r)%16 | 0;
-              d = Math.floor(d/16);
-          } else {
-              var r = (d2 + r)%16 | 0;
-              d2 = Math.floor(d2/16);
-          }
-          return (c=='x' ? r : (r&0x7|0x8)).toString(16);
-      });
-      if(length!=null){
-        uuid = uuid.substr(0,length)
-      }
-      return uuid;
-  }
-}//en class
-
-
-
-
+}
