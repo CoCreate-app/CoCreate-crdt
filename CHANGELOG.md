@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.4...v1.1.5) (2021-06-16)
+
+
+### Bug Fixes
+
+* added header for seo ([423968c](https://github.com/CoCreate-app/CoCreate-crdt/commit/423968c18772d68b245b48e12d0e05d30b0fafc3))
+
 ## [1.1.4](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.3...v1.1.4) (2021-06-06)
 
 
