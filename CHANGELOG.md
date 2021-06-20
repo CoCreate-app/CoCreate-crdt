@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.5...v1.1.6) (2021-06-20)
+
+
+### Bug Fixes
+
+* new mutaionObserver init function ([34fdf4a](https://github.com/CoCreate-app/CoCreate-crdt/commit/34fdf4ac1714b7e85df67aea8d505e699e9eb89d))
+
 ## [1.1.5](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.4...v1.1.5) (2021-06-16)
 
 
