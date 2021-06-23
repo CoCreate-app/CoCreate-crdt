@@ -1,3 +1,10 @@
+## [1.1.7](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.6...v1.1.7) (2021-06-23)
+
+
+### Bug Fixes
+
+* update to new crud.save and crud.read ([a1d0d0a](https://github.com/CoCreate-app/CoCreate-crdt/commit/a1d0d0ae96d4cd77c91d506cc99c2f50910439d7))
+
 ## [1.1.6](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.5...v1.1.6) (2021-06-20)
 
 
