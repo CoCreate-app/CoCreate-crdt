@@ -190,9 +190,9 @@ class CoCreateCRDTClass extends CoCreateYSocket
 	}
  
 	__getYDocId(collection, document_id, name) {
-		if (!crud.checkValue(collection) || 
-				!crud.checkValue(document_id) || 
-				!crud.checkValue(name)) 
+		if (!crud.checkAttrValue(collection) || 
+				!crud.checkAttrValue(document_id) || 
+				!crud.checkAttrValue(name)) 
 		{
 			return null;
 		}
