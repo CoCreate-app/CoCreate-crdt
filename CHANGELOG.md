@@ -1,3 +1,10 @@
+## [1.1.9](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.8...v1.1.9) (2021-06-23)
+
+
+### Bug Fixes
+
+* update checkValue to crud.checkAttrValue ([6271dc6](https://github.com/CoCreate-app/CoCreate-crdt/commit/6271dc6c5942320bd47ecb977121cf85031b5aec))
+
 ## [1.1.8](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.7...v1.1.8) (2021-06-23)
 
 
