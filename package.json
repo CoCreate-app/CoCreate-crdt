@@ -3,9 +3,9 @@
   "version": "1.1.5",
   "description": "CoCreate crdt",
   "author": "CoCreate LLC",
-  "license": "UNLICENSED",
+  "license": "SEE LICENSE",
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   },
   "scripts": {
     "start": "npx webpack --config webpack.config.js",
