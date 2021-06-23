@@ -72,4 +72,12 @@ We appreciate your continued support, thank you!
 
 # License
 
-[UNLICENSED](https://github.com/CoCreate-app/CoCreate-crdt/blob/master/LICENSE)
+If you want to use CoCreate-crdt to develop commercial sites, themes, projects, and applications, the Commercial license is the appropriate license. With this option, your source code is kept proprietary. Purchase a CoCreate Commercial License at 
+
+[cocreate.app/commercial-license](https://cocreate.app/#commercial-license)
+
+### Open source license
+
+If you are creating an open source application under a license compatible with the [GNU GPL license v3](https://www.gnu.org/licenses/gpl-3.0.html), you may use CoCreate-crdt under the terms of the GPLv3.
+
+[GNU GPL license v3 (GPLv3)](https://github.com/CoCreate-app/CoCreate-text/blob/master/LICENSE)
