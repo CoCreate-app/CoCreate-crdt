@@ -4,9 +4,7 @@
   "description": "CoCreate crdt",
   "author": "CoCreate LLC",
   "license": "SEE LICENSE",
-  "publishConfig": {
-    "access": "public"
-  },
+  "publishConfig": { "access": "public" },
   "scripts": {
     "start": "npx webpack --config webpack.config.js",
     "build": "NODE_ENV=production npx webpack --config webpack.config.js",
