@@ -1,3 +1,11 @@
+## [1.1.11](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.10...v1.1.11) (2021-06-24)
+
+
+### Bug Fixes
+
+* add method to turn on and off console.log while in development ([ac2fda1](https://github.com/CoCreate-app/CoCreate-crdt/commit/ac2fda1573a86bb9baef7e0c8a5c9b296e381120))
+* update all [@cocreate](https://github.com/cocreate) to use latest versions ([66ab1ac](https://github.com/CoCreate-app/CoCreate-crdt/commit/66ab1ac9a3b2ba74d6831daa608229512ac627fc))
+
 ## [1.1.10](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.9...v1.1.10) (2021-06-23)
 
 
