@@ -868,7 +868,7 @@
     "@babel/helper-validator-identifier" "^7.14.5"
     to-fast-properties "^2.0.0"
 
-"@cocreate/crud-client@^1.0.0", "@cocreate/crud-client@^1.1.8":
+"@cocreate/crud-client@^1.0.0", "@cocreate/crud-client@^1.1.9":
   version "1.1.9"
   resolved "https://registry.yarnpkg.com/@cocreate/crud-client/-/crud-client-1.1.9.tgz#df1434169dfa5f656d281461bfb2ad3842e9749a"
   integrity sha512-heNbIEwX6i2un+eIQDph7KYt81/9c1VlP0f+VfOA5/7PPNkCA3/Lo5UF76Qzze1JNvvThsQvCXxIA3++YJldKQ==
@@ -876,7 +876,7 @@
     "@cocreate/docs" "^1.0.0"
     "@cocreate/socket-client" "^1.0.0"
 
-"@cocreate/cursors@^1.1.15":
+"@cocreate/cursors@^1.1.16":
   version "1.1.16"
   resolved "https://registry.yarnpkg.com/@cocreate/cursors/-/cursors-1.1.16.tgz#3812b1e1215db2bb4a458bba2cef05bb531021d9"
   integrity sha512-L4Ea0bEU8Oe7n55P5yJtFhuP7TJU4ll/lgsFIQwx/pRy2tqqEQllvCtwTFuJVRinYICLr02dv9RKkxfAWAGuyA==
