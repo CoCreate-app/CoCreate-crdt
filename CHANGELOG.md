@@ -1,3 +1,10 @@
+## [1.1.13](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.12...v1.1.13) (2021-06-25)
+
+
+### Bug Fixes
+
+* latest version numbers applied to all cocreate packages ([8c248ab](https://github.com/CoCreate-app/CoCreate-crdt/commit/8c248ab6b09de43e52f2b9d9e2e7f88d5ab9adba))
+
 ## [1.1.12](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.11...v1.1.12) (2021-06-24)
 
 
