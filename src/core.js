@@ -3,8 +3,9 @@ import { WebsocketProvider } from 'y-websocket'
 import { fetchUpdates, storeState, IndexeddbPersistence } from 'y-indexeddb'
 import crud from '@cocreate/crud-client';
 import CoCreateCursors from '@cocreate/cursors'
+import { logger } from '@cocreate/utils'
 
-const debug = false;
+let console = logger('off');
 
 class CoCreateYSocket {
 	constructor(org, ydoc) {
@@ -22,7 +23,6 @@ class CoCreateYSocket {
 		}
 		
 		let newInfo = this.parseType(id)
-		// if(debug)
 		// 	console.log(newInfo);
 		
 		const newId = newInfo.id;
@@ -247,8 +247,7 @@ class CoCreateYSocket {
 	}
 	
 	updateRemoteSelection (y, cm, type, cursors, clientId, awareness)  {
-		if(debug)
-				console.log("CHANGE ---- DOCID ",this.doc.clientID,' OTHER CLIENTEID ',clientId)
+		console.log("CHANGE ---- DOCID ",this.doc.clientID,' OTHER CLIENTEID ',clientId)
 		if(clientId !== this.doc.clientID){
 			
 					//console.log("TEXT -> updateRemoteSelection ",clientId,awareness,cursor)
@@ -264,10 +263,8 @@ class CoCreateYSocket {
 					  }
 					  // redraw caret and selection for clientId
 					  const aw = awareness.getStates().get(clientId);
-					  if(debug)
 						console.log(aw)
 					  if (aw === undefined) {
-						  if(debug)
 							console.log(" Cursor OUT ",clientId)
 						   //awareness.setLocalStateField('cursor', null);
 						   let elements = document.querySelectorAll('[id*="socket_'+clientId+'"]');
@@ -297,7 +294,6 @@ class CoCreateYSocket {
 						user.name = `User: ${clientId}`
 					  }
 					  const cursor = aw.cursor
-					  if(debug)
 						console.log("Cursor ",cursor)
 					  if (cursor == null || cursor.anchor == null || cursor.head == null) {
 						  //let element = document.getElementById("socket_"+clientId)
@@ -317,12 +313,10 @@ class CoCreateYSocket {
 					  const anchor = Y.createAbsolutePositionFromRelativePosition(Y.createRelativePositionFromJSON(cursor.anchor), y)
 					  const head = Y.createAbsolutePositionFromRelativePosition(Y.createRelativePositionFromJSON(cursor.head), y)
 					  //CoCreate.cursors.draw_cursor(1,11,12,66,{},true);
-					  if(debug){
 						  console.log("PRE Draw Cursor ")
 						  console.log("anchor  ",anchor , " head ",head,' Type ',type)
 						  console.log("anchor  Type",anchor.type === type)
 						  console.log("anchor  Type",head.type === type)
-					  }
 					  //if (anchor !== null && head !== null && anchor.type === type && head.type === type) {
 					  if (anchor !== null && head !== null ) {
 						let from, to;
@@ -330,12 +324,10 @@ class CoCreateYSocket {
 						  from = head.index
 						  to = anchor.index
 						} else {
-							if(debug)
 								console.log(anchor.index)
 						  from = anchor.index
 						  to = head.index
 						}
-						if(debug)
 							console.log("Draw Cursor ",from,to,clientId,aw.user)
 						let t_info = this.parseTypeName(cursor.anchor['tname']);
 						let id_mirror = t_info.document_id + t_info.name+'--mirror-div';
@@ -416,7 +408,6 @@ class CoCreateYSocket {
 		var anchor = Y.createRelativePositionFromTypeIndex(type, from)
 		var head = Y.createRelativePositionFromTypeIndex(type, to)
 		
-		if(debug)
 			console.log("Sending Cursor ",{
 				anchor,
 				head
@@ -427,7 +418,6 @@ class CoCreateYSocket {
 			head
 		})
 		/*
-		if(debug)
 			console.log("Cursor Send")
 			*/
 	}
