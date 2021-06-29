@@ -1,3 +1,11 @@
+## [1.1.14](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.13...v1.1.14) (2021-06-29)
+
+
+### Bug Fixes
+
+* add logger ([ee2d3dc](https://github.com/CoCreate-app/CoCreate-crdt/commit/ee2d3dc32ffb0c8915dac3d286b6b09c1b160963))
+* updates to crdt ([c47f4a8](https://github.com/CoCreate-app/CoCreate-crdt/commit/c47f4a83ab7add71478d0bace80cd0aad96535c7))
+
 ## [1.1.13](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.12...v1.1.13) (2021-06-25)
 
 
