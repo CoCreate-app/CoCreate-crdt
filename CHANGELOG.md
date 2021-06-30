@@ -1,3 +1,10 @@
+## [1.1.16](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.15...v1.1.16) (2021-06-30)
+
+
+### Bug Fixes
+
+* automated and manual workflows ([36d555c](https://github.com/CoCreate-app/CoCreate-crdt/commit/36d555c0a89675d07431a2a200baf620d9651238))
+
 ## [1.1.15](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.14...v1.1.15) (2021-06-30)
 
 
