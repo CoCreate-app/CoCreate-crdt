@@ -1,3 +1,10 @@
+## [1.1.15](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.14...v1.1.15) (2021-06-30)
+
+
+### Bug Fixes
+
+* update crdt websocket pagkage v1.3.16 ([8d9f916](https://github.com/CoCreate-app/CoCreate-crdt/commit/8d9f916c65cabbb7f7322e9d738c0d6645a3230d))
+
 ## [1.1.14](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.13...v1.1.14) (2021-06-29)
 
 
