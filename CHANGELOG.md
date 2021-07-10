@@ -1,3 +1,10 @@
+## [1.1.19](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.18...v1.1.19) (2021-07-10)
+
+
+### Bug Fixes
+
+* gitignore all logs ([5c2699e](https://github.com/CoCreate-app/CoCreate-crdt/commit/5c2699ed1773eadea1c626c66bfe2af9f3915aa8))
+
 ## [1.1.18](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.17...v1.1.18) (2021-07-07)
 
 
