@@ -1,3 +1,11 @@
+## [1.1.20](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.19...v1.1.20) (2021-07-13)
+
+
+### Bug Fixes
+
+* add yarn lockfile to git ignore ([f032a54](https://github.com/CoCreate-app/CoCreate-crdt/commit/f032a54d45eb15a7f95e1ddd2656ac6b2ebbe535))
+* remove yarn.lock ([36cbee0](https://github.com/CoCreate-app/CoCreate-crdt/commit/36cbee011514d9694c541684cf68c25082af926c))
+
 ## [1.1.19](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.18...v1.1.19) (2021-07-10)
 
 
