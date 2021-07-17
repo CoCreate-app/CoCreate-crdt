@@ -1,3 +1,11 @@
+## [1.1.22](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.21...v1.1.22) (2021-07-17)
+
+
+### Bug Fixes
+
+* init and update demos scripts ([bf94998](https://github.com/CoCreate-app/CoCreate-crdt/commit/bf9499873c47e3aae7dfa5582d00e64b58cdcd01))
+* workflows ([0d511a7](https://github.com/CoCreate-app/CoCreate-crdt/commit/0d511a7fdb741d842eed88ea9a87427a0b610b6c))
+
 ## [1.1.21](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.20...v1.1.21) (2021-07-14)
 
 
