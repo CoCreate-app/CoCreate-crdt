@@ -313,10 +313,10 @@ class CoCreateYSocket {
 					  const anchor = Y.createAbsolutePositionFromRelativePosition(Y.createRelativePositionFromJSON(cursor.anchor), y)
 					  const head = Y.createAbsolutePositionFromRelativePosition(Y.createRelativePositionFromJSON(cursor.head), y)
 					  //CoCreate.cursors.draw_cursor(1,11,12,66,{},true);
-						  console.log("PRE Draw Cursor ")
-						  console.log("anchor  ",anchor , " head ",head,' Type ',type)
-						  console.log("anchor  Type",anchor.type === type)
-						  console.log("anchor  Type",head.type === type)
+						  //console.log("PRE Draw Cursor ")
+						  //console.log("anchor  ",anchor , " head ",head,' Type ',type)
+						  //console.log("anchor  Type",anchor.type === type)
+						  //console.log("anchor  Type",head.type === type)
 					  //if (anchor !== null && head !== null && anchor.type === type && head.type === type) {
 					  if (anchor !== null && head !== null ) {
 						let from, to;
