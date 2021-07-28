@@ -248,6 +248,7 @@ class CoCreateYSocket {
 	
 	updateRemoteSelection (y, cm, type, cursors, clientId, awareness)  {
 		console.log("CHANGE ---- DOCID ",this.doc.clientID,' OTHER CLIENTEID ',clientId)
+		// ToDo: blocks character inserts
 		if(clientId !== this.doc.clientID){
 			
 					//console.log("TEXT -> updateRemoteSelection ",clientId,awareness,cursor)
