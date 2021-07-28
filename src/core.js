@@ -332,7 +332,7 @@ class CoCreateYSocket {
 						let t_info = this.parseTypeName(cursor.anchor['tname']);
 						let id_mirror = t_info.document_id + t_info.name+'--mirror-div';
 						let json = {};
-						let selector = '[data-collection="'+t_info.collection+'"][data-document_id="'+t_info.document_id+'"][name="'+t_info.name+'"]'
+						let selector = '[collection="'+t_info.collection+'"][document_id="'+t_info.document_id+'"][name="'+t_info.name+'"]'
 						selector += ':not(.codemirror):not(.quill):not(.monaco)';
 						let elements = document.querySelectorAll(selector);
 						let that = this;
