@@ -20,19 +20,19 @@ class CoCreateCRDTClass extends CoCreateYSocket
 	*/
 	init(info) {
 		try {
-			this.__validateKeysJson(info, ['collection', 'document_id', 'name']);
+			// this.__validateKeysJson(info, ['collection', 'document_id', 'name']);
 			
 			const id = this.__getYDocId(info['collection'], info['document_id'], info['name'])
 
 			if (!id) return;
-			const status = this.createDoc(id, info.element)
-			// console.log("InitCrdt")
+				this.createDoc(id)
+
 		} catch(e) {
 			console.log('Invalid param', e);
 		}
 	}
 
-	/*. init data function
+	/*
 	crdt.replaceText({
 		collection: "module",
 		document_id: "",
@@ -47,7 +47,9 @@ class CoCreateCRDTClass extends CoCreateYSocket
 	replaceText(info){
 		if (!info) return;
 		
-		const id = this.__getYDocId(info.collection, info.document_id, info.name)
+		let id = this.generateID(config.organization_Id, info['collection'], info['document_id'], info['name'])
+		let info1 = this.parseType(id)
+		
 		if (!id) return;
 
 		if (info.updateCrud != false) info.updateCrud = true;
@@ -56,9 +58,9 @@ class CoCreateCRDTClass extends CoCreateYSocket
 			let oldData = this.getType(id).toString();
 			let textValue = info.value.toString();
 			if (oldData && oldData.length > 0) {
-				this.deleteData(id, 0, Math.max(oldData.length, textValue.length));
+				this.deleteText(info['collection'], info['document_id'], info['name'], 0, Math.max(oldData.length, textValue.length));
 			}
-			this.insertData(id, 0, textValue);
+			this.insertText(info['collection'], info['document_id'], info['name'], 0, textValue);
 		}
 		if (info.crud != false) {
 			crud.updateDocument({
@@ -87,32 +89,32 @@ class CoCreateCRDTClass extends CoCreateYSocket
 	})
 	*/
 	insertText(info) {
-			try {
-				this.__validateKeysJson(info,['collection','document_id','name','value','position']);
-				let id = this.__getYDocId(info['collection'], info['document_id'], info['name'])
-				if (id) {
-					
-					this.insertData(id, info['position'], info['value'].toString(), info['attributes']);
-					
-					let wholestring = this.getType(id).toString();
-					
-					console.log(wholestring)
-					
-					if (info.crud != false) {
-						crud.updateDocument({
-							collection: info.collection,
-							document_id: info.document_id,
-							data: {
-								[info.name]: wholestring
-							},
-							metadata: 'yjs-change'
-						})
-					}
+		try {
+			// this.__validateKeysJson(info,['collection','document_id','name','value','position']);
+			let id = this.generateID(config.organization_Id, info['collection'], info['document_id'], info['name'])
+			let info1 = this.parseType(id)
+			
+			if (id) {
+				this.getType(id).insert(info['position'], info['value'], info['attribute']);
+				let wholestring = this.getType(id).toString();
+				
+				console.log(wholestring)
+				
+				if (info.crud != false) {
+					crud.updateDocument({
+						collection: info.collection,
+						document_id: info.document_id,
+						data: {
+							[info.name]: wholestring
+						},
+						metadata: 'yjs-change'
+					})
 				}
 			}
-			catch (e) {
-				console.error(e); 
-			}
+		}
+		catch (e) {
+			console.error(e); 
+		}
 	}
 	
 	
@@ -125,13 +127,14 @@ class CoCreateCRDTClass extends CoCreateYSocket
 		length: 2,
 	})
 	*/
+
 	deleteText(info) {
 		try{
-			this.__validateKeysJson(info,['collection','document_id','name', 'position','length']);
-			let id = this.__getYDocId(info['collection'], info['document_id'], info['name'])
+			// this.__validateKeysJson(info,['collection','document_id','name', 'position','length']);
+			let id = this.generateID(config.organization_Id, info['collection'], info['document_id'], info['name'])
+			let info1 = this.parseType(id)
 			if (id) {
-				this.deleteData(id, info['position'], info['length']);
-				
+				this.docs[info1.id].doc.getText(id).delete(info['position'], info['length']);
 				let wholestring = this.getType(id).toString();
 				
 				console.log(wholestring)
@@ -161,15 +164,17 @@ class CoCreateCRDTClass extends CoCreateYSocket
 		name: 'name'
 	})
 	*/
+	
 	getText(info) {
 		try{
-			this.__validateKeysJson(info,['collection','document_id','name']);
-			let id = this.__getYDocId(info['collection'], info['document_id'], info['name'])
+			// this.__validateKeysJson(info,['collection','document_id','name']);
+			let id = this.generateID(config.organization_Id, info['collection'], info['document_id'], info['name'])
+			let info1 = this.parseType(id)
 			if (id) {
-				return this.getWholeString(id);
-			} else {
-				return "";
-			}
+			return this.docs[info1.id].doc.getText(id).toString();
+		} else {
+			return "--";
+		}
 		}
 		catch (e) {
 			console.error(e); 
