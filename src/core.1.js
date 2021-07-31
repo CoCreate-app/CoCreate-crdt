@@ -7,7 +7,7 @@ import { logger } from '@cocreate/utils'
 
 let console = logger('off');
 
-class CoCreateYSocket {
+class CoCreateCrdt {
 	constructor(org, ydoc) {
 		this.doc = ydoc;
 		this.orgName = org;
@@ -456,5 +456,5 @@ class CoCreateYSocket {
 	}
 }
 
-export default CoCreateYSocket;
+export default CoCreateCrdt;
 

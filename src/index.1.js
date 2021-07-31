@@ -1,9 +1,9 @@
-import CoCreateYSocket from "./core.js"
+import CoCreateCrdt from "./core.js"
 import * as Y from 'yjs'
 import crud from '@cocreate/crud-client';
 
 
-class CoCreateCRDTClass extends CoCreateYSocket 
+class CoCreateCRDTClass extends CoCreateCrdt 
 {
 	constructor(org, doc) {
 		super(org, doc)

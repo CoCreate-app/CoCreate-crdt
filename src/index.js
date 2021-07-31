@@ -1,9 +1,9 @@
-import CoCreateYSocket from "./core.js"
+import CoCreateCrdtInit from "./core.js"
 import * as Y from 'yjs'
 import crud from '@cocreate/crud-client';
 
 
-class CoCreateCRDTClass extends CoCreateYSocket 
+class CoCreateCRDTClass extends CoCreateCrdtInit 
 {
 	constructor(org, doc) {
 		super(org, doc)
@@ -18,14 +18,12 @@ class CoCreateCRDTClass extends CoCreateYSocket
 		metadata: "xxxx"
 	})
 	*/
-	init(info) {
+	init({collection, document_id, name}) {
 		try {
 			// this.__validateKeysJson(info, ['collection', 'document_id', 'name']);
 			
-			const id = this.__getYDocId(info['collection'], info['document_id'], info['name'])
-
-			if (!id) return;
-				this.createDoc(id)
+			if (!collection || !document_id || !name) return;
+				this.createDoc(collection, document_id, name)
 
 		} catch(e) {
 			console.log('Invalid param', e);
@@ -47,15 +45,14 @@ class CoCreateCRDTClass extends CoCreateYSocket
 	replaceText(info){
 		if (!info) return;
 		
-		let id = this.generateID(config.organization_Id, info['collection'], info['document_id'], info['name'])
-		let info1 = this.parseType(id)
+		let docId = this.generateDoc(info['collection'], info['document_id']);
+		let name = this.generateName(info['document_id'], info['name'])
 		
-		if (!id) return;
 
 		if (info.updateCrud != false) info.updateCrud = true;
 		
-		if (this.getType(id) ) {
-			let oldData = this.getType(id).toString();
+		if ( this.docs[docId.id].doc.getText(name) ) {
+			let oldData = this.docs[docId.id].doc.getText(name).toString();
 			let textValue = info.value.toString();
 			if (oldData && oldData.length > 0) {
 				this.deleteText(info['collection'], info['document_id'], info['name'], 0, Math.max(oldData.length, textValue.length));
@@ -88,15 +85,15 @@ class CoCreateCRDTClass extends CoCreateYSocket
 		attributes: {bold: true}
 	})
 	*/
-	insertText(info) {
+	insertText(info){
 		try {
 			// this.__validateKeysJson(info,['collection','document_id','name','value','position']);
-			let id = this.generateID(config.organization_Id, info['collection'], info['document_id'], info['name'])
-			let info1 = this.parseType(id)
+			let docId = this.generateDoc(info['collection'], info['document_id'])
+			let name = this.generateName(info['document_id'], info['name'])
 			
-			if (id) {
-				this.getType(id).insert(info['position'], info['value'], info['attribute']);
-				let wholestring = this.getType(id).toString();
+			if (docId && name) {
+				this.docs[docId.id].doc.getText(name).insert(info['position'], info['value'], info['attribute']);
+				let wholestring = this.docs[docId.id].doc.getText(name).toString();
 				
 				console.log(wholestring)
 				
@@ -131,11 +128,12 @@ class CoCreateCRDTClass extends CoCreateYSocket
 	deleteText(info) {
 		try{
 			// this.__validateKeysJson(info,['collection','document_id','name', 'position','length']);
-			let id = this.generateID(config.organization_Id, info['collection'], info['document_id'], info['name'])
-			let info1 = this.parseType(id)
-			if (id) {
-				this.docs[info1.id].doc.getText(id).delete(info['position'], info['length']);
-				let wholestring = this.getType(id).toString();
+			let docId = this.generateDoc(info['collection'], info['document_id'])
+			let name = this.generateName(info['document_id'], info['name'])
+			
+			if (docId && name) {
+				this.docs[docId.id].doc.getText(name).delete(info['position'], info['length']);
+				let wholestring = this.docs[docId.id].doc.getText(name).toString();
 				
 				console.log(wholestring)
 				
@@ -168,10 +166,11 @@ class CoCreateCRDTClass extends CoCreateYSocket
 	getText(info) {
 		try{
 			// this.__validateKeysJson(info,['collection','document_id','name']);
-			let id = this.generateID(config.organization_Id, info['collection'], info['document_id'], info['name'])
-			let info1 = this.parseType(id)
-			if (id) {
-			return this.docs[info1.id].doc.getText(id).toString();
+			let docId = this.generateDoc(info['collection'], info['document_id'])
+			let name = this.generateName(info['document_id'], info['name'])
+			
+			if (docId && name) {
+			return this.docs[docId.id].doc.getText(name).toString();
 		} else {
 			return "--";
 		}
@@ -194,16 +193,6 @@ class CoCreateCRDTClass extends CoCreateYSocket
 		console.error('Callback should be a function')
 	}
  
-	__getYDocId(collection, document_id, name) {
-		if (!crud.checkAttrValue(collection) || 
-				!crud.checkAttrValue(document_id) || 
-				!crud.checkAttrValue(name)) 
-		{
-			return null;
-		}
-		return this.generateID(config.organization_Id, collection, document_id, name);
-	}
-	
 	__validateKeysJson(json,rules){
 		let keys_json = Object.keys(json);
 		keys_json.forEach(key=>{

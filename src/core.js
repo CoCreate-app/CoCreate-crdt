@@ -7,7 +7,7 @@ import { logger } from '@cocreate/utils'
 
 let console = logger('off');
 
-class CoCreateYSocket {
+class CoCreateCrdtInit {
 	constructor(org, ydoc) {
 		this.doc = ydoc;
 		this.orgName = org;
@@ -17,20 +17,17 @@ class CoCreateYSocket {
 		this.listenAwereness = function(){}
 	}
 	
-	createDoc(id) {
-		if (!id || id == "") {
-			return null;
-		}
-		
-		let newInfo = this.parseType(id)
+	createDoc(collection, document_id, typeName) {
 
-		const newId = newInfo.id;
-		
-		if (this.docs[newId]) { 
-			if (!this.docs[newId].types.some((type) => type === id)) {
-				// register event
-				this.docs[newId].types.push(id);
-				this.registerUpdateEvent(this.docs[newId], id)
+		let docId= this.generateDoc(collection, document_id)
+		let name= this.generateName(document_id, typeName)
+
+
+		if (this.docs[docId.id]) { 
+			if (!this.docs[docId.id].types.some((type) => type === name)) {
+
+				this.docs[docId.id].types.push(name);
+				this.registerUpdateEvent(this.docs[docId.id], name)
 				
 			}
 			return false;
@@ -40,11 +37,11 @@ class CoCreateYSocket {
 		
 		const url_socket = this.__getSocketUrl();
 
-		var socketProvider = new WebsocketProvider(url_socket, newId, yDoc);
+		var socketProvider = new WebsocketProvider(url_socket, docId.id, yDoc);
 		
 		let indexeddbProvider = null;
-		if (newInfo.document_id != "null") {
-			indexeddbProvider = new IndexeddbPersistence(newId, this.doc)
+		if (docId.document_id != "null") {
+			indexeddbProvider = new IndexeddbPersistence(docId.id, this.doc)
 			indexeddbProvider.whenSynced.then(() => {
 			  console.log('loaded data from indexed db')
 			})
@@ -57,7 +54,7 @@ class CoCreateYSocket {
 		this._awarenessListener = event => {
 		  const f = clientId => {
 		//	if (clientId !== this.doc.clientID) {
-			  this.updateRemoteSelection(yDoc, id, yDoc.getText(id), this._cursors, clientId, awareness)
+			  this.updateRemoteSelection(yDoc, name, yDoc.getText(name), this._cursors, clientId, awareness)
 		//	}
 		  }
 		  event.added.forEach(f)
@@ -67,26 +64,26 @@ class CoCreateYSocket {
 		
 		awareness.on('change', this._awarenessListener);
 
-        this.docs[newId] = {
-			id: newId,
+        this.docs[docId.id] = {
+			id: docId.id,
 			doc: yDoc,
 			socket: socketProvider,
 			awareness: awareness,
-			types: [id],
+			types: [name],
 			indexeddb: indexeddbProvider
 		}
-		this.registerUpdateEvent(this.docs[newId], id)
+		this.registerUpdateEvent(docId.id, name)
 
 		return true;
 	}
 	
-	registerUpdateEvent(docObject, id) {
-		const yDoc = docObject.doc;
-		const shardType = yDoc.getText(id)
+	registerUpdateEvent(docId, name) {
+		const yDoc = this.docs[docId.id].doc;
+		const shardType = yDoc.getText(name)
 		let _this = this;
 		
 		shardType.observe((event) => {
-			_this.__setTypeObserveEvent(event, id);
+			_this.__setTypeObserveEvent(event, docId, name);
 		})
 	}
 	
@@ -117,16 +114,21 @@ class CoCreateYSocket {
 
 	}
 	
-	__setTypeObserveEvent(event, id) {
+	__setTypeObserveEvent(event, docId, name) {
 		console.log('set crdt event .', event.delta)
-		if (!id) return;
+		if (!name) return;
 
 		const eventDelta = event.delta;
 		
 		if (eventDelta.length == 0) {
 			return;
 		}
-		const info = JSON.parse(atob(id));
+		const  info1 = JSON.parse(atob([docId.id]));
+		let collection = info1.collection;
+		let document_id = info1.document_id;
+		const info2 = JSON.parse(atob(name));
+		let name1 = info2.name
+		const info = { collection: collection, document_id: document_id, name: name1 }
 		let is_save_value = false
 		
 		// let is_crud = eventDelta.attributes && eventDelta.attributes.crud === false ? false : true;
@@ -141,13 +143,15 @@ class CoCreateYSocket {
 		})
 		
 		window.dispatchEvent(update_event);
+		window.dispatchEvent(store_event)
 	}
 	
 	//send Position Custom
-	sendPosition(collection, document_id, name, from, to) {
-		let id = this.generateID(config.organization_Id, collection, document_id, name);
-		const info = this.parseType(id)
-		const type = this.getType(id);
+	sendPosition(collection, document_id, typeName, from, to) {
+		const docId = this.generateDoc(collection, document_id,)
+		let name = this.generateName(document_id, typeName);
+
+		const type = this.docs[docId.id].doc.getText(name);
 		console.log("Type ",type)
 		if (!type) {
 			return;
@@ -159,15 +163,15 @@ class CoCreateYSocket {
 				console.log("Sending Cursor ",{
 					anchor,
 					head
-				},{'to':to,'from':from,'info.id':info.id})
+				},{'to':to,'from':from,'end':docId.id})
 			
-			this.docs[info.id].socket.awareness.setLocalStateField('cursor', {
+			this.docs[docId.id].socket.awareness.setLocalStateField('cursor', {
 				anchor,
 				head
 			})
 		}
 		else {
-			this.docs[info.id].socket.awareness.setLocalStateField('cursor', null);
+			this.docs[docId.id].socket.awareness.setLocalStateField('cursor', null);
 		}
 			
 	}
@@ -291,17 +295,26 @@ class CoCreateYSocket {
 		
 		let newId = {org: data.org, collection: data.collection, document_id: data.document_id}
 		return {
-			id: btoa(JSON.stringify(newId)),
+			id: btoa(JSON.stringify(newId.id)),
 			collection: data.collection,
 			document_id: data.document_id,
 			name: data.name
 		}
 	}
-
-	generateID(org, collection, document_id, name) {
-		const info = {org, collection, document_id, name}
-		return btoa(JSON.stringify(info));        
+	
+	generateDoc(collection, document_id) {
+		let docId = {org: config.organization_id, collection: collection, document_id: document_id}
+		return {
+			id: btoa(JSON.stringify(docId)),
+			collection: collection,
+			document_id: document_id
+		}
+	}
+	
+	generateName(document_id, name) {
+		const nameId = {document_id: document_id, name: name}
+		return btoa(JSON.stringify(nameId));        
 	}
 }
 
-export default CoCreateYSocket;
+export default CoCreateCrdtInit;
