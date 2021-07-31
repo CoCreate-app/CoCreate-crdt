@@ -7,7 +7,7 @@ import { logger } from '@cocreate/utils'
 
 let console = logger('off');
 
-class CoCreateYSocket {
+class CoCreateCrdt {
 	constructor(org, ydoc) {
 		this.doc = ydoc;
 		this.orgName = org;
@@ -131,17 +131,16 @@ class CoCreateYSocket {
 		
 		// let is_crud = eventDelta.attributes && eventDelta.attributes.crud === false ? false : true;
 		
-		// const wholestring = event.target.toString()
-		// const store_event = new CustomEvent('store-content-db', {
-		// 	detail: wholestring
-		// })
+		const wholestring = event.target.toString()
+		const store_event = new CustomEvent('store-content-db', {
+			detail: wholestring
+		})
 		
 		const update_event = new CustomEvent('cocreate-crdt-update', {
 			detail: {eventDelta,...info}, 
 		})
 		
 		window.dispatchEvent(update_event);
-		// window.dispatchEvent(store_event);
 	}
 	
 	//send Position Custom
@@ -319,4 +318,4 @@ class CoCreateYSocket {
 	}
 }
 
-export default CoCreateYSocket;
+export default CoCreateCrdt;
