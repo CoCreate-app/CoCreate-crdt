@@ -1,10 +1,9 @@
-import CoCreateYSocket from "./core.js"
+import CoCreateCrdtInit from "./core.js"
 import * as Y from 'yjs'
 import crud from '@cocreate/crud-client';
 
 
-class CoCreateCRDTClass extends CoCreateYSocket 
-{
+class CoCreateCRDTClass extends CoCreateCrdtInit {
 	constructor(org, doc) {
 		super(org, doc)
 	}
@@ -20,13 +19,7 @@ class CoCreateCRDTClass extends CoCreateYSocket
 	*/
 	init(info) {
 		try {
-			// this.__validateKeysJson(info, ['collection', 'document_id', 'name']);
-			
-			const id = this.__getYDocId(info['collection'], info['document_id'], info['name'])
-
-			if (!id) return;
-				this.createDoc(id)
-
+			this.createDoc(info)
 		} catch(e) {
 			console.log('Invalid param', e);
 		}
@@ -43,19 +36,14 @@ class CoCreateCRDTClass extends CoCreateYSocket
 		metadata: "xxxx"
 	})
 	*/
-	
 	replaceText(info){
-		if (!info) return;
-		
-		let id = this.generateID(config.organization_Id, info['collection'], info['document_id'], info['name'])
-		let info1 = this.parseType(id)
-		
-		if (!id) return;
+		let docName = this.generateDocName(info)
+		let typeName = this.generateTypeName(info)
 
 		if (info.updateCrud != false) info.updateCrud = true;
 		
-		if (this.getType(id) ) {
-			let oldData = this.getType(id).toString();
+		if (docName) {
+			let oldData = this.docs[docName].doc.getText(typeName).toString();
 			let textValue = info.value.toString();
 			if (oldData && oldData.length > 0) {
 				this.deleteText(info['collection'], info['document_id'], info['name'], 0, Math.max(oldData.length, textValue.length));
@@ -90,13 +78,12 @@ class CoCreateCRDTClass extends CoCreateYSocket
 	*/
 	insertText(info) {
 		try {
-			// this.__validateKeysJson(info,['collection','document_id','name','value','position']);
-			let id = this.generateID(config.organization_Id, info['collection'], info['document_id'], info['name'])
-			let info1 = this.parseType(id)
+			let docName = this.generateDocName(info)
+			let typeName = this.generateTypeName(info)
 			
-			if (id) {
-				this.getType(id).insert(info['position'], info['value'], info['attribute']);
-				let wholestring = this.getType(id).toString();
+			if (docName) {
+				this.docs[docName].doc.getText(typeName).insert(info['position'], info['value'], info['attribute']);
+				let wholestring = this.docs[docName].doc.getText(typeName).toString();
 				
 				console.log(wholestring)
 				
@@ -117,7 +104,6 @@ class CoCreateCRDTClass extends CoCreateYSocket
 		}
 	}
 	
-	
 	/*
 	crdt.deleteText({
 		collection: 'module_activities',
@@ -127,15 +113,13 @@ class CoCreateCRDTClass extends CoCreateYSocket
 		length: 2,
 	})
 	*/
-
 	deleteText(info) {
 		try{
-			// this.__validateKeysJson(info,['collection','document_id','name', 'position','length']);
-			let id = this.generateID(config.organization_Id, info['collection'], info['document_id'], info['name'])
-			let info1 = this.parseType(id)
-			if (id) {
-				this.docs[info1.id].doc.getText(id).delete(info['position'], info['length']);
-				let wholestring = this.getType(id).toString();
+			let docName = this.generateDocName(info)
+			let typeName = this.generateTypeName(info)
+			if (docName) {
+				this.docs[docName].doc.getText(typeName).delete(info['position'], info['length']);
+				let wholestring = this.docs[docName].doc.getText(typeName).toString();
 				
 				console.log(wholestring)
 				
@@ -164,17 +148,14 @@ class CoCreateCRDTClass extends CoCreateYSocket
 		name: 'name'
 	})
 	*/
-	
 	getText(info) {
 		try{
-			// this.__validateKeysJson(info,['collection','document_id','name']);
-			let id = this.generateID(config.organization_Id, info['collection'], info['document_id'], info['name'])
-			let info1 = this.parseType(id)
-			if (id) {
-			return this.docs[info1.id].doc.getText(id).toString();
-		} else {
-			return "--";
-		}
+			let docName = this.generateDocName(info)
+			let typeName = this.generateTypeName(info)
+			if (docName) {
+				return this.docs[docName].doc.getText(typeName).toString();
+			} 
+			else return "--";
 		}
 		catch (e) {
 			console.error(e); 
@@ -182,7 +163,6 @@ class CoCreateCRDTClass extends CoCreateYSocket
 		}
 	}
 
-	
 	/* 
 	crdt.getPosition(function(data))
 	crdt.getPosition(function(data){console.log(" EScuchando ahora  ",data)})
@@ -192,27 +172,6 @@ class CoCreateCRDTClass extends CoCreateYSocket
 		this.changeListenAwereness(callback);
 	else
 		console.error('Callback should be a function')
-	}
- 
-	__getYDocId(collection, document_id, name) {
-		if (!crud.checkAttrValue(collection) || 
-				!crud.checkAttrValue(document_id) || 
-				!crud.checkAttrValue(name)) 
-		{
-			return null;
-		}
-		return this.generateID(config.organization_Id, collection, document_id, name);
-	}
-	
-	__validateKeysJson(json,rules){
-		let keys_json = Object.keys(json);
-		keys_json.forEach(key=>{
-			const index = rules.indexOf(key);
-			if(index != -1)
-				rules.splice(index, 1);
-		});
-		if( rules.length )
-			throw "Requires the following "+ rules.toString();
 	}
 }
 
@@ -227,4 +186,3 @@ if (!window.CoCreateCrdt) {
 }
 
 export default CoCreateCrdt;
-

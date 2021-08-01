@@ -7,44 +7,32 @@ import { logger } from '@cocreate/utils'
 
 let console = logger('off');
 
-class CoCreateYSocket {
+class CoCreateCrdtInit {
 	constructor(org, ydoc) {
 		this.doc = ydoc;
-		this.orgName = org;
 		this.docs = {};
-		this._awarenessListener = null;
-		this.character = '_';
-		this.listenAwereness = function(){}
 	}
 	
-	createDoc(id) {
-		if (!id || id == "") {
-			return null;
-		}
-		
-		let newInfo = this.parseType(id)
+	createDoc(info) {
 
-		const newId = newInfo.id;
-		
-		if (this.docs[newId]) { 
-			if (!this.docs[newId].types.some((type) => type === id)) {
-				// register event
-				this.docs[newId].types.push(id);
-				this.registerUpdateEvent(this.docs[newId], id)
-				
+		let docName = this.generateDocName(info)
+		let typeName = this.generateTypeName(info)
+
+		if (this.docs[docName]) { 
+			if (!this.docs[docName].types.some((type) => type === typeName)) {
+				this.docs[docName].types.push(typeName);
+				this.registerUpdateEvent(this.docs[docName], typeName)
 			}
 			return false;
 		} 
 		
 		const yDoc = this.doc
-		
 		const url_socket = this.__getSocketUrl();
-
-		var socketProvider = new WebsocketProvider(url_socket, newId, yDoc);
+		var socketProvider = new WebsocketProvider(url_socket, docName, yDoc);
 		
 		let indexeddbProvider = null;
-		if (newInfo.document_id != "null") {
-			indexeddbProvider = new IndexeddbPersistence(newId, this.doc)
+		if (info.document_id != "null") {
+			indexeddbProvider = new IndexeddbPersistence(docName, this.doc)
 			indexeddbProvider.whenSynced.then(() => {
 			  console.log('loaded data from indexed db')
 			})
@@ -57,7 +45,7 @@ class CoCreateYSocket {
 		this._awarenessListener = event => {
 		  const f = clientId => {
 		//	if (clientId !== this.doc.clientID) {
-			  this.updateRemoteSelection(yDoc, id, yDoc.getText(id), this._cursors, clientId, awareness)
+			  this.updateRemoteSelection(yDoc, typeName, yDoc.getText(typeName), this._cursors, clientId, awareness)
 		//	}
 		  }
 		  event.added.forEach(f)
@@ -67,26 +55,26 @@ class CoCreateYSocket {
 		
 		awareness.on('change', this._awarenessListener);
 
-        this.docs[newId] = {
-			id: newId,
+        this.docs[docName] = {
+			id: docName,
 			doc: yDoc,
 			socket: socketProvider,
 			awareness: awareness,
-			types: [id],
+			types: [typeName],
 			indexeddb: indexeddbProvider
 		}
-		this.registerUpdateEvent(this.docs[newId], id)
+		this.registerUpdateEvent(this.docs[docName], typeName)
 
 		return true;
 	}
 	
-	registerUpdateEvent(docObject, id) {
-		const yDoc = docObject.doc;
-		const shardType = yDoc.getText(id)
+	registerUpdateEvent(docName, typeName) {
+		const yDoc = docName.doc;
+		const shardType = yDoc.getText(typeName)
 		let _this = this;
 		
 		shardType.observe((event) => {
-			_this.__setTypeObserveEvent(event, id);
+			_this.__setTypeObserveEvent(event, typeName);
 		})
 	}
 	
@@ -117,65 +105,45 @@ class CoCreateYSocket {
 
 	}
 	
-	__setTypeObserveEvent(event, id) {
+	__setTypeObserveEvent(event, typeName) {
 		console.log('set crdt event .', event.delta)
-		if (!id) return;
+		if (!typeName) return;
 
 		const eventDelta = event.delta;
 		
 		if (eventDelta.length == 0) {
 			return;
 		}
-		const info = JSON.parse(atob(id));
+		const info = JSON.parse(atob(typeName));
 		let is_save_value = false
-		
-		// let is_crud = eventDelta.attributes && eventDelta.attributes.crud === false ? false : true;
-		
-		// const wholestring = event.target.toString()
-		// const store_event = new CustomEvent('store-content-db', {
-		// 	detail: wholestring
-		// })
 		
 		const update_event = new CustomEvent('cocreate-crdt-update', {
 			detail: {eventDelta,...info}, 
 		})
 		
 		window.dispatchEvent(update_event);
-		// window.dispatchEvent(store_event);
 	}
 	
-	//send Position Custom
-	sendPosition(collection, document_id, name, from, to) {
-		let id = this.generateID(config.organization_Id, collection, document_id, name);
-		const info = this.parseType(id)
-		const type = this.getType(id);
-		console.log("Type ",type)
-		if (!type) {
-			return;
-		}
-		if (from != null && to != null){
-			var anchor = Y.createRelativePositionFromTypeIndex(type, from)
-			var head = Y.createRelativePositionFromTypeIndex(type, to)
+	sendPosition(info) {
+		let docName = this.generateDocName(info);
+		let typeName = this.generateTypeName(info);
+		let type = this.docs[docName].doc.getText(typeName);
+		if (!type) return;
+		if (info.start != null && info.end != null){
+			var anchor = Y.createRelativePositionFromTypeIndex(type, info.start)
+			var head = Y.createRelativePositionFromTypeIndex(type, info.end)
 			
-				console.log("Sending Cursor ",{
-					anchor,
-					head
-				},{'to':to,'from':from,'info.id':info.id})
-			
-			this.docs[info.id].socket.awareness.setLocalStateField('cursor', {
-				anchor,
-				head
-			})
+			this.docs[docName].socket.awareness.setLocalStateField('cursor', {anchor, head})
 		}
 		else {
-			this.docs[info.id].socket.awareness.setLocalStateField('cursor', null);
+			this.docs[docName].socket.awareness.setLocalStateField('cursor', null);
 		}
 			
 	}
 	
 	updateRemoteSelection (y, cm, type, cursors, clientId, awareness)  {
-		console.log("CHANGE ---- DOCID ",this.doc.clientID,' OTHER CLIENTEID ',clientId)
-		// ToDo: blocks character inserts
+
+		// ToDo: blocks character inserts because some time clientId are equal and should not be
 		if(clientId !== this.doc.clientID){
 			
 			const m = cursors.get(clientId)
@@ -187,7 +155,6 @@ class CoCreateYSocket {
 				cursors.delete(clientId)
 			}
 			  
-			// redraw caret and selection for clientId
 			const aw = awareness.getStates().get(clientId);
 	
 			if (aw === undefined) {
@@ -217,7 +184,7 @@ class CoCreateYSocket {
 				let	from = anchor.index
 				let to = head.index
 				
-				let info = this.parseType(cursor.anchor['tname']);
+				let info = this.parseName(cursor.anchor['tname']);
 				
 				let id_mirror = info.document_id + info.name+'--mirror-div';
 				let json = {};
@@ -226,8 +193,7 @@ class CoCreateYSocket {
 				selector += ':not(.codemirror):not(.quill):not(.monaco)';
 				
 				let elements = document.querySelectorAll(selector);
-				
-				let that = this; // does it matter the position this is placed
+				// let that = this; // does it matter the position this is placed
 				elements.forEach(function (element, index, array) {
 					json = {
 						element:element,
@@ -240,18 +206,16 @@ class CoCreateYSocket {
 							'name':user.name
 						},
 					}
-					
 					CoCreateCursors.draw_cursor(json);
-					//sent custom position
-					that.listenAwereness.apply(this,[json]);
+					// that.listen(json);
 				});
 			}
 		}
 	}
 	
-	listen(json){
-		this.listenAwereness.apply(this,[json])
-	}
+	// listen(json){
+	// 	this.listenAwereness.apply(this,[json])
+	// }
 	
 	removeCursor(clientId){
 	   let elements = document.querySelectorAll('[id*="socket_'+clientId+'"]');
@@ -265,58 +229,37 @@ class CoCreateYSocket {
 		})
 	}
 	
-	deleteDoc(id) {
-		const info = this.parseType(id)
-		if (this.docs[info.id]) {
-			delete this.docs[info.id];
+	deleteDoc(docName) {
+		if (this.docs[docName]) {
+			delete this.docs[docName];
 		}
 	}
 	
-	destroyObserver(id) {
-		const info = this.parseType(id)
-		this.docs[info.id].doc.getText(id).unobserve((event) => {});
-		
-		this.docs[info.id].socket.awareness.off('change', this._awarenessListener);
+	destroyObserver(docName, typeName) {
+		this.docs[docName].doc.getText(typeName).unobserve((event) => {});
+		this.docs[docName].socket.awareness.off('change', this._awarenessListener);
 	}
 	
-	getType(id){
-		const info = this.parseType(id)
-		if (!this.docs[info.id]) {
-			return null;
-		}
-		return this.docs[info.id].doc.getText(id);
-	}
-	
-	parseType(id) {
+	parseName(id) {
 		let data = JSON.parse(atob(id));
-		
-		let newId = {org: data.org, collection: data.collection, document_id: data.document_id}
+		let name = {org: data.org, collection: data.collection, document_id: data.document_id}
 		return {
-			id: btoa(JSON.stringify(newId)),
+			id: btoa(JSON.stringify(name)),
 			collection: data.collection,
 			document_id: data.document_id,
 			name: data.name
 		}
 	}
 	
-	generateDoc(collection, document_id) {
-		let docId = {collection: collection, document_id: document_id}
-		return {
-			docId: btoa(JSON.stringify(id)),
-			collection: collection,
-			document_id: document_id
-		}
+	generateDocName(info) {
+		let docName = {org: config.organization_Id, collection: info.collection, document_id: info.document_id}
+		return btoa(JSON.stringify(docName));        
 	}
 	
-	generateName(name) {
-		const nameId = {name}
+	generateTypeName(info) {
+		let nameId = {org: config.organization_Id, collection: info.collection, document_id: info.document_id, name: info.name}
 		return btoa(JSON.stringify(nameId));        
-	}
-
-	generateID(org, collection, document_id, name) {
-		const info = {org, collection, document_id, name}
-		return btoa(JSON.stringify(info));        
 	}
 }
 
-export default CoCreateYSocket;
+export default CoCreateCrdtInit;
