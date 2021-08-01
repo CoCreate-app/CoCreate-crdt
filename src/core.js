@@ -3,9 +3,6 @@ import { WebsocketProvider } from 'y-websocket'
 import { fetchUpdates, storeState, IndexeddbPersistence } from 'y-indexeddb'
 import crud from '@cocreate/crud-client';
 import CoCreateCursors from '@cocreate/cursors'
-import { logger } from '@cocreate/utils'
-
-let console = logger('off');
 
 class CoCreateCrdtInit {
 	constructor(org, ydoc) {
@@ -144,7 +141,7 @@ class CoCreateCrdtInit {
 	updateRemoteSelection (y, cm, type, cursors, clientId, awareness)  {
 
 		// ToDo: blocks character inserts because some time clientId are equal and should not be
-		if(clientId !== this.doc.clientID){
+		// if(clientId !== this.doc.clientID){
 			
 			const m = cursors.get(clientId)
 				if (m !== undefined) {
@@ -173,16 +170,19 @@ class CoCreateCrdtInit {
 				this.removeCursor(clientId)
 				return
 			}
-		
+			// const start = cursor.anchor.item.clock;
+			// const end = cursor.head.item.clock;
+
 			const anchor = Y.createAbsolutePositionFromRelativePosition(Y.createRelativePositionFromJSON(cursor.anchor), y)
 			const head = Y.createAbsolutePositionFromRelativePosition(Y.createRelativePositionFromJSON(cursor.head), y)
-			// const anchor = cursor.anchor
-			// const head = cursor.head
-			
 			if (anchor !== null && head !== null ) {
+				let	start = anchor.index;
+				let end = head.index;
+			// }
+			// if (start !== null && end !== null ) {
 	
-				let	from = anchor.index
-				let to = head.index
+				// let	start = anchor.index
+				// let end = head.index
 				
 				let info = this.parseName(cursor.anchor['tname']);
 				
@@ -196,11 +196,11 @@ class CoCreateCrdtInit {
 				// let that = this; // does it matter the position this is placed
 				elements.forEach(function (element, index, array) {
 					json = {
-						element:element,
-						selector:selector,
-						startPosition:from,
-						endPositon:to,
-						clientId : clientId,
+						element: element,
+						selector: selector,
+						start: start,
+						end: end,
+						clientId: clientId,
 						user:{
 							'color':user.color,
 							'name':user.name
@@ -209,7 +209,7 @@ class CoCreateCrdtInit {
 					CoCreateCursors.draw_cursor(json);
 					// that.listen(json);
 				});
-			}
+			// }
 		}
 	}
 	
