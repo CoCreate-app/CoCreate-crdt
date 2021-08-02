@@ -1,8 +1,8 @@
-import * as Y from 'yjs'
-import { WebsocketProvider } from 'y-websocket'
-import { fetchUpdates, storeState, IndexeddbPersistence } from 'y-indexeddb'
-import crud from '@cocreate/crud-client';
-import CoCreateCursors from '@cocreate/cursors'
+import * as Y from 'yjs';
+import { WebsocketProvider } from 'y-websocket';
+import { IndexeddbPersistence } from 'y-indexeddb';
+import * as awarenessProtocol from 'y-protocols/awareness.js';
+import CoCreateCursors from '@cocreate/cursors';
 
 class CoCreateCrdtInit {
 	constructor(org, ydoc) {
@@ -18,61 +18,46 @@ class CoCreateCrdtInit {
 		if (this.docs[docName]) { 
 			if (!this.docs[docName].types.some((type) => type === typeName)) {
 				this.docs[docName].types.push(typeName);
-				this.registerUpdateEvent(this.docs[docName], typeName)
+				this._registerUpdateEvent(this.docs[docName], typeName)
 			}
 			return false;
 		} 
 		
-		const yDoc = this.doc
+		const crdtDoc = this.doc
 		const url_socket = this.__getSocketUrl();
-		var socketProvider = new WebsocketProvider(url_socket, docName, yDoc);
+		const shardType = crdtDoc.getText(typeName)
+
+		var socketProvider = new WebsocketProvider(url_socket, docName, crdtDoc);
 		
-		let indexeddbProvider = null;
-		if (info.document_id != "null") {
-			indexeddbProvider = new IndexeddbPersistence(docName, this.doc)
-			indexeddbProvider.whenSynced.then(() => {
-			  console.log('loaded data from indexed db')
-			})
-		}	
-		
-		let awareness = socketProvider.awareness;
-		
+		const indexeddbProvider = new IndexeddbPersistence(docName, crdtDoc)
+		indexeddbProvider.on('synced', () => {});
+
+		const awareness = socketProvider.awareness;
+
 		this._cursors = new Map();
 		
 		this._awarenessListener = event => {
-		  const f = clientId => {
-		//	if (clientId !== this.doc.clientID) {
-			  this.updateRemoteSelection(yDoc, typeName, yDoc.getText(typeName), this._cursors, clientId, awareness)
-		//	}
+		 const f = clientId => {
+			  this.updateSelection(crdtDoc, typeName, shardType, this._cursors, clientId, awareness)
 		  }
 		  event.added.forEach(f)
 		  event.removed.forEach(f)
 		  event.updated.forEach(f)
 		}
 		
-		awareness.on('change', this._awarenessListener);
+		awareness.on('update', this._awarenessListener);
 
         this.docs[docName] = {
 			id: docName,
-			doc: yDoc,
+			doc: crdtDoc,
 			socket: socketProvider,
 			awareness: awareness,
 			types: [typeName],
 			indexeddb: indexeddbProvider
 		}
-		this.registerUpdateEvent(this.docs[docName], typeName)
+		this._registerUpdateEvent(this.docs[docName], typeName)
 
 		return true;
-	}
-	
-	registerUpdateEvent(docName, typeName) {
-		const yDoc = docName.doc;
-		const shardType = yDoc.getText(typeName)
-		let _this = this;
-		
-		shardType.observe((event) => {
-			_this.__setTypeObserveEvent(event, typeName);
-		})
 	}
 	
 	__getSocketUrl() {
@@ -95,24 +80,27 @@ class CoCreateCrdtInit {
 			}
 		}
 		
-		console.log(url_socket)
 		url_socket += "crdt/";
 		
 		return url_socket;
-
 	}
 	
-	__setTypeObserveEvent(event, typeName) {
-		console.log('set crdt event .', event.delta)
-		if (!typeName) return;
-
-		const eventDelta = event.delta;
+	_registerUpdateEvent(docName, typeName) {
+		const crdtDoc = docName.doc;
+		const shardType = crdtDoc.getText(typeName)
+		let self = this;
 		
-		if (eventDelta.length == 0) {
-			return;
-		}
+		shardType.observe((event) => {
+			self._crdtUpdateEvent(event, typeName);
+		})
+	}
+
+	_crdtUpdateEvent(event, typeName) {
+		const eventDelta = event.delta;
+		if (eventDelta.length == 0)	return;
+		
 		const info = JSON.parse(atob(typeName));
-		let is_save_value = false
+		// let is_save_value = false
 		
 		const update_event = new CustomEvent('cocreate-crdt-update', {
 			detail: {eventDelta,...info}, 
@@ -138,10 +126,9 @@ class CoCreateCrdtInit {
 			
 	}
 	
-	updateRemoteSelection (y, cm, type, cursors, clientId, awareness)  {
+	updateSelection (y, cm, type, cursors, clientId, awareness)  {
 
-		// ToDo: blocks character inserts because some time clientId are equal and should not be
-		// if(clientId !== this.doc.clientID){
+		if(clientId !== this.doc.clientID){
 			
 			const m = cursors.get(clientId)
 				if (m !== undefined) {
@@ -155,7 +142,7 @@ class CoCreateCrdtInit {
 			const aw = awareness.getStates().get(clientId);
 	
 			if (aw === undefined) {
-				this.removeCursor(clientId)
+				CoCreateCursors.removeCursor(clientId)
 				return
 			}
 			const user = aw.user || {}
@@ -167,7 +154,7 @@ class CoCreateCrdtInit {
 			}
 			const cursor = aw.cursor
 			if (cursor == null || cursor.anchor == null || cursor.head == null) {
-				this.removeCursor(clientId)
+				CoCreateCursors.removeCursor(clientId)
 				return
 			}
 			// const start = cursor.anchor.item.clock;
@@ -178,22 +165,15 @@ class CoCreateCrdtInit {
 			if (anchor !== null && head !== null ) {
 				let	start = anchor.index;
 				let end = head.index;
-			// }
-			// if (start !== null && end !== null ) {
-	
-				// let	start = anchor.index
-				// let end = head.index
-				
 				let info = this.parseName(cursor.anchor['tname']);
 				
-				let id_mirror = info.document_id + info.name+'--mirror-div';
+				// Todo: pass json to cursors and let cursors query for its elements
 				let json = {};
-				
+				let id_mirror = info.document_id + info.name+'--mirror-div';
 				let selector = '[collection="'+info.collection+'"][document_id="'+info.document_id+'"][name="'+info.name+'"]'
 				selector += ':not(.codemirror):not(.quill):not(.monaco)';
 				
 				let elements = document.querySelectorAll(selector);
-				// let that = this; // does it matter the position this is placed
 				elements.forEach(function (element, index, array) {
 					json = {
 						element: element,
@@ -207,26 +187,9 @@ class CoCreateCrdtInit {
 						},
 					}
 					CoCreateCursors.draw_cursor(json);
-					// that.listen(json);
 				});
-			// }
+			}
 		}
-	}
-	
-	// listen(json){
-	// 	this.listenAwereness.apply(this,[json])
-	// }
-	
-	removeCursor(clientId){
-	   let elements = document.querySelectorAll('[id*="socket_'+clientId+'"]');
-		elements.forEach(function (element, index, array) {
-			element.parentNode.removeChild(element);
-		})
-		
-		let sel_elements = document.querySelectorAll('[id*="sel-'+clientId+'"]');
-		  sel_elements.forEach(function (sel_element, index, array) {
-			sel_element.parentNode.removeChild(sel_element);
-		})
 	}
 	
 	deleteDoc(docName) {
