@@ -1,3 +1,14 @@
+## [1.2.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.2.0...v1.2.1) (2021-08-02)
+
+
+### Bug Fixes
+
+* bugs related to update message ([cd97c63](https://github.com/CoCreate-app/CoCreate-crdt/commit/cd97c63ab3edda20c38202e389c04e70ad7027ec))
+* reactored, removed duplicate and dead code, update to cursors ([7c4da76](https://github.com/CoCreate-app/CoCreate-crdt/commit/7c4da7679c33176f8e102edc189eb438eea0c8b1))
+* remove data- from attributes ([ee9085a](https://github.com/CoCreate-app/CoCreate-crdt/commit/ee9085ade1094bc6f1a079e2e723294a68fb05a9))
+* remove data- from fetch, pass and filter ([76a302f](https://github.com/CoCreate-app/CoCreate-crdt/commit/76a302fce88c576e27f0b43a8536e15710f78485))
+* update data-fullscreen to fullscreen ([899c27f](https://github.com/CoCreate-app/CoCreate-crdt/commit/899c27fe0e48230c512994b97ae88ffc1efbeb79))
+
 # [1.2.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.1.22...v1.2.0) (2021-07-28)
 
 
