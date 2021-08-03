@@ -44,11 +44,11 @@ class CoCreateCRDTClass extends CoCreateCrdtInit {
 		
 		if (docName) {
 			let oldData = this.docs[docName].doc.getText(typeName).toString();
-			let textValue = info.value.toString();
+			let textValue = info['value'].toString();
 			if (oldData && oldData.length > 0) {
-				this.deleteText(info['collection'], info['document_id'], info['name'], 0, Math.max(oldData.length, textValue.length));
+				this.deleteText({collection: info['collection'], document_id: info['document_id'], name: info['name'], position: 0, length: Math.max(oldData.length, textValue.length), crud: info['crud']});
 			}
-			this.insertText(info['collection'], info['document_id'], info['name'], 0, textValue);
+			this.insertText({ collection: info.collection, document_id: info.document_id, name: info.name, position: 0, value: textValue });
 		}
 		if (info.crud != false) {
 			crud.updateDocument({
