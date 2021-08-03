@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.2.2...v1.2.3) (2021-08-03)
+
+
+### Bug Fixes
+
+* replaceText updated to send object to insert and delete text ([0dbd5ce](https://github.com/CoCreate-app/CoCreate-crdt/commit/0dbd5ceed56f4df44f4f53c0bc9a1ad98c53149c))
+
 ## [1.2.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.2.1...v1.2.2) (2021-08-02)
 
 
