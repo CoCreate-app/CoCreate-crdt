@@ -85,8 +85,6 @@ class CoCreateCRDTClass extends CoCreateCrdtInit {
 				this.docs[docName].doc.getText(typeName).insert(info['position'], info['value'], info['attribute']);
 				let wholestring = this.docs[docName].doc.getText(typeName).toString();
 				
-				console.log(wholestring)
-				
 				if (info.crud != false) {
 					crud.updateDocument({
 						collection: info.collection,
@@ -120,8 +118,6 @@ class CoCreateCRDTClass extends CoCreateCrdtInit {
 			if (docName) {
 				this.docs[docName].doc.getText(typeName).delete(info['position'], info['length']);
 				let wholestring = this.docs[docName].doc.getText(typeName).toString();
-				
-				console.log(wholestring)
 				
 				if (info.crud != false) {
 					crud.updateDocument({
