@@ -1,3 +1,11 @@
+## [1.2.4](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.2.3...v1.2.4) (2021-08-10)
+
+
+### Bug Fixes
+
+* merger index.js and core.js ([e6c8fb8](https://github.com/CoCreate-app/CoCreate-crdt/commit/e6c8fb8e27fc6a6f3cbeee7bb906ae698f2d8d73))
+* remove console.log in insert and delete functions ([6730f59](https://github.com/CoCreate-app/CoCreate-crdt/commit/6730f59b9b31da6056cef4ed5b20aca30b61340f))
+
 ## [1.2.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.2.2...v1.2.3) (2021-08-03)
 
 
