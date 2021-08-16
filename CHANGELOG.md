@@ -1,3 +1,10 @@
+## [1.2.6](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.2.5...v1.2.6) (2021-08-16)
+
+
+### Bug Fixes
+
+* when replcaeText runs create doc if does not exist ([2462bd4](https://github.com/CoCreate-app/CoCreate-crdt/commit/2462bd4d1d56f79c15e6d1eea734dda0f6faa69f))
+
 ## [1.2.5](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.2.4...v1.2.5) (2021-08-14)
 
 
