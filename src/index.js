@@ -247,9 +247,11 @@ class CoCreateCRDTClass {
 	})
 	*/
 	replaceText(info){
-		let docName = this.generateDocName(info)
-		let typeName = this.generateTypeName(info)
-
+		let docName = this.generateDocName(info);
+		let typeName = this.generateTypeName(info);
+		if (!this.docs[docName]){
+			this.init(info)
+		};
 		if (info.updateCrud != false) info.updateCrud = true;
 		
 		if (docName) {
