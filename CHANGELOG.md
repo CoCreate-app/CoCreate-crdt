@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.2.6...v1.3.0) (2021-08-18)
+
+
+### Features
+
+* crdt.getDoc to see if element already has a doc ([8972518](https://github.com/CoCreate-app/CoCreate-crdt/commit/8972518432c8b766eca26663c77308bc9087cd68))
+
 ## [1.2.6](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.2.5...v1.2.6) (2021-08-16)
 
 
