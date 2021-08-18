@@ -370,6 +370,50 @@ class CoCreateCRDTClass {
 			return "";
 		}
 	}
+	
+	/*
+	crdt.getText({
+		collection: 'module_activities',
+		document_id: '5e4802ce3ed96d38e71fc7e5',
+		name: 'name'
+	})
+	*/
+	getText(info) {
+		try{
+			let docName = this.generateDocName(info)
+			let typeName = this.generateTypeName(info)
+			if (docName) {
+				return this.docs[docName].doc.getText(typeName).toString();
+			} 
+			else return "--";
+		}
+		catch (e) {
+			console.error(e); 
+			return "";
+		}
+	}
+
+	/*
+	crdt.getDoc({
+		collection: 'module_activities',
+		document_id: '5e4802ce3ed96d38e71fc7e5',
+		name: 'name'
+	})
+	*/
+	getDoc(info) {
+		try{
+			let docName = this.generateDocName(info)
+			let typeName = this.generateTypeName(info)
+			if (docName) {
+				return this.docs[docName].doc.getText(typeName);
+			} 
+			else return false;
+		}
+		catch (e) {
+			console.error(e); 
+			return false;
+		}
+	}
 
 	/* 
 	crdt.getPosition(function(data))
