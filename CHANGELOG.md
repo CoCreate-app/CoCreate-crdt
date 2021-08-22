@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.3.0...v1.3.1) (2021-08-22)
+
+
+### Bug Fixes
+
+* bump package versions ([7952976](https://github.com/CoCreate-app/CoCreate-crdt/commit/79529762649cb7594f36b779ddc3515e9f6f26e7))
+
 # [1.3.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.2.6...v1.3.0) (2021-08-18)
 
 
