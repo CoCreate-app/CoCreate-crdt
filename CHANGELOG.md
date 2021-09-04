@@ -1,3 +1,10 @@
+## [1.3.6](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.3.5...v1.3.6) (2021-09-04)
+
+
+### Bug Fixes
+
+* update dependencies ([863777e](https://github.com/CoCreate-app/CoCreate-crdt/commit/863777e97fa7a3cab224c478379cbc0afe73fa56))
+
 ## [1.3.5](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.3.4...v1.3.5) (2021-08-31)
 
 
