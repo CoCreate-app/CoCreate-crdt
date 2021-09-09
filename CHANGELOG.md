@@ -1,3 +1,10 @@
+## [1.3.8](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.3.7...v1.3.8) (2021-09-09)
+
+
+### Bug Fixes
+
+* CoCreate.config directory, path, name and  public ([a8c8243](https://github.com/CoCreate-app/CoCreate-crdt/commit/a8c824381162b3a0356d3e97c92f2302f07ef04b))
+
 ## [1.3.7](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.3.6...v1.3.7) (2021-09-08)
 
 
