@@ -1,3 +1,10 @@
+## [1.3.13](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.3.12...v1.3.13) (2021-09-14)
+
+
+### Bug Fixes
+
+* add cocreate.app to domains ([4ebfd5b](https://github.com/CoCreate-app/CoCreate-crdt/commit/4ebfd5b4a7780d1e2feb2d5defdc386cdc5222ad))
+
 ## [1.3.12](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.3.11...v1.3.12) (2021-09-13)
 
 
