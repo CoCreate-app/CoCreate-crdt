@@ -19,7 +19,6 @@ class CoCreateCRDTClass {
 		collection: "module",
 		document_id: "",
 		name: "",
-		element: dom_object,
 		metadata: "xxxx"
 	})
 	*/
@@ -51,8 +50,8 @@ class CoCreateCRDTClass {
 
 		var socketProvider = new WebsocketProvider(url_socket, docName, crdtDoc);
 		
-		const indexeddbProvider = new IndexeddbPersistence(docName, crdtDoc);
-		indexeddbProvider.on('synced', () => {});
+		// const indexeddbProvider = new IndexeddbPersistence(docName, crdtDoc);
+		// indexeddbProvider.on('synced', () => {});
 
 		const awareness = socketProvider.awareness;
 
@@ -75,7 +74,7 @@ class CoCreateCRDTClass {
 			socket: socketProvider,
 			awareness: awareness,
 			types: [typeName],
-			indexeddb: indexeddbProvider
+			// indexeddb: indexeddbProvider
 		};
 		this._registerUpdateEvent(this.docs[docName], typeName);
 
