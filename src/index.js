@@ -1,6 +1,6 @@
 import * as Y from 'yjs';
 import { WebsocketProvider } from 'y-websocket';
-import { IndexeddbPersistence } from 'y-indexeddb';
+// import { IndexeddbPersistence } from 'y-indexeddb';
 import CoCreateCursors from '@cocreate/cursors';
 import crud from '@cocreate/crud-client';
 
@@ -291,9 +291,9 @@ class CoCreateCRDTClass {
 		try {
 			let docName = this.generateDocName(info)
 			let typeName = this.generateTypeName(info)
-			
+			let meta = {test: 'hello'}
 			if (docName) {
-				this.docs[docName].doc.getText(typeName).insert(info['position'], info['value'], info['attribute']);
+				this.docs[docName].doc.getText(typeName).insert(info['position'], info['value'], info['attributes']);
 				let wholestring = this.docs[docName].doc.getText(typeName).toString();
 				
 				if (info.crud != false) {
