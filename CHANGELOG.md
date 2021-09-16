@@ -1,3 +1,10 @@
+## [1.3.14](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.3.13...v1.3.14) (2021-09-16)
+
+
+### Bug Fixes
+
+* comment indexDB ([66fa11f](https://github.com/CoCreate-app/CoCreate-crdt/commit/66fa11f0cf0eca6c464d2a53e3bdda041ce2c4f6))
+
 ## [1.3.13](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.3.12...v1.3.13) (2021-09-14)
 
 
