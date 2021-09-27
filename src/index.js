@@ -46,7 +46,7 @@ class CoCreateCRDTClass {
 		
 		const crdtDoc = this.doc;
 		const url_socket = this.__getSocketUrl();
-		const shardType = crdtDoc.getText(typeName);
+		const sharedType = crdtDoc.getText(typeName);
 
 		var socketProvider = new WebsocketProvider(url_socket, docName, crdtDoc);
 		
@@ -59,7 +59,7 @@ class CoCreateCRDTClass {
 		
 		this._awarenessListener = event => {
 		 const f = clientId => {
-			  this.updateSelection(crdtDoc, typeName, shardType, this._cursors, clientId, awareness);
+			  this.updateSelection(crdtDoc, typeName, sharedType, this._cursors, clientId, awareness);
 		  };
 		  event.added.forEach(f);
 		  event.removed.forEach(f);
@@ -107,10 +107,10 @@ class CoCreateCRDTClass {
 	
 	_registerUpdateEvent(docName, typeName) {
 		const crdtDoc = docName.doc;
-		const shardType = crdtDoc.getText(typeName);
+		const sharedType = crdtDoc.getText(typeName);
 		let self = this;
 		
-		shardType.observe((event) => {
+		sharedType.observe((event) => {
 			self._crdtUpdateEvent(event, typeName);
 		});
 	}
