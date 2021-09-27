@@ -1,3 +1,10 @@
+## [1.3.16](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.3.15...v1.3.16) (2021-09-27)
+
+
+### Bug Fixes
+
+* sendPostion ([ef57991](https://github.com/CoCreate-app/CoCreate-crdt/commit/ef5799155665454eaf27efc3387310cae66a572b))
+
 ## [1.3.15](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.3.14...v1.3.15) (2021-09-16)
 
 
