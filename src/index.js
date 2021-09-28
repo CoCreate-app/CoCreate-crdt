@@ -1,3 +1,5 @@
+/*globals config, atob, btoa, CustomEvent*/
+
 import * as Y from 'yjs';
 import { WebsocketProvider } from 'y-websocket';
 // import { IndexeddbPersistence } from 'y-indexeddb';
@@ -24,7 +26,7 @@ class CoCreateCRDTClass {
 	*/
 	init(info) {
 		try {
-			this.createDoc(info)
+			this.createDoc(info);
 		} catch(e) {
 			console.log('Invalid param', e);
 		}
@@ -225,12 +227,12 @@ class CoCreateCRDTClass {
 	}
 	
 	generateDocName(info) {
-		let docName = {org: config.organization_Id, collection: info.collection, document_id: info.document_id}
+		let docName = {org: config.organization_Id, collection: info.collection, document_id: info.document_id};
 		return btoa(JSON.stringify(docName));        
 	}
 	
 	generateTypeName(info) {
-		let nameId = {org: config.organization_Id, collection: info.collection, document_id: info.document_id, name: info.name}
+		let nameId = {org: config.organization_Id, collection: info.collection, document_id: info.document_id, name: info.name};
 		return btoa(JSON.stringify(nameId));        
 	}
 
@@ -249,31 +251,31 @@ class CoCreateCRDTClass {
 		let docName = this.generateDocName(info);
 		let typeName = this.generateTypeName(info);
 		if (!this.docs[docName]){
-			this.init(info)
-		};
+			this.init(info);
+		}
 		if (info.updateCrud != false) info.updateCrud = true;
 		
 		if (docName) {
 			let oldData = this.docs[docName].doc.getText(typeName).toString();
 			let textValue = info['value'].toString();
 			if (oldData && oldData.length > 0) {
-				this.deleteText({collection: info['collection'], document_id: info['document_id'], name: info['name'], position: 0, length: Math.max(oldData.length, textValue.length), crud: info['crud']});
+				this.deleteText({collection: info.collection, document_id: info.document_id, name: info.name, position: 0, length: Math.max(oldData.length, textValue.length), crud: info['crud']});
 			}
-			this.insertText({ collection: info.collection, document_id: info.document_id, name: info.name, position: 0, value: textValue });
+			this.insertText({ collection: info.collection, document_id: info.document_id, name: info.name, position: 0, value: textValue, crud: info.crud });
 		}
-		if (info.crud != false) {
+		if (info.crud != 'false') {
 			crud.updateDocument({
 				collection: info.collection,
 				document_id: info.document_id,
 				data: {[info.name]: info.value},
-				element: info.element,
-				metadata:info.metadata,
+				upsert: info.upsert,
+				// element: info.element,
 				namespace: info.namespace,
 				room: info.room,
 				broadcast: info.broadcast,
-				upsert: info.upsert,
-				broadcast_sender: info.broadcast_sender
-			})
+				broadcast_sender: info.broadcast_sender,
+				metadata:info.metadata
+			});
 		}
 	}
 	
@@ -289,22 +291,26 @@ class CoCreateCRDTClass {
 	*/
 	insertText(info) {
 		try {
-			let docName = this.generateDocName(info)
-			let typeName = this.generateTypeName(info)
-			let meta = {test: 'hello'}
+			let docName = this.generateDocName(info);
+			let typeName = this.generateTypeName(info);
 			if (docName) {
 				this.docs[docName].doc.getText(typeName).insert(info['position'], info['value'], info['attributes']);
-				let wholestring = this.docs[docName].doc.getText(typeName).toString();
 				
-				if (info.crud != false) {
+				if (info.crud != 'false') {
+					let wholestring = this.docs[docName].doc.getText(typeName).toString();
 					crud.updateDocument({
 						collection: info.collection,
 						document_id: info.document_id,
 						data: {
 							[info.name]: wholestring
 						},
-						metadata: 'yjs-change'
-					})
+						upsert: info.upsert,
+						namespace: info.namespace,
+						room: info.room,
+						broadcast: info.broadcast,
+						broadcast_sender: info.broadcast_sender,
+						metadata: 'crdt-change'
+					});
 				}
 			}
 		}
@@ -324,21 +330,26 @@ class CoCreateCRDTClass {
 	*/
 	deleteText(info) {
 		try{
-			let docName = this.generateDocName(info)
-			let typeName = this.generateTypeName(info)
+			let docName = this.generateDocName(info);
+			let typeName = this.generateTypeName(info);
 			if (docName) {
 				this.docs[docName].doc.getText(typeName).delete(info['position'], info['length']);
-				let wholestring = this.docs[docName].doc.getText(typeName).toString();
 				
-				if (info.crud != false) {
+				if (info.crud != 'false') {
+					let wholestring = this.docs[docName].doc.getText(typeName).toString();
 					crud.updateDocument({
 						collection: info.collection,
 						document_id: info.document_id,
 						data: {
 							[info.name]: wholestring
 						},
-						metadata: 'yjs-change'
-					})
+						upsert: info.upsert,
+						namespace: info.namespace,
+						room: info.room,
+						broadcast: info.broadcast,
+						broadcast_sender: info.broadcast_sender,
+						metadata: 'crdt-change'
+					});
 				}
 			}
 		}
@@ -357,9 +368,12 @@ class CoCreateCRDTClass {
 	*/
 	getText(info) {
 		try{
-			let docName = this.generateDocName(info)
-			let typeName = this.generateTypeName(info)
+			let docName = this.generateDocName(info);
+			let typeName = this.generateTypeName(info);
 			if (docName) {
+				if (!this.docs[docName]){
+					this.init(info);
+				}				
 				return this.docs[docName].doc.getText(typeName).toString();
 			} 
 			else return "--";
@@ -370,27 +384,6 @@ class CoCreateCRDTClass {
 		}
 	}
 	
-	/*
-	crdt.getText({
-		collection: 'module_activities',
-		document_id: '5e4802ce3ed96d38e71fc7e5',
-		name: 'name'
-	})
-	*/
-	getText(info) {
-		try{
-			let docName = this.generateDocName(info)
-			let typeName = this.generateTypeName(info)
-			if (docName) {
-				return this.docs[docName].doc.getText(typeName).toString();
-			} 
-			else return "--";
-		}
-		catch (e) {
-			console.error(e); 
-			return "";
-		}
-	}
 
 	/*
 	crdt.getDoc({
@@ -401,9 +394,12 @@ class CoCreateCRDTClass {
 	*/
 	getDoc(info) {
 		try{
-			let docName = this.generateDocName(info)
-			let typeName = this.generateTypeName(info)
+			let docName = this.generateDocName(info);
+			let typeName = this.generateTypeName(info);
 			if (docName) {
+				if (!this.docs[docName]){
+					this.init(info);
+				}
 				return this.docs[docName].doc.getText(typeName);
 			} 
 			else return false;
@@ -422,7 +418,7 @@ class CoCreateCRDTClass {
 	if(typeof miFuncion === 'function')
 		this.changeListenAwereness(callback);
 	else
-		console.error('Callback should be a function')
+		console.error('Callback should be a function');
 	}
 }
 
