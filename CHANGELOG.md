@@ -1,3 +1,10 @@
+## [1.3.19](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.3.18...v1.3.19) (2021-09-29)
+
+
+### Bug Fixes
+
+* upgrade cursors package ([001ccba](https://github.com/CoCreate-app/CoCreate-crdt/commit/001ccbab2f3bcfedaef2db7911accc55871f8665))
+
 ## [1.3.18](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.3.17...v1.3.18) (2021-09-28)
 
 
