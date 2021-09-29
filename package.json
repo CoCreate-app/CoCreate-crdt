@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@cocreate/crud-client": "^1.2.25",
-    "@cocreate/cursors": "^1.5.2",
+    "@cocreate/cursors": "^1.6.0",
     "@cocreate/utils": "^1.1.19",
     "y-indexeddb": "^9.0.6",
     "y-websocket": "^1.3.16",
