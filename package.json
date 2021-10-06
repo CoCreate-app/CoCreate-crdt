@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CoCreate-app/CoCreate-clone.git"
+    "url": "git+https://github.com/CoCreate-app/CoCreate-crdt.git"
   },
   "funding": {
     "type": "GitHub Sponsors ❤",
