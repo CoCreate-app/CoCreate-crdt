@@ -1,3 +1,26 @@
+# [1.4.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.3.21...v1.4.0) (2021-10-06)
+
+
+### Bug Fixes
+
+* CoCreate.config ([8e9ebc9](https://github.com/CoCreate-app/CoCreate-crdt/commit/8e9ebc91a2c1451f5fdb9d89ed465dcd535af5f4))
+* comment about in workflow ([236d410](https://github.com/CoCreate-app/CoCreate-crdt/commit/236d410385ac87f8b812f0e50a19d6b60433aa7a))
+* comment docs in workflow ([25f1cb4](https://github.com/CoCreate-app/CoCreate-crdt/commit/25f1cb427275d45c66d8ad49aa1adb6f27e3ea02))
+* typo in package.json repository url ([7fad331](https://github.com/CoCreate-app/CoCreate-crdt/commit/7fad331d4db8fae840939bfe6876778c865aa01f))
+* update cursors ([43159bc](https://github.com/CoCreate-app/CoCreate-crdt/commit/43159bc31f806b5d12467d694431e27e30b22f51))
+* update cursors ([b789967](https://github.com/CoCreate-app/CoCreate-crdt/commit/b78996715d5450ee5881361b889b2e2a20df5f02))
+* update dependencies ([770db8d](https://github.com/CoCreate-app/CoCreate-crdt/commit/770db8d25eddeea6065ccc703c6bc7896b85068d))
+* update dependencies ([616433e](https://github.com/CoCreate-app/CoCreate-crdt/commit/616433e3088ec04ea2cd410680f848d85239c114))
+* update dependencies ([ef14b02](https://github.com/CoCreate-app/CoCreate-crdt/commit/ef14b0285e5a93b682e1476107d7c5fbc44a9cee))
+* update dependencies ([bda6c73](https://github.com/CoCreate-app/CoCreate-crdt/commit/bda6c73c3a2ee550d99666a776d033c8d3539f0a))
+* website_id in CoCreate.config ([7593a8b](https://github.com/CoCreate-app/CoCreate-crdt/commit/7593a8b59510f9c1b363852bae3987167a587d64))
+
+
+### Features
+
+* test workflow ([df7ea8d](https://github.com/CoCreate-app/CoCreate-crdt/commit/df7ea8dea60d85883251d474a87339ec3b6b0231))
+* test workflow ([590205d](https://github.com/CoCreate-app/CoCreate-crdt/commit/590205d0bbcdad88a8c870bcd26f8563f881c979))
+
 ## [1.3.21](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.3.20...v1.3.21) (2021-10-01)
 
 
