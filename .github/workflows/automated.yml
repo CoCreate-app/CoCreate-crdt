@@ -4,16 +4,16 @@ name: Automated
     branches:
       - master
 jobs:
-  about:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Jaid/action-sync-node-meta
-        uses: jaid/action-sync-node-meta@v1.4.0
-        with:
-          direction: overwrite-github
-          githubToken: "${{ secrets.GITHUB }}"
+  # about:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - name: Jaid/action-sync-node-meta
+  #       uses: jaid/action-sync-node-meta@v1.4.0
+  #       with:
+  #         direction: overwrite-github
+  #         githubToken: "${{ secrets.GITHUB }}"
   release:
     runs-on: ubuntu-latest
     steps:
