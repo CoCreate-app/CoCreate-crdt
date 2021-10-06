@@ -428,3 +428,4 @@ let org = config.organization_Id;
 let	CoCreateCrdt = new CoCreateCRDTClass(org, cDoc);
 
 export default CoCreateCrdt;
+
