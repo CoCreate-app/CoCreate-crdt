@@ -1,3 +1,15 @@
+# [1.5.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.4.5...v1.5.0) (2021-10-15)
+
+
+### Bug Fixes
+
+* dispatchEvent for cursors ([ac84921](https://github.com/CoCreate-app/CoCreate-crdt/commit/ac84921f215ea24d1b0bd3ce80a2a740eb869789))
+
+
+### Features
+
+* removed @cocreate/cursor and dispatch cursor event instead ([91ae024](https://github.com/CoCreate-app/CoCreate-crdt/commit/91ae024b57ae9c8ec488ddeb61344ae21ad14a20))
+
 ## [1.4.5](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.4.4...v1.4.5) (2021-10-15)
 
 
