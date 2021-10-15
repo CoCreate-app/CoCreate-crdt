@@ -165,6 +165,7 @@ class CoCreateCRDTClass {
 	
 			if (aw === undefined) {
 				CoCreateCursors.removeCursor(clientId);
+				this.removeCursor(clientId, aw);
 				return;
 			}
 			const user = aw.user || {};
@@ -177,6 +178,7 @@ class CoCreateCRDTClass {
 			const cursor = aw.cursor;
 			if (cursor == null || cursor.anchor == null || cursor.head == null) {
 				CoCreateCursors.removeCursor(clientId);
+				this.removeCursor(clientId, aw);
 				return;
 			}
 			// const start = cursor.anchor.item.clock;
@@ -200,8 +202,22 @@ class CoCreateCRDTClass {
 					},
 				};
 				CoCreateCursors.drawCursors(selection);
+				const cursorUpdate = new CustomEvent('updateCursor', {
+					detail: {selection}, 
+				});
+				
+				window.dispatchEvent(cursorUpdate);
 			}
 		}
+	}
+	
+	removeCursor(clientId, aw){
+		const cursorRemove = new CustomEvent('removeCursor', {
+			detail: {clientId, aw}, 
+		});
+		window.dispatchEvent(cursorRemove);
+		return;
+
 	}
 	
 	deleteDoc(docName) {
