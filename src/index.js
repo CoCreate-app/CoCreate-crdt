@@ -3,7 +3,6 @@
 import * as Y from 'yjs';
 import { WebsocketProvider } from 'y-websocket';
 // import { IndexeddbPersistence } from 'y-indexeddb';
-import CoCreateCursors from '@cocreate/cursors';
 import crud from '@cocreate/crud-client';
 
 
@@ -164,7 +163,6 @@ class CoCreateCRDTClass {
 			const aw = awareness.getStates().get(clientId);
 	
 			if (aw === undefined) {
-				CoCreateCursors.removeCursor(clientId);
 				this.removeCursor(clientId, aw);
 				return;
 			}
@@ -177,7 +175,6 @@ class CoCreateCRDTClass {
 			}
 			const cursor = aw.cursor;
 			if (cursor == null || cursor.anchor == null || cursor.head == null) {
-				CoCreateCursors.removeCursor(clientId);
 				this.removeCursor(clientId, aw);
 				return;
 			}
@@ -201,7 +198,6 @@ class CoCreateCRDTClass {
 						'name':user.name
 					},
 				};
-				CoCreateCursors.drawCursors(selection);
 				const cursorUpdate = new CustomEvent('updateCursor', {
 					detail: {selection}, 
 				});
