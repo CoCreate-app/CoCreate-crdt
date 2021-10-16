@@ -24,8 +24,8 @@
     "hosting": "node ./node_modules/@cocreate/hosting/src/index.js"
   },
   "dependencies": {
-    "@cocreate/crud-client": "^1.4.11",
-    "@cocreate/utils": "^1.1.34",
+    "@cocreate/crud-client": "^1.4.13",
+    "@cocreate/utils": "^1.1.35",
     "y-indexeddb": "^9.0.6",
     "y-websocket": "^1.3.16",
     "yjs": "^13.5.11"
