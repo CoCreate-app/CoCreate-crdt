@@ -1,3 +1,10 @@
+## [1.5.4](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.5.3...v1.5.4) (2021-10-16)
+
+
+### Bug Fixes
+
+* updated socket and crud  dependency ([4a4bbf5](https://github.com/CoCreate-app/CoCreate-crdt/commit/4a4bbf565b8f83c78afdd3cd4c4ba1cb00053fd6))
+
 ## [1.5.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.5.2...v1.5.3) (2021-10-16)
 
 
