@@ -271,9 +271,9 @@ class CoCreateCRDTClass {
 			let oldData = this.docs[docName].doc.getText(typeName).toString();
 			let textValue = info['value'].toString();
 			if (oldData && oldData.length > 0) {
-				this.deleteText({collection: info.collection, document_id: info.document_id, name: info.name, position: 0, length: Math.max(oldData.length, textValue.length), crud: info['crud']});
+				this.deleteText({collection: info.collection, document_id: info.document_id, name: info.name, start: 0, length: Math.max(oldData.length, textValue.length), crud: info['crud']});
 			}
-			this.insertText({ collection: info.collection, document_id: info.document_id, name: info.name, position: 0, value: textValue, crud: info.crud });
+			this.insertText({ collection: info.collection, document_id: info.document_id, name: info.name, start: 0, value: textValue, crud: info.crud });
 		}
 		if (info.crud != 'false') {
 			crud.updateDocument({
@@ -297,7 +297,7 @@ class CoCreateCRDTClass {
 		document_id: '5e4802ce3ed96d38e71fc7e5',
 		name: 'name',
 		value: 'T',
-		position: '8',
+		start: '8',
 		attributes: {bold: true}
 	})
 	*/
@@ -306,7 +306,7 @@ class CoCreateCRDTClass {
 			let docName = this.generateDocName(info);
 			let typeName = this.generateTypeName(info);
 			if (docName) {
-				this.docs[docName].doc.getText(typeName).insert(info['position'], info['value'], info['attributes']);
+				this.docs[docName].doc.getText(typeName).insert(info['start'], info['value'], info['attributes']);
 				
 				if (info.crud != 'false') {
 					let wholestring = this.docs[docName].doc.getText(typeName).toString();
@@ -336,7 +336,7 @@ class CoCreateCRDTClass {
 		collection: 'module_activities',
 		document_id: '5e4802ce3ed96d38e71fc7e5',
 		name: 'name',
-		position: '8',
+		start: '8',
 		length: 2,
 	})
 	*/
@@ -345,7 +345,7 @@ class CoCreateCRDTClass {
 			let docName = this.generateDocName(info);
 			let typeName = this.generateTypeName(info);
 			if (docName) {
-				this.docs[docName].doc.getText(typeName).delete(info['position'], info['length']);
+				this.docs[docName].doc.getText(typeName).delete(info['start'], info['length']);
 				
 				if (info.crud != 'false') {
 					let wholestring = this.docs[docName].doc.getText(typeName).toString();
