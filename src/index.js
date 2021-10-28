@@ -1,23 +1,26 @@
-/*globals config, atob, btoa, CustomEvent*/
+/*globals config, atob, btoa, localStorage, CustomEvent*/
 import crud from '@cocreate/crud-client';
 import message from '@cocreate/message-client';
+import uuid from '@cocreate/uuid';
+import action from '@cocreate/action';
 
 const docs = new Map();
+const clientId = uuid.generate(12);
 
 function init(info){
 	getDoc(info).then(response => {
 		getText(info).then(value => {
 			info.value = value;
 			info.start = 0;
-			let data = createDelta(info);
-			updateEvent(data);
+			info['clientId'] = clientId;
+			localChange(info);
 		});
 	});
 }
 
 async function getDoc(info) {
 	try {
-		var docName = generateDocName(info);
+		let docName = generateDocName(info);
 		let typeName = info.name;
 
 		if (!docs.has(docName)) {
@@ -39,35 +42,27 @@ async function getDoc(info) {
 						operator: "$eq",
 						value: [docName]
 					}]
-				},
-			})
+				}
+			});
 			
 			let changeLog;
-			if (response.data.length) {
+			if (response.data.length && response.data[0][typeName]) {
 				changeLog = response.data[0][typeName];
 			}
 			else {
 				changeLog = [];
 			}
 			docs.get(docName).get(typeName).set('changeLog', changeLog);
+			generateText(docs.get(docName).get(typeName));
 			if (!changeLog.length)
 				checkDb(info);
-			// }
-			// 	else if (!docs.get(docName).get(typeName).has('changeLog')) {
-			// 		docs.get(docName).get(typeName).set('changeLog', changeLog);
-			// 	}
-			
-			// });
-			// let changeLog = [];
-			// 	docs.get(docName).get(typeName).set('changeLog', changeLog);
-			// 	checkDb(info);
 		}
 		
 		if (!docs.get(docName).get(typeName).has('cursors')) {
 			let cursorMap = new Map();
 			docs.get(docName).get(typeName).set('cursors', cursorMap);
 		}
-		return true
+		return true;
 
 	}
 	catch (e) {
@@ -75,25 +70,139 @@ async function getDoc(info) {
 	}
 }
 
-function insertChange(info) {
+String.prototype.customSplice = function (index, absIndex, string) {
+    return this.slice(0, index) + string+ this.slice(index + Math.abs(absIndex));
+};
+
+async function generateText(name) {
+	try {
+		let string = '';
+		let changeLog = name.get('changeLog');
+		for (let change of changeLog) {
+			string = string.customSplice(change.start, change.length, change.value);
+		}
+		name.set('text', string);
+	}
+	catch (e) {
+		console.error(e);
+	}
+}
+
+function checkDb(info) {
+	let { collection, document_id, name } = info;
+	crud.readDocument({ collection, document_id, name }).then(response => {
+		let string = response.data[name];
+		if (string) {
+			info.value = string;
+			insertChange(info);
+		}
+	});
+}
+
+
+let isTimerActive;
+let timer;
+function startTimer() {
+	isTimerActive = true;
+	restartTimer();
+	timer = setTimeout(() => {   
+		isTimerActive = false; 
+	}, 500);
+}
+
+function restartTimer() {
+  clearTimeout(timer);
+}
+
+function insertChange(info, broadcast) {
 	let docName = generateDocName(info);
 	let typeName = info.name;
 	let type = 'insert';
-	const datetime = new Date
-	if (info.legnth > 0)
+	
+	if(info.start == undefined) return;
+	if (info.length > 0)
 		type = 'delete';
+	
 	let change = {
-		datetime,
+		datetime: info.datetime || new Date().toISOString(),
 		value: info.value || '',
-		start: info.start || 0,
-		end: info.end || 0,
-		legnth: info.length || 0,
-		clientId: info.userId,
+		start: info.start,
+		end: info.end,
+		length: info.length || 0,
+		clientId: info.clientId || clientId,
+		user_id: info.user_id || localStorage.getItem("user_id"),
 		type
+	};
+	
+	let name = docs.get(docName).get(typeName);
+	let changeLog = name.get('changeLog');
+	
+	let lastChange = changeLog[changeLog.length - 1];
+	if (lastChange && change.datetime < lastChange.datetime){
+		console.log('requires changeLog rebuild');
 	}
-	let changeLog = docs.get(docName).get(typeName).get('changeLog');
-	changeLog.push(change)
+	if (lastChange && change.value.length == 1) {
+		if (isTimerActive || change.start == lastChange.start){
+			startTimer();
+			change.start = lastChange.start + lastChange.value.length;
+			info.start = change.start;
+		}
+	}
+	if (lastChange && change.length == 1) {
+		if (isTimerActive || change.start == lastChange.start){
+			startTimer();
+			change.start = lastChange.start - lastChange.length;
+			info.start = change.start;
+		}
+	}
+
+	changeLog.push(change);
+	let string = name.get('text');
+	name.set('text', string.customSplice(change.start, change.length, change.value));
 		
+	if(!info.clientId){
+		info['datetime'] = change.datetime;
+		info['clientId'] = change.clientId;
+		
+		broadcastChange(info);
+		localChange(info);
+		persistChange(info);
+	}
+	else
+		localChange(info);
+}
+
+function undoChange(){
+	
+}
+
+function redoChange(){
+	
+}
+
+function broadcastChange(info){
+	message.send({
+		room: "",
+		broadcast_sender: 'false',
+		emit: {
+			message: "crdt",
+			data: info
+		}
+	});
+}
+
+function localChange(data) {
+	const localChange = new CustomEvent('cocreate-crdt-update', {
+		detail: { ...data },
+	});
+	window.dispatchEvent(localChange);
+}
+
+function persistChange(info) {
+	let docName = generateDocName(info);
+	let typeName = info.name;
+	let name = docs.get(docName).get(typeName);
+	let changeLog = name.get('changeLog');
 	crud.updateDocument({
 		collection: 'crdtNew',
 		document_id: info.document_id,
@@ -108,19 +217,38 @@ function insertChange(info) {
 		broadcast_sender: info.broadcast_sender,
 		metadata: 'crdt-change'
 	});
-	
 }
 
-function checkDb(info) {
-	let { collection, document_id, name } = info;
-	crud.readDocument({ collection, document_id, name }).then(response => {
-		let string = response.data[name];
-		if (string) {
-			info.value = string;
-			insertChange(info)
+message.listen('crdt', function(data) {
+	if (docs.get(`${data.collection}${data.document_id}`).get(data.name)){
+		if (data.clientId !== clientId){
+			insertChange(data);
 		}
-	});
+	}
+});
+
+/*
+crdt.getText({
+	collection: 'modules',
+	document_id: '5e4802ce3ed96d38e71fc7e5',
+	name: 'name'
+})
+*/
+async function getText(info) {
+	try {
+		let docName = generateDocName(info);
+		let typeName = info.name;
+		let doc = await getDoc(info);
+		if (doc) {
+			return docs.get(docName).get(typeName).get('text');
+		}
+	}
+	catch (e) {
+		console.error(e);
+		return "";
+	}
 }
+
 
 /*
 crdt.replaceText({
@@ -128,15 +256,13 @@ crdt.replaceText({
 	document_id: "",
 	name: "",
 	value: "",
-	updateCrud: true | false,
+	crud: true | false,
 	element: dom_object,
 	metadata: "xxxx"
 })
 */
 async function replaceText(info) {
 	try {
-		let docName = generateDocName(info);
-		let typeName = info.name;
 		let doc = await getDoc(info);
 		if (doc) {
 		
@@ -159,12 +285,12 @@ crdt.insertText({
 	document_id: '5e4802ce3ed96d38e71fc7e5',
 	name: 'name',
 	value: 'T',
-	position: '8',
+	start: '8',
 	attributes: {bold: true}
 })
 */
 function insertText(info) {
-	updateCrdt(info)
+	updateCrdt(info);
 }
 
 /*
@@ -172,128 +298,44 @@ crdt.deleteText({
 	collection: 'module_activities',
 	document_id: '5e4802ce3ed96d38e71fc7e5',
 	name: 'name',
-	position: '8',
+	start: '8',
 	length: 2,
 })
 */
-
 function deleteText(info) {
-	updateCrdt(info)
+	updateCrdt(info);
 }
 
 async function updateCrdt(info) {
-	try {
-		// let docName = generateDocName(info);
-		// let typeName = info.name;
-		let doc = await getDoc(info);
-		if (doc) {
-			insertChange(info);
-
-			changeEvent(info)
-			
-			if (info.crud != 'false') {
-				let wholestring = await getText(info);
-				crud.updateDocument({
-					collection: info.collection,
-					document_id: info.document_id,
-					data: {
-						[info.name]: wholestring
-					},
-					upsert: info.upsert,
-					namespace: info.namespace,
-					room: info.room,
-					broadcast: info.broadcast,
-					broadcast_sender: info.broadcast_sender,
-					metadata: 'crdt-change'
-				});
-			}
-		}
+	let broadcast = true;
+	let doc = await getDoc(info);
+	if (doc) {
 		
-	}
-	catch (e) {
-		console.error(e);
-	}
-
-}
-
-
-
-function changeEvent(info){
-	message.send({
-		room: "",
-		emit: {
-			message: "crdt",
-			data: createDelta(info)
+		insertChange(info, broadcast);
+		
+		if (info.crud != 'false') {
+			let wholestring = await getText(info);
+			crud.updateDocument({
+				collection: info.collection,
+				document_id: info.document_id,
+				data: {
+					[info.name]: wholestring
+				},
+				upsert: info.upsert,
+				namespace: info.namespace,
+				room: info.room,
+				broadcast: info.broadcast,
+				broadcast_sender: info.broadcast_sender,
+				metadata: 'crdt-change'
+			});
 		}
-	});
-}
-
-message.listen('crdt', function(data) {
-	updateEvent(data);	
-});
-
-function createDelta(info){
-	let data = {
-		collection: info.collection,
-		document_id: info.document_id,
-		name: info.name,
-		eventDelta: [
-			{ retain: info['start'] },
-			{ insert: info['value'], attributes: info['attributes'] },
-			{ delete: info['length'] }
-		]
-	}
-	return data;
-}
-
-function updateEvent(data) {
-	const updateEvent = new CustomEvent('cocreate-crdt-update', {
-		detail: { ...data },
-	});
-	window.dispatchEvent(updateEvent);
-}
-
-/*
-crdt.getText({
-	collection: 'module_activities',
-	document_id: '5e4802ce3ed96d38e71fc7e5',
-	name: 'name'
-})
-*/
-
-// String.prototype.splice = function(index, del, ...newStrs) {
-// 	let str = this.split('');
-// 	str.splice(index, del, newStrs.join('') || '');
-// 	return str.join('');
-// }
-String.prototype.customSplice = function (index, absIndex, string) {
-    return this.slice(0, index) + string+ this.slice(index + Math.abs(absIndex));
-};
-
-async function getText(info) {
-	try {
-		let docName = generateDocName(info);
-		let typeName = info.name;
-		let string = "";
-		let doc = await getDoc(info);
-		if (doc) {
-			let changeLog = docs.get(docName).get(typeName).get('changeLog')
-			for (let change of changeLog) {
-				string = string.customSplice(change.start, change.legnth, change.value)
-			}
-			return string;
-		}
-	}
-	catch (e) {
-		console.error(e);
-		return "";
 	}
 }
 
 
 /* 
 crdt.getPosition(function(data))
-crdt.getPosition(function(data){console.log(" EScuchando ahora  ",data)})
+crdt.getPosition(function(data){console.log(" EScuchando ahora  ", data)})
 */
 function getPosition(callback) {
 	if (typeof miFuncion === 'function')
@@ -310,15 +352,17 @@ function sendPosition(info) {
 		let type = docs.get(docName).get(typeName);
 		let start = info.start;
 		let end = info.end;
-		let color = info.color;
-		let name = info.name;
-		info.user_id = info.user_id || "test";
+		let color = info.color || localStorage.getItem("cursorColor");;
+		let background = info.background || localStorage.getItem("cursorBackground");;
+		let userName = info.userName || localStorage.getItem("userName");
+		let user_id = info.user_id || localStorage.getItem("user_id");
+		info['clientId'] = clientId;
 		if (!type) return;
 		if (start != null && end != null) {
-			type.get('cursors').set(info.user_id, { start, end, color, name });
+			type.get('cursors').set(clientId, { start, end, background, color, userName, user_id });
 		}
 		else {
-			type.get('cursors').delete(info.user_id);
+			type.get('cursors').delete(clientId);
 		}
 
 		message.send({
@@ -331,11 +375,11 @@ function sendPosition(info) {
 					name: info.name,
 					start,
 					end,
-					clientId: info.user_id || 'test',
-					user: {
-						'color': color,
-						'name': name
-					}
+					clientId: info.clientId || clientId,
+					color,
+					background,
+					userName,
+					user_id
 				}
 			},
 		});
@@ -346,27 +390,25 @@ function sendPosition(info) {
 }
 
 message.listen('cursor', function(selection) {
-	if (selection.start != null && selection.end != null) {
+	if (selection.clientId == clientId) return;
+	if (selection.start != null && selection.end != null)
+		updateCursor(selection);
+	else
+		removeCursor(selection.clientId);
+});
+
+function updateCursor(selection) {
 		const cursorUpdate = new CustomEvent('updateCursor', {
 			detail: { selection },
 		});
 		window.dispatchEvent(cursorUpdate);
-	}
-	else {
-		const cursorRemove = new CustomEvent('removeCursor', {
-			detail: { clientId: selection.clientId },
-		});
-		window.dispatchEvent(cursorRemove);
-	}
-})
+}
 
-function removeCursor(clientId, aw) {
+function removeCursor(clientId) {
 	const cursorRemove = new CustomEvent('removeCursor', {
-		detail: { clientId, aw },
+		detail: { clientId },
 	});
 	window.dispatchEvent(cursorRemove);
-	return;
-
 }
 
 // function deleteDoc(docName) {
@@ -385,5 +427,21 @@ function generateDocName(info) {
 	return `${info.collection}${info.document_id}`;
 	// return btoa(JSON.stringify(docName));
 }
+
+action.init({
+	action: "undo",
+	endEvent: "undo",
+	callback: (btn, data) => {
+		undoChange(btn);
+	}
+});
+
+action.init({
+	action: "redo",
+	endEvent: "redo",
+	callback: (btn, data) => {
+		redoChange(btn);
+	}
+});
 
 export default { init, getText, insertText, deleteText, replaceText, getPosition, sendPosition };
