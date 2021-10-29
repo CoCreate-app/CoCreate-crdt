@@ -7,15 +7,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CoCreate-app/CoCreate-crdt.git"
-  },
-  "funding": {
-    "type": "GitHub Sponsors ❤",
-    "url": "https://github.com/sponsors/CoCreate-app"
-  },
-  "main": "./src/index.js",
   "scripts": {
     "start": "npx webpack --config webpack.config.js",
     "build": "NODE_ENV=production npx webpack --config webpack.config.js",
@@ -23,31 +14,38 @@
     "docs": "node ./node_modules/@cocreate/docs/src/index.js",
     "hosting": "node ./node_modules/@cocreate/hosting/src/index.js"
   },
-  "dependencies": {
-    "@cocreate/action": "^1.3.4",
-    "@cocreate/crud-client": "^1.4.15",
-    "@cocreate/message-client": "^1.1.38",
-    "@cocreate/utils": "^1.1.35",
-    "y-indexeddb": "^9.0.6",
-    "y-websocket": "^1.3.16",
-    "yjs": "^13.5.11"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoCreate-app/CoCreate-crdt.git"
   },
+  "bugs": {
+    "url": "https://github.com/CoCreate-app/CoCreate-crdt/issues"
+  },
+  "homepage": "https://cocreate.app/docs/crdt",
+  "funding": {
+    "type": "GitHub Sponsors ❤",
+    "url": "https://github.com/sponsors/CoCreate-app"
+  },
+  "main": "./src/index.js",
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
-    "concurrently": "^3.6.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^4.5.0",
-    "http-server": "^0.12.3",
     "mini-css-extract-plugin": "^1.5.0",
-    "standard": "^14.3.4",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.1.1",
-    "typescript": "^4.1.5",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^5.24.4",
     "webpack-cli": "^4.5.0",
     "webpack-log": "^3.0.1"
-  }
+  },
+  "dependencies": {
+    "@cocreate/action": "^1.3.4",
+    "@cocreate/crud-client": "^1.4.15",
+    "@cocreate/message-client": "^1.1.38",
+    "@cocreate/utils": "^1.1.35"
+  },
 }
