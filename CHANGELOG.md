@@ -1,3 +1,20 @@
+# [1.6.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.5.5...v1.6.0) (2021-10-29)
+
+
+### Bug Fixes
+
+* removed utils folder ([ffe19f9](https://github.com/CoCreate-app/CoCreate-crdt/commit/ffe19f902e504dc2d03ead651dd82ea370a073c7))
+* renamed init to getDoc and created a new init ([6ba16c3](https://github.com/CoCreate-app/CoCreate-crdt/commit/6ba16c360400b54883460ca3e89ef492dfa907cf))
+* syntax error in package.json ([a68379b](https://github.com/CoCreate-app/CoCreate-crdt/commit/a68379bbc3c888243694579e17f4482bc40577d7))
+* updated crdt position to start ([22628f5](https://github.com/CoCreate-app/CoCreate-crdt/commit/22628f52a26e7482dd32ddbd61fbc2692a6e1443))
+* updated package.json dependencies ([5fa5901](https://github.com/CoCreate-app/CoCreate-crdt/commit/5fa5901998961148723c7fec707fbefdacd6e9a7))
+
+
+### Features
+
+* conflict resolution when inserts have same posions just milliseconds apart. ([fd1b245](https://github.com/CoCreate-app/CoCreate-crdt/commit/fd1b245fb1252582089d1879418d1bbc184d4f6b))
+* crdtDoc made from javascript map ([be90e1d](https://github.com/CoCreate-app/CoCreate-crdt/commit/be90e1d33a5350ae12c0aeca532250dc2b01f76d))
+
 ## [1.5.5](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.5.4...v1.5.5) (2021-10-16)
 
 
