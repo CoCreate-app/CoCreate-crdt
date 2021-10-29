@@ -47,5 +47,5 @@
     "@cocreate/crud-client": "^1.4.15",
     "@cocreate/message-client": "^1.1.38",
     "@cocreate/utils": "^1.1.35"
-  },
+  }
 }
