@@ -8,13 +8,12 @@ const docs = new Map();
 const clientId = uuid.generate(12);
 
 function init(info){
-	getDoc(info).then(response => {
-		getText(info).then(value => {
-			info.value = value;
-			info.start = 0;
-			info['clientId'] = clientId;
-			localChange(info);
-		});
+	getText(info).then(value => {
+		info.value = value;
+		info.start = 0;
+		info['clientId'] = clientId;
+		localChange(info);
+	// console.log('init', info)
 	});
 }
 
@@ -34,28 +33,27 @@ async function getDoc(info) {
 		}
 		
 		if (!docs.get(docName).get(typeName).has('changeLog')) {
-			let response = await crud.readDocumentList({		      
-				collection: "crdtNew",
-				operator: {
-					filters: [{
-						name: 'name',
-						operator: "$eq",
-						value: [docName]
-					}]
-				}
-			});
-			
-			let changeLog;
-			if (response.data.length && response.data[0][typeName]) {
-				changeLog = response.data[0][typeName];
-			}
-			else {
-				changeLog = [];
-			}
+			let changeLog = [];
 			docs.get(docName).get(typeName).set('changeLog', changeLog);
-			generateText(docs.get(docName).get(typeName));
-			if (!changeLog.length)
-				checkDb(info);
+			
+			if (info.read != 'false') {
+				let response = await crud.readDocumentList({		      
+					collection: "crdtNew",
+					operator: {
+						filters: [{
+							name: 'name',
+							operator: "$eq",
+							value: [docName]
+						}]
+					}
+				});
+				// console.log('getDoc response', response)
+				if (response.data.length && response.data[0][typeName]) {
+					changeLog = response.data[0][typeName];
+					docs.get(docName).get(typeName).set('changeLog', changeLog);
+				}
+			}
+			generateText(info);
 		}
 		
 		if (!docs.get(docName).get(typeName).has('cursors')) {
@@ -63,7 +61,6 @@ async function getDoc(info) {
 			docs.get(docName).get(typeName).set('cursors', cursorMap);
 		}
 		return true;
-
 	}
 	catch (e) {
 		console.log('Invalid param', e);
@@ -74,14 +71,17 @@ String.prototype.customSplice = function (index, absIndex, string) {
     return this.slice(0, index) + string+ this.slice(index + Math.abs(absIndex));
 };
 
-async function generateText(name) {
+async function generateText(info) {
 	try {
+		let name = docs.get(`${info.collection}${info.document_id}`).get(info.name);
 		let string = '';
 		let changeLog = name.get('changeLog');
 		for (let change of changeLog) {
 			string = string.customSplice(change.start, change.length, change.value);
 		}
 		name.set('text', string);
+		if (string == '' && info.read != 'false')
+			checkDb(info);
 	}
 	catch (e) {
 		console.error(e);
@@ -115,12 +115,13 @@ function restartTimer() {
 }
 
 function insertChange(info, broadcast) {
+	// console.log('crdtInsert', info)
 	let docName = generateDocName(info);
 	let typeName = info.name;
 	let type = 'insert';
 	
 	if(info.start == undefined) return;
-	if (info.length > 0)
+	if (!info.value)
 		type = 'delete';
 	
 	let change = {
@@ -157,7 +158,7 @@ function insertChange(info, broadcast) {
 	}
 
 	changeLog.push(change);
-	let string = name.get('text');
+	let string = name.get('text') || '';
 	name.set('text', string.customSplice(change.start, change.length, change.value));
 		
 	if(!info.clientId){
@@ -166,10 +167,12 @@ function insertChange(info, broadcast) {
 		
 		broadcastChange(info);
 		localChange(info);
-		persistChange(info);
 	}
 	else
 		localChange(info);
+		
+	if (info.clientId == clientId && info.save != "false")
+		persistChange(info);
 }
 
 function undoChange(){
@@ -220,7 +223,8 @@ function persistChange(info) {
 }
 
 message.listen('crdt', function(data) {
-	if (docs.get(`${data.collection}${data.document_id}`).get(data.name)){
+	if (docs.get(`${data.collection}${data.document_id}`)){
+		if (docs.get(`${data.collection}${data.document_id}`).get(data.name))
 		if (data.clientId !== clientId){
 			insertChange(data);
 		}
@@ -265,13 +269,12 @@ async function replaceText(info) {
 	try {
 		let doc = await getDoc(info);
 		if (doc) {
-		
 			let oldValue = getText(info);
 			let newValue = info['value'].toString();
 			if (oldValue && oldValue.length > 0) {
-				deleteText({ collection: info.collection, document_id: info.document_id, name: info.name, start: 0, length: Math.max(oldValue.length, newValue.length), crud: false });
+				deleteText({ ...info, start: 0, length: Math.max(oldValue.length, newValue.length), crud: false });
 			}
-			insertText({ collection: info.collection, document_id: info.document_id, name: info.name, start: 0, value: newValue, crud: info.crud });
+			insertText({ ...info, start: 0, value: newValue });
 		}
 	}
 	catch (e) {
