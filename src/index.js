@@ -91,6 +91,7 @@ async function generateText(info) {
 function checkDb(info) {
 	let { collection, document_id, name } = info;
 	crud.readDocument({ collection, document_id, name }).then(response => {
+		if (!response) return;
 		let string = response.data[name];
 		if (string) {
 			info.value = string;
@@ -270,11 +271,7 @@ async function replaceText(info) {
 		let doc = await getDoc(info);
 		if (doc) {
 			let oldValue = getText(info);
-			let newValue = info['value'].toString();
-			if (oldValue && oldValue.length > 0) {
-				deleteText({ ...info, start: 0, length: Math.max(oldValue.length, newValue.length), crud: false });
-			}
-			insertText({ ...info, start: 0, value: newValue });
+				updateText({ ...info, start: 0, length: oldValue.length, crud: false });
 		}
 	}
 	catch (e) {
@@ -283,33 +280,17 @@ async function replaceText(info) {
 }
 
 /*
-crdt.insertText({
+crdt.updateText({
 	collection: 'module_activities',
 	document_id: '5e4802ce3ed96d38e71fc7e5',
 	name: 'name',
 	value: 'T',
 	start: '8',
-	attributes: {bold: true}
+	attributes: {bold: true} 
+	length: 2, // length is used to define charcters that will be deleted
 })
 */
-function insertText(info) {
-	updateCrdt(info);
-}
-
-/*
-crdt.deleteText({
-	collection: 'module_activities',
-	document_id: '5e4802ce3ed96d38e71fc7e5',
-	name: 'name',
-	start: '8',
-	length: 2,
-})
-*/
-function deleteText(info) {
-	updateCrdt(info);
-}
-
-async function updateCrdt(info) {
+async function updateText(info) {
 	let broadcast = true;
 	let doc = await getDoc(info);
 	if (doc) {
@@ -447,4 +428,4 @@ action.init({
 	}
 });
 
-export default { init, getText, insertText, deleteText, replaceText, getPosition, sendPosition };
+export default { init, getText, updateText, replaceText, getPosition, sendPosition };
