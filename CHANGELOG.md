@@ -1,3 +1,15 @@
+# [1.7.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.6.1...v1.7.0) (2021-10-30)
+
+
+### Bug Fixes
+
+* replaced insertText() and deleteText() with updateText() ([4e66ea3](https://github.com/CoCreate-app/CoCreate-crdt/commit/4e66ea33f20bd6d85482192a9e9fb13bb635eae5))
+
+
+### Features
+
+* improved algorithm to improve speed when there are many crdt elements ([027e9b2](https://github.com/CoCreate-app/CoCreate-crdt/commit/027e9b23c579651581a1b4025931578e62edf56b))
+
 ## [1.6.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.6.0...v1.6.1) (2021-10-29)
 
 
