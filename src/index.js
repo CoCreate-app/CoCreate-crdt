@@ -95,27 +95,22 @@ function checkDb(info) {
 		let string = response.data[name];
 		if (string) {
 			info.value = string;
+			info.start = 0;
 			insertChange(info);
 		}
 	});
 }
 
-
-let isTimerActive;
-let timer;
-function startTimer() {
-	isTimerActive = true;
-	restartTimer();
-	timer = setTimeout(() => {   
-		isTimerActive = false; 
+var timeouts = {};
+function startTimer(name, timerName) {
+	name.set('isTimerActive', true);
+	clearTimeout(timeouts[timerName]);
+	timeouts[timerName] = setTimeout(() => {   
+		name.set('isTimerActive', false);
 	}, 500);
 }
 
-function restartTimer() {
-  clearTimeout(timer);
-}
-
-function insertChange(info, broadcast) {
+function insertChange(info, broadcast, flag) {
 	// console.log('crdtInsert', info)
 	let docName = generateDocName(info);
 	let typeName = info.name;
@@ -138,26 +133,28 @@ function insertChange(info, broadcast) {
 	
 	let name = docs.get(docName).get(typeName);
 	let changeLog = name.get('changeLog');
+	let isTimerActive = name.get('isTimerActive')
 	
 	let lastChange = changeLog[changeLog.length - 1];
 	if (lastChange && change.datetime < lastChange.datetime){
 		console.log('requires changeLog rebuild');
 	}
-	if (lastChange && change.value.length == 1) {
-		if (isTimerActive || change.start == lastChange.start){
-			startTimer();
-			change.start = lastChange.start + lastChange.value.length;
-			info.start = change.start;
+	if (flag != 'replace') {
+		if (lastChange && change.value.length == 1) {
+			if (isTimerActive || change.start == lastChange.start){
+				startTimer(name, `${docName}${typeName}`);
+				change.start = lastChange.start + lastChange.value.length;
+				info.start = change.start;
+			}
+		}
+		if (lastChange && change.length == 1) {
+			if (isTimerActive || change.start == lastChange.start){
+				startTimer(name, `${docName}${typeName}`);
+				change.start = lastChange.start - lastChange.length;
+				info.start = change.start;
+			}
 		}
 	}
-	if (lastChange && change.length == 1) {
-		if (isTimerActive || change.start == lastChange.start){
-			startTimer();
-			change.start = lastChange.start - lastChange.length;
-			info.start = change.start;
-		}
-	}
-
 	changeLog.push(change);
 	let string = name.get('text') || '';
 	name.set('text', string.customSplice(change.start, change.length, change.value));
@@ -270,8 +267,13 @@ async function replaceText(info) {
 	try {
 		let doc = await getDoc(info);
 		if (doc) {
-			let oldValue = getText(info);
-				updateText({ ...info, start: 0, length: oldValue.length, crud: false });
+			let oldValue = await getText(info);
+				if (oldValue)
+					info.length = oldValue.length;
+				else 
+					info.length = 0;
+				info.start = 0;
+				updateText(info, 'replace');
 		}
 	}
 	catch (e) {
@@ -290,12 +292,12 @@ crdt.updateText({
 	length: 2, // length is used to define charcters that will be deleted
 })
 */
-async function updateText(info) {
+async function updateText(info, flag) {
 	let broadcast = true;
 	let doc = await getDoc(info);
 	if (doc) {
 		
-		insertChange(info, broadcast);
+		insertChange(info, broadcast, flag);
 		
 		if (info.crud != 'false') {
 			let wholestring = await getText(info);
