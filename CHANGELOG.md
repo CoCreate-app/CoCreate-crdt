@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.7.2...v1.8.0) (2021-11-01)
+
+
+### Features
+
+* added @cocreate/message to broadcast cursor positions ([1029623](https://github.com/CoCreate-app/CoCreate-crdt/commit/1029623541783c7acd7debe56c4872936da05824))
+
 ## [1.7.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.7.1...v1.7.2) (2021-11-01)
 
 
