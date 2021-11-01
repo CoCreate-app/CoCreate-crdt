@@ -354,4 +354,4 @@ action.init({
 	}
 });
 
-export default { init, getText, updateText, replaceText, getPosition, sendPosition };
+export default { init, getText, updateText, replaceText };
