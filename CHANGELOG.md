@@ -1,3 +1,11 @@
+## [1.7.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.7.0...v1.7.1) (2021-11-01)
+
+
+### Bug Fixes
+
+* await getText in replaceText ([41c219c](https://github.com/CoCreate-app/CoCreate-crdt/commit/41c219cb79f5e416661c73b3b62862e0e92bf767))
+* startTimer was needed per each typeName and a flag for replaceText to skip timer all together ([20e74dc](https://github.com/CoCreate-app/CoCreate-crdt/commit/20e74dcef89ca5f6c6e6ec4b01c4d9e2a3e47ad6))
+
 # [1.7.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.6.1...v1.7.0) (2021-10-30)
 
 
