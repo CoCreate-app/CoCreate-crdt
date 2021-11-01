@@ -268,12 +268,12 @@ async function replaceText(info) {
 		let doc = await getDoc(info);
 		if (doc) {
 			let oldValue = await getText(info);
-				if (oldValue)
-					info.length = oldValue.length;
-				else 
-					info.length = 0;
-				info.start = 0;
-				updateText(info, 'replace');
+			if (oldValue)
+				info.length = oldValue.length;
+			else 
+				info.length = 0;
+			info.start = 0;
+			updateText(info, 'replace');
 		}
 	}
 	catch (e) {
