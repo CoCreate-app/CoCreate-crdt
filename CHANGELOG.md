@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.0...v1.8.1) (2021-11-01)
+
+
+### Bug Fixes
+
+* removed getPosition, sendPosition from export ([9c30bcc](https://github.com/CoCreate-app/CoCreate-crdt/commit/9c30bccb7950e9968fc3cf89ab9165296a0225ad))
+
 # [1.8.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.7.2...v1.8.0) (2021-11-01)
 
 
