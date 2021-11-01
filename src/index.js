@@ -5,7 +5,8 @@ import uuid from '@cocreate/uuid';
 import action from '@cocreate/action';
 
 const docs = new Map();
-const clientId = uuid.generate(12);
+const clientId = config.clientId || uuid.generate(12);
+
 
 function init(info){
 	getText(info).then(value => {
@@ -319,83 +320,6 @@ async function updateText(info, flag) {
 }
 
 
-/* 
-crdt.getPosition(function(data))
-crdt.getPosition(function(data){console.log(" EScuchando ahora  ", data)})
-*/
-function getPosition(callback) {
-	if (typeof miFuncion === 'function')
-		this.changeListenAwereness(callback);
-	else
-		console.error('Callback should be a function');
-}
-
-
-function sendPosition(info) {
-	try {
-		let docName = generateDocName(info);
-		let typeName = info.name;
-		let type = docs.get(docName).get(typeName);
-		let start = info.start;
-		let end = info.end;
-		let color = info.color || localStorage.getItem("cursorColor");;
-		let background = info.background || localStorage.getItem("cursorBackground");;
-		let userName = info.userName || localStorage.getItem("userName");
-		let user_id = info.user_id || localStorage.getItem("user_id");
-		info['clientId'] = clientId;
-		if (!type) return;
-		if (start != null && end != null) {
-			type.get('cursors').set(clientId, { start, end, background, color, userName, user_id });
-		}
-		else {
-			type.get('cursors').delete(clientId);
-		}
-
-		message.send({
-			room: "",
-			emit: {
-				message: "cursor",
-				data: {
-					collection: info.collection,
-					document_id: info.document_id,
-					name: info.name,
-					start,
-					end,
-					clientId: info.clientId || clientId,
-					color,
-					background,
-					userName,
-					user_id
-				}
-			},
-		});
-	}
-	catch (e) {
-		console.error(e);
-	}
-}
-
-message.listen('cursor', function(selection) {
-	if (selection.clientId == clientId) return;
-	if (selection.start != null && selection.end != null)
-		updateCursor(selection);
-	else
-		removeCursor(selection.clientId);
-});
-
-function updateCursor(selection) {
-		const cursorUpdate = new CustomEvent('updateCursor', {
-			detail: { selection },
-		});
-		window.dispatchEvent(cursorUpdate);
-}
-
-function removeCursor(clientId) {
-	const cursorRemove = new CustomEvent('removeCursor', {
-		detail: { clientId },
-	});
-	window.dispatchEvent(cursorRemove);
-}
 
 // function deleteDoc(docName) {
 // 	if (this.docs[docName]) {
