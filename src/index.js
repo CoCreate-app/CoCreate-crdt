@@ -14,7 +14,6 @@ function init(info){
 		info.start = 0;
 		info['clientId'] = clientId;
 		localChange(info);
-	// console.log('init', info)
 	});
 }
 
@@ -48,7 +47,6 @@ async function getDoc(info) {
 						}]
 					}
 				});
-				// console.log('getDoc response', response)
 				if (response.data.length && response.data[0][typeName]) {
 					changeLog = response.data[0][typeName];
 					docs.get(docName).get(typeName).set('changeLog', changeLog);
@@ -102,17 +100,7 @@ function checkDb(info) {
 	});
 }
 
-var timeouts = {};
-function startTimer(name, timerName) {
-	name.set('isTimerActive', true);
-	clearTimeout(timeouts[timerName]);
-	timeouts[timerName] = setTimeout(() => {   
-		name.set('isTimerActive', false);
-	}, 500);
-}
-
 function insertChange(info, broadcast, flag) {
-	// console.log('crdtInsert', info)
 	let docName = generateDocName(info);
 	let typeName = info.name;
 	let type = 'insert';
@@ -134,25 +122,27 @@ function insertChange(info, broadcast, flag) {
 	
 	let name = docs.get(docName).get(typeName);
 	let changeLog = name.get('changeLog');
-	let isTimerActive = name.get('isTimerActive')
-	
+
 	let lastChange = changeLog[changeLog.length - 1];
-	if (lastChange && change.datetime < lastChange.datetime){
-		console.log('requires changeLog rebuild');
-	}
-	if (flag != 'replace') {
-		if (lastChange && change.value.length == 1) {
-			if (isTimerActive || change.start == lastChange.start){
-				startTimer(name, `${docName}${typeName}`);
-				change.start = lastChange.start + lastChange.value.length;
-				info.start = change.start;
-			}
+	if (lastChange && change.datetime && lastChange.datetime){
+		if (change.datetime < lastChange.datetime){
+			console.log('requires changeLog rebuild');
 		}
-		if (lastChange && change.length == 1) {
-			if (isTimerActive || change.start == lastChange.start){
-				startTimer(name, `${docName}${typeName}`);
-				change.start = lastChange.start - lastChange.length;
-				info.start = change.start;
+		if (flag != 'replace') {
+			if (lastChange && change.start == lastChange.start) {
+				let date1 = new Date(lastChange.datetime);
+				let date2 = new Date(change.datetime);
+				let diff = date2.getTime() - date1.getTime();
+				if (diff < 500) {
+					if (change.value.length == 1) {
+						change.start = lastChange.start + lastChange.value.length;
+						info.start = change.start;
+					}
+					if (change.length == 1) {
+						change.start = lastChange.start - lastChange.length;
+						info.start = change.start;
+					}
+				}
 			}
 		}
 	}
@@ -273,6 +263,10 @@ async function replaceText(info) {
 				info.length = oldValue.length;
 			else 
 				info.length = 0;
+			
+			if (info.name.includes('margin-left'))
+				console.log(info.value, info.length);
+
 			info.start = 0;
 			updateText(info, 'replace');
 		}
