@@ -1,3 +1,10 @@
+## [1.8.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.2...v1.8.3) (2021-11-03)
+
+
+### Bug Fixes
+
+* conflict resolution had bug that caused it to run if position was the same but at different times. crated a time diff to check if positiion is same and within a 500 mmliseconds ([9053130](https://github.com/CoCreate-app/CoCreate-crdt/commit/9053130d4082346bccb0717c82fa29c004d1030d))
+
 ## [1.8.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.1...v1.8.2) (2021-11-03)
 
 
