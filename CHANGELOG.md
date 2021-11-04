@@ -1,3 +1,10 @@
+## [1.8.6](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.5...v1.8.6) (2021-11-04)
+
+
+### Bug Fixes
+
+* get clientId from config or window.CoCreateSockets ([00d9a4b](https://github.com/CoCreate-app/CoCreate-crdt/commit/00d9a4b790840bad9eed786770afd47efd7f7982))
+
 ## [1.8.5](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.4...v1.8.5) (2021-11-04)
 
 
