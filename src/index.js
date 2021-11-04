@@ -5,7 +5,7 @@ import uuid from '@cocreate/uuid';
 import action from '@cocreate/action';
 
 const docs = new Map();
-const clientId = config.clientId || uuid.generate(12);
+const clientId = config.clientId || window.CoCreateSockets.clientId || uuid.generate(12);
 
 
 function init(info){
@@ -263,9 +263,6 @@ async function replaceText(info) {
 				info.length = oldValue.length;
 			else 
 				info.length = 0;
-			
-			if (info.name.includes('margin-left'))
-				console.log(info.value, info.length);
 
 			info.start = 0;
 			updateText(info, 'replace');
