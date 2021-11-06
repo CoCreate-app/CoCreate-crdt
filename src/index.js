@@ -38,7 +38,7 @@ async function getDoc(info) {
 			
 			if (info.read != 'false') {
 				let response = await crud.readDocumentList({		      
-					collection: "crdtNew",
+					collection: "crdt-transactions",
 					operator: {
 						filters: [{
 							name: 'name',
@@ -196,7 +196,7 @@ function persistChange(info) {
 	let name = docs.get(docName).get(typeName);
 	let changeLog = name.get('changeLog');
 	crud.updateDocument({
-		collection: 'crdtNew',
+		collection: 'crdt-transactions',
 		document_id: info.document_id,
 		data: {
 			name: docName,
