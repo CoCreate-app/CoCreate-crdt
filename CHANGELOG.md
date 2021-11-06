@@ -1,3 +1,10 @@
+## [1.8.7](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.6...v1.8.7) (2021-11-06)
+
+
+### Bug Fixes
+
+* update name of collection where changeLog will b e stored ([0d691a2](https://github.com/CoCreate-app/CoCreate-crdt/commit/0d691a24d98b89890f4aab3fb70bf93f68d505a7))
+
 ## [1.8.6](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.5...v1.8.6) (2021-11-04)
 
 
