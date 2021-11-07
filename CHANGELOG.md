@@ -1,3 +1,10 @@
+## [1.8.9](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.8...v1.8.9) (2021-11-07)
+
+
+### Bug Fixes
+
+* update name to docName when stored persistently ([c8ddc51](https://github.com/CoCreate-app/CoCreate-crdt/commit/c8ddc51392ccc54b1eb12f2f4cf8c95a4a1ba63a))
+
 ## [1.8.8](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.7...v1.8.8) (2021-11-06)
 
 
