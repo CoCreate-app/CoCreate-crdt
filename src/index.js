@@ -199,7 +199,7 @@ function persistChange(info) {
 		collection: 'crdt-transactions',
 		document_id: info.document_id,
 		data: {
-			name: docName,
+			docName,
 			[typeName]: changeLog
 		},
 		upsert: true,
