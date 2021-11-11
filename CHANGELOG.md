@@ -1,3 +1,10 @@
+## [1.8.10](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.9...v1.8.10) (2021-11-11)
+
+
+### Bug Fixes
+
+* licensing information ([1707ace](https://github.com/CoCreate-app/CoCreate-crdt/commit/1707ace6560ca78b6c0fa28b91097a4889f052b2))
+
 ## [1.8.9](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.8...v1.8.9) (2021-11-07)
 
 
