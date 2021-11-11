@@ -6,7 +6,8 @@ CoCreate crdt Take it for a spin in our [playground!](https://cocreate.app/docs/
 ![gzip](https://img.badgesize.io/https://cdn.cocreate.app/crdt/latest/CoCreate-crdt.min.js?compression=gzip&style=flat-square&label=gzip&color=yellow)
 ![brotli](https://img.badgesize.io/https://cdn.cocreate.app/crdt/latest/CoCreate-crdt.min.js?compression=brotli&style=flat-square&label=brotli)
 ![GitHub latest release](https://img.shields.io/github/v/release/CoCreate-app/CoCreate-crdt?style=flat-square)
-![License](https://img.shields.io/github/license/CoCreate-app/CoCreate-crdt?style=flat-square)
+![GitHub contributors](https://img.shields.io/github/contributors/CoCreate-app/CoCreate-metrics-server?style=flat-square)
+![License](https://img.shields.io/static/v1?style=flat-square&label=license&message=AGPL-3.0&color=green)
 ![Hiring](https://img.shields.io/static/v1?style=flat-square&label=&message=Hiring&color=blueviolet)
 
 ![CoCreate-crdt](https://cdn.cocreate.app/docs/CoCreate-crdt.gif)
@@ -79,11 +80,17 @@ We want this library to be community-driven, and CoCreate led. We need your help
 We appreciate your continued support, thank you!
 
 
+<a name="license"></a>
 # Dual License
 ## Open Source
 [GNU Affero General Public License version 3 (AGPL-3.0)](https://github.com/CoCreate-app/CoCreate-crdt/blob/master/LICENSE)
 
 ## Commercial
+For-profit companies and individuals intending to use CoCreate-crdt for 
+commercial use must purchase a commercial license. This license allows 
+source code modifications, but does not permit redistribution of 
+modifications.
+
 The commercial license is designed for you to use CoCreate-crdt in commercial 
 products and applications, without the provisions of the GPLv3. With the 
 commercial license, your code is kept propietary, to yourself. If you 
