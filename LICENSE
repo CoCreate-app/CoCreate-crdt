@@ -1,12 +1,12 @@
-For-profit companies and individuals intending to use CRDT for 
+For-profit companies and individuals intending to use CoCreate-crdt for 
 commercial use must purchase a commercial license. This license allows 
 source code modifications, but does not permit redistribution of 
 modifications.
 
-The commercial license is designed for you to use CRDT in commercial 
+The commercial license is designed for you to use CoCreate-crdt in commercial 
 products and applications, without the provisions of the GPLv3. With the 
 commercial license, your code is kept propietary, to yourself. If you 
-want to use CRDT to develop commercial sites, themes, projects, and 
+want to use CoCreate-crdt to develop commercial sites, themes, projects, and 
 applications, the commercial license is the appropriate license.
 
 
@@ -14,7 +14,7 @@ This Software License Agreement (the “Agreement”) is between
 CoCreate LLC (“CoCreate”) and You (including your agents and 
 affiliates), a commercial licensee of CoCreate's software. 
 
-If you have not purchased a CRDT commercial license from CoCreate, 
+If you have not purchased a CoCreate-crdt commercial license from CoCreate, 
 these terms do not apply to you, and your use of the CoCreate software
 is instead governed by the GNU General Public License, version 3.
 
