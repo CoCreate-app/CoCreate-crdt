@@ -54,11 +54,6 @@ async function getDoc(info) {
 			}
 			generateText(info);
 		}
-		
-		if (!docs.get(docName).get(typeName).has('cursors')) {
-			let cursorMap = new Map();
-			docs.get(docName).get(typeName).set('cursors', cursorMap);
-		}
 		return true;
 	}
 	catch (e) {
