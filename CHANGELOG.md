@@ -1,3 +1,10 @@
+## [1.8.14](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.13...v1.8.14) (2021-11-16)
+
+
+### Bug Fixes
+
+* remove cursors map.. now handled by cocreate-cursors ([c91be88](https://github.com/CoCreate-app/CoCreate-crdt/commit/c91be88dad64320f3f4331ab3b065c6988df1506))
+
 ## [1.8.13](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.12...v1.8.13) (2021-11-16)
 
 
