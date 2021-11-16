@@ -41,7 +41,7 @@ async function getDoc(info) {
 					collection: "crdt-transactions",
 					operator: {
 						filters: [{
-							name: 'name',
+							name: 'docName',
 							operator: "$eq",
 							value: [docName]
 						}]
