@@ -1,3 +1,10 @@
+## [1.8.13](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.12...v1.8.13) (2021-11-16)
+
+
+### Bug Fixes
+
+* name to docName ([fda1249](https://github.com/CoCreate-app/CoCreate-crdt/commit/fda1249a682dfff1e3d22c3e7de37bc17016074a))
+
 ## [1.8.12](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.11...v1.8.12) (2021-11-15)
 
 
