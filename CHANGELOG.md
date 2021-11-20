@@ -1,3 +1,10 @@
+## [1.8.19](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.18...v1.8.19) (2021-11-20)
+
+
+### Bug Fixes
+
+* updated script tags and link tags ([6618c3a](https://github.com/CoCreate-app/CoCreate-crdt/commit/6618c3a265d348e6c2c8ba046a426509cb0ad03d))
+
 ## [1.8.18](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.17...v1.8.18) (2021-11-20)
 
 
