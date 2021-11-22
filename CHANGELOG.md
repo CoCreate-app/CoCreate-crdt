@@ -1,3 +1,10 @@
+## [1.8.20](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.19...v1.8.20) (2021-11-22)
+
+
+### Bug Fixes
+
+* if crud or save will not save to crud ([b8f51ac](https://github.com/CoCreate-app/CoCreate-crdt/commit/b8f51ac606fc3d1894404ef8ec82c3895b16d6cc))
+
 ## [1.8.19](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.18...v1.8.19) (2021-11-20)
 
 
