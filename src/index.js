@@ -286,7 +286,7 @@ async function updateText(info, flag) {
 		
 		insertChange(info, broadcast, flag);
 		
-		if (info.crud != 'false') {
+		if (info.crud != 'false' && info.save != 'false') {
 			let wholestring = await getText(info);
 			crud.updateDocument({
 				collection: info.collection,
