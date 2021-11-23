@@ -232,9 +232,7 @@ async function getText(info) {
 		let typeName = info.name;
 		let doc = await getDoc(info);
 		if (doc) {
-			let value =  docs.get(docName).get(typeName).get('text')
-			if (info.name == 'nam')
-				console.log('nam')
+			let value = docs.get(docName).get(typeName).get('text')
 			return value;
 		}
 	}
