@@ -1,3 +1,10 @@
+## [1.8.21](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.20...v1.8.21) (2021-11-23)
+
+
+### Bug Fixes
+
+* await generateText ([917dd9a](https://github.com/CoCreate-app/CoCreate-crdt/commit/917dd9acdeae8b6dc9185aa2049dd28b0337e3eb))
+
 ## [1.8.20](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.19...v1.8.20) (2021-11-22)
 
 
