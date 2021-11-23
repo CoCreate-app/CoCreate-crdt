@@ -52,7 +52,9 @@ async function getDoc(info) {
 					docs.get(docName).get(typeName).set('changeLog', changeLog);
 				}
 			}
-			generateText(info);
+		}
+		if (!docs.get(docName).get(typeName).has('text')){
+			await generateText(info);
 		}
 		return true;
 	}
@@ -75,7 +77,8 @@ async function generateText(info) {
 		}
 		name.set('text', string);
 		if (string == '' && info.read != 'false')
-			checkDb(info);
+			await checkDb(info);
+		return;
 	}
 	catch (e) {
 		console.error(e);
@@ -92,6 +95,7 @@ function checkDb(info) {
 			info.start = 0;
 			insertChange(info);
 		}
+		return;
 	});
 }
 
@@ -228,7 +232,10 @@ async function getText(info) {
 		let typeName = info.name;
 		let doc = await getDoc(info);
 		if (doc) {
-			return docs.get(docName).get(typeName).get('text');
+			let value =  docs.get(docName).get(typeName).get('text')
+			if (info.name == 'nam')
+				console.log('nam')
+			return value;
 		}
 	}
 	catch (e) {
