@@ -34,7 +34,6 @@ async function getDoc(info) {
 		
 		if (!docs.get(docName).get(typeName).has('changeLog')) {
 			let changeLog = [];
-			docs.get(docName).get(typeName).set('changeLog', changeLog);
 			
 			if (info.read != 'false') {
 				let response = await crud.readDocumentList({		      
@@ -49,12 +48,13 @@ async function getDoc(info) {
 				});
 				if (response.data.length && response.data[0][typeName]) {
 					changeLog = response.data[0][typeName];
-					docs.get(docName).get(typeName).set('changeLog', changeLog);
 				}
+				docs.get(docName).get(typeName).set('changeLog', changeLog);
+				await generateText(info, true);
 			}
 		}
-		if (!docs.get(docName).get(typeName).has('text')){
-			await generateText(info);
+		else if (!docs.get(docName).get(typeName).has('text')){
+			await generateText(info, false);
 		}
 		return true;
 	}
@@ -67,7 +67,7 @@ String.prototype.customSplice = function (index, absIndex, string) {
     return this.slice(0, index) + string+ this.slice(index + Math.abs(absIndex));
 };
 
-async function generateText(info) {
+async function generateText(info, flag) {
 	try {
 		let name = docs.get(`${info.collection}${info.document_id}`).get(info.name);
 		let string = '';
@@ -75,9 +75,10 @@ async function generateText(info) {
 		for (let change of changeLog) {
 			string = string.customSplice(change.start, change.length, change.value);
 		}
+		if (string == '' && info.read != 'false'){
+			string = await checkDb(info, flag);
+		}
 		name.set('text', string);
-		if (string == '' && info.read != 'false')
-			await checkDb(info);
 		return;
 	}
 	catch (e) {
@@ -85,18 +86,16 @@ async function generateText(info) {
 	}
 }
 
-function checkDb(info) {
+async function checkDb(info, flag) {
 	let { collection, document_id, name } = info;
-	crud.readDocument({ collection, document_id, name }).then(response => {
-		if (!response) return;
-		let string = response.data[name];
-		if (string) {
-			info.value = string;
-			info.start = 0;
-			insertChange(info);
-		}
-		return;
-	});
+	let response = await crud.readDocument({ collection, document_id, name })
+	let string = response.data[name];
+	if (string && flag != false) {
+		info.value = string;
+		info.start = 0;
+		insertChange(info);
+	}
+	return string || '';
 }
 
 function insertChange(info, broadcast, flag) {
@@ -233,7 +232,12 @@ async function getText(info) {
 		let doc = await getDoc(info);
 		if (doc) {
 			let value = docs.get(docName).get(typeName).get('text')
+			if (!value)
+			console.log(value)
 			return value;
+		}
+		else {
+			console.log('undefined')
 		}
 	}
 	catch (e) {
