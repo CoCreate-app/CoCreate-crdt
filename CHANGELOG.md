@@ -1,3 +1,11 @@
+## [1.8.24](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.23...v1.8.24) (2021-11-26)
+
+
+### Bug Fixes
+
+* add nav and sidenav to docs ([4749696](https://github.com/CoCreate-app/CoCreate-crdt/commit/47496966a2faa8dd1b7b999a8592a09d56c8d516))
+* updated action dependency to actions ([04c3728](https://github.com/CoCreate-app/CoCreate-crdt/commit/04c3728d8e5e575baecf70db57e8f9137a0fc95e))
+
 ## [1.8.23](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.22...v1.8.23) (2021-11-26)
 
 
