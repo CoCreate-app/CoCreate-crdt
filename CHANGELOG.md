@@ -1,3 +1,10 @@
+## [1.8.23](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.22...v1.8.23) (2021-11-26)
+
+
+### Bug Fixes
+
+* getDocs will request generateText with changeLog true or false ([2309736](https://github.com/CoCreate-app/CoCreate-crdt/commit/230973632f96a8a65f1bea430e626a8a7e6223af))
+
 ## [1.8.22](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.21...v1.8.22) (2021-11-23)
 
 
