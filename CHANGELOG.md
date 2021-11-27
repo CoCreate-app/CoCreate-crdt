@@ -1,3 +1,11 @@
+## [1.8.27](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.26...v1.8.27) (2021-11-27)
+
+
+### Bug Fixes
+
+* actions import typo ([f8be4b1](https://github.com/CoCreate-app/CoCreate-crdt/commit/f8be4b1da90e1db4713d2dc034b2da56687b0883))
+* update dependencies ([1fecfd5](https://github.com/CoCreate-app/CoCreate-crdt/commit/1fecfd599146f8a4c395e7e074ef673749600acc))
+
 ## [1.8.26](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.25...v1.8.26) (2021-11-27)
 
 
