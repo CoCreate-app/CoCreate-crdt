@@ -2,7 +2,7 @@
 import crud from '@cocreate/crud-client';
 import message from '@cocreate/message-client';
 import uuid from '@cocreate/uuid';
-import action from '@cocreate/action';
+import action from '@cocreate/actions';
 
 const docs = new Map();
 const clientId = config.clientId || window.CoCreateSockets.clientId || uuid.generate(12);
