@@ -1,3 +1,10 @@
+## [1.8.25](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.24...v1.8.25) (2021-11-27)
+
+
+### Bug Fixes
+
+* update docs api and cocreateJS script ([dc2bbcc](https://github.com/CoCreate-app/CoCreate-crdt/commit/dc2bbcca94828ef8d3699aec37f68a1b5eb7095b))
+
 ## [1.8.24](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.23...v1.8.24) (2021-11-26)
 
 
