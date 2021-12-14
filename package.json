@@ -46,6 +46,6 @@
     "@cocreate/actions": "^1.3.24",
     "@cocreate/crud-client": "^1.4.39",
     "@cocreate/message-client": "^1.1.57",
-    "@cocreate/utils": "^1.3.18"
+    "@cocreate/utils": "^1.4.0"
   }
 }
