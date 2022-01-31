@@ -147,16 +147,17 @@ function insertChange(info, broadcast, flag) {
 	changeLog.push(change);
 	let string = name.get('text') || '';
 	name.set('text', string.customSplice(change.start, change.length, change.value));
-		
+	string = {string: name.get('text')};
+	
 	if(!info.clientId){
 		info['datetime'] = change.datetime;
 		info['clientId'] = change.clientId;
 		
 		broadcastChange(info);
-		localChange(info);
+		localChange(info, string);
 	}
 	else
-		localChange(info);
+		localChange(info, string);
 		
 	if (info.clientId == clientId && info.save != "false")
 		persistChange(info);
@@ -181,9 +182,9 @@ function broadcastChange(info){
 	});
 }
 
-function localChange(data) {
+function localChange(data, string) {
 	const localChange = new CustomEvent('cocreate-crdt-update', {
-		detail: { ...data },
+		detail: { ...data, ...string },
 	});
 	window.dispatchEvent(localChange);
 }
