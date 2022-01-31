@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.30...v1.9.0) (2022-01-31)
+
+
+### Features
+
+* provide updated string to localChange update event ([83534dd](https://github.com/CoCreate-app/CoCreate-crdt/commit/83534dd74b868c4f1fdd35f1ae683e19cac33ec7))
+
 ## [1.8.30](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.8.29...v1.8.30) (2022-01-01)
 
 
