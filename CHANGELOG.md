@@ -1,3 +1,10 @@
+## [1.9.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.9.1...v1.9.2) (2022-02-03)
+
+
+### Bug Fixes
+
+* replaced show and hide class hidden with attribute hidden ([3add8ee](https://github.com/CoCreate-app/CoCreate-crdt/commit/3add8ee46e64021bf13706c935873076bdcc9927))
+
 ## [1.9.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.9.0...v1.9.1) (2022-02-01)
 
 
