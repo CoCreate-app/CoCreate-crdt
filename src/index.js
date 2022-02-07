@@ -75,7 +75,7 @@ async function generateText(info, flag) {
 		for (let change of changeLog) {
 			string = string.customSplice(change.start, change.length, change.value);
 		}
-		if (string == '' && info.read != 'false'){
+		if (string === '' && info.read !== 'false'){
 			string = await checkDb(info, flag);
 		}
 		name.set('text', string);
