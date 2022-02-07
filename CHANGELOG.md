@@ -1,3 +1,10 @@
+## [1.9.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.9.2...v1.9.3) (2022-02-07)
+
+
+### Bug Fixes
+
+* checkDb if condition was was true even if string was not empty. replaced == with === ([ca27e77](https://github.com/CoCreate-app/CoCreate-crdt/commit/ca27e770b2ebbabb1c2a5763e7c1205987731662))
+
 ## [1.9.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.9.1...v1.9.2) (2022-02-03)
 
 
