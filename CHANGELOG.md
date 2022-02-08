@@ -1,3 +1,10 @@
+## [1.9.5](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.9.4...v1.9.5) (2022-02-08)
+
+
+### Bug Fixes
+
+* value duplication resolved ([8894449](https://github.com/CoCreate-app/CoCreate-crdt/commit/8894449cda528249a3f7731490251b07db2a0a61))
+
 ## [1.9.4](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.9.3...v1.9.4) (2022-02-07)
 
 
