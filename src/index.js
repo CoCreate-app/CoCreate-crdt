@@ -6,7 +6,8 @@ import action from '@cocreate/actions';
 
 const docs = new Map();
 const clientId = config.clientId || window.CoCreateSockets.clientId || uuid.generate(12);
-
+const checkedDb = new Map();
+const isInit = new Map();
 
 function init(info){
 	getText(info).then(value => {
@@ -21,20 +22,23 @@ async function getDoc(info) {
 	try {
 		let docName = generateDocName(info);
 		let typeName = info.name;
-
-		if (!docs.has(docName)) {
+		let doc = docs.get(docName);
+		
+		if (!doc) {
 			let docNameMap = new Map();
 			docs.set(docName, docNameMap);
+			doc = docs.get(docName);
 		}
 		
-		if (!docs.get(docName).has(typeName)) {
+		let type = doc.get(typeName)
+		if (!type) {
 			let typeNameMap = new Map();
-			docs.get(docName).set(typeName, typeNameMap);
+			doc.set(typeName, typeNameMap);
+			type = doc.get(typeName)
 		}
-		
-		if (!docs.get(docName).get(typeName).has('changeLog')) {
+		if (!type.has('changeLog')) {
 			let changeLog = [];
-			
+
 			if (info.read != 'false') {
 				let response = await crud.readDocumentList({		      
 					collection: "crdt-transactions",
@@ -49,11 +53,12 @@ async function getDoc(info) {
 				if (response.data.length && response.data[0][typeName]) {
 					changeLog = response.data[0][typeName];
 				}
-				docs.get(docName).get(typeName).set('changeLog', changeLog);
+				type.set('changeLog', changeLog);
 				await generateText(info, true);
 			}
+
 		}
-		else if (!docs.get(docName).get(typeName).has('text')){
+		else if (!type.has('text')){
 			await generateText(info, false);
 		}
 		return true;
@@ -88,7 +93,9 @@ async function generateText(info, flag) {
 
 async function checkDb(info, flag) {
 	let { collection, document_id, name } = info;
-	let response = await crud.readDocument({ collection, document_id, name })
+	if (checkedDb.get(`${collection}${document_id}${name}`)) return;
+	checkedDb.set(`${collection}${document_id}${name}`, true);
+	let response = await crud.readDocument({ collection, document_id, name });
 	let string = response.data[name];
 	if (string && flag != false) {
 		info.value = string;
@@ -233,8 +240,6 @@ async function getText(info) {
 		let doc = await getDoc(info);
 		if (doc) {
 			let value = docs.get(docName).get(typeName).get('text')
-			if (!value)
-			console.log(value)
 			return value;
 		}
 		else {
