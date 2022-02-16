@@ -340,7 +340,7 @@ function generateDocName(info) {
 }
 
 action.init({
-	action: "undo",
+	name: "undo",
 	endEvent: "undo",
 	callback: (btn, data) => {
 		undoChange(btn);
@@ -348,7 +348,7 @@ action.init({
 });
 
 action.init({
-	action: "redo",
+	name: "redo",
 	endEvent: "redo",
 	callback: (btn, data) => {
 		redoChange(btn);
