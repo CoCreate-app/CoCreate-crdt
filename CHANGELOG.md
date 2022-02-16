@@ -1,3 +1,10 @@
+## [1.9.7](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.9.6...v1.9.7) (2022-02-16)
+
+
+### Bug Fixes
+
+* update action param to name ([49e60b5](https://github.com/CoCreate-app/CoCreate-crdt/commit/49e60b593477e138fd3ae6bd6738f4f64fb804f6))
+
 ## [1.9.6](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.9.5...v1.9.6) (2022-02-10)
 
 
