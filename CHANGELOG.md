@@ -1,3 +1,10 @@
+## [1.9.9](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.9.8...v1.9.9) (2022-02-24)
+
+
+### Bug Fixes
+
+* CoCreate.config replace CoCreate.app with * ([05d590d](https://github.com/CoCreate-app/CoCreate-crdt/commit/05d590d36405322634849dbae6a80c1857ce143c))
+
 ## [1.9.8](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.9.7...v1.9.8) (2022-02-16)
 
 
