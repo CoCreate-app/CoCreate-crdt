@@ -182,10 +182,8 @@ function broadcastChange(info){
 	message.send({
 		room: "",
 		broadcast_sender: 'false',
-		emit: {
-			message: "crdt",
-			data: info
-		}
+		message: "crdt",
+		data: info
 	});
 }
 
@@ -217,7 +215,8 @@ function persistChange(info) {
 	});
 }
 
-message.listen('crdt', function(data) {
+message.listen('crdt', function(response) {
+    let data = response.data
 	if (docs.get(`${data.collection}${data.document_id}`)){
 		if (docs.get(`${data.collection}${data.document_id}`).get(data.name))
 		if (data.clientId !== clientId){
