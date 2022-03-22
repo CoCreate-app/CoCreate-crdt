@@ -1,3 +1,10 @@
+## [1.9.10](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.9.9...v1.9.10) (2022-03-22)
+
+
+### Bug Fixes
+
+* removed emit from message.send and message.listen ([203f46d](https://github.com/CoCreate-app/CoCreate-crdt/commit/203f46ddd00a5f06cc77648a722619f41c3f1000))
+
 ## [1.9.9](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.9.8...v1.9.9) (2022-02-24)
 
 
