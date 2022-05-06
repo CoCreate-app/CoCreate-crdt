@@ -1,3 +1,10 @@
+## [1.9.11](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.9.10...v1.9.11) (2022-05-06)
+
+
+### Bug Fixes
+
+* update config organization_Id to organization_id ([a683683](https://github.com/CoCreate-app/CoCreate-crdt/commit/a6836834cfdece7c37a243a2e8e325dabf55681c))
+
 ## [1.9.10](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.9.9...v1.9.10) (2022-03-22)
 
 
