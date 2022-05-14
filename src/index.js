@@ -40,7 +40,7 @@ async function getDoc(info) {
 			let changeLog = [];
 
 			if (info.read != 'false') {
-				let response = await crud.readDocumentList({		      
+				let response = await crud.readDocuments({		      
 					collection: "crdt-transactions",
 					operator: {
 						filters: [{
