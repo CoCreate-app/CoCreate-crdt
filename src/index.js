@@ -38,7 +38,13 @@ async function getDoc(info) {
 		}
 		if (!type.has('changeLog')) {
 			let changeLog = [];
-
+			
+			let undoLog = new Map()
+			type.set('undoLog', undoLog)
+			
+			let redoLog = new Map()
+			type.set('redoLog', redoLog)
+			
 			if (info.read != 'false') {
 				let response = await crud.readDocuments({		      
 					collection: "crdt-transactions",
@@ -170,12 +176,81 @@ function insertChange(info, broadcast, flag) {
 		persistChange(info);
 }
 
-function undoChange(){
-	
+function undoText(info){
+	let docName = generateDocName(info);
+	let typeName = info.name;
+
+	let name = docs.get(docName).get(typeName);
+	let changeLog = name.get('changeLog');
+	let undoLog = name.get('undoLog')
+
+	for (let index = changeLog.length - 1; index >= 0; index--) {
+		let change = changeLog[index];
+		if (change && change.clientId == clientId){
+			let log = undoLog.get(index)
+			if (!log) {
+				if (log != 'undo') {
+					undoLog.set(index, 'undo')
+					change.index = changeLog.length += 1;
+					if (change.value && change.length == 0) {
+						change.length = change.value.length
+						change.removedValue = change.value
+						change.value = '';
+						// change.start += 1;
+						change.type = 'delete';
+					} else {
+						change.value = change.removedValue
+						change.length = 0;
+						change.type = 'insert';
+					}
+					info = {...info, ...change};
+					delete info.clientId
+					undoLog.set(change.index, change)
+					insertChange(info)
+					return	console.log(change)
+				}
+			}
+		}
+	}
 }
 
-function redoChange(){
-	
+function redoText(info){
+	let docName = generateDocName(info);
+	let typeName = info.name;
+
+	let name = docs.get(docName).get(typeName);
+	// let undoLog = name.get('undoLog')
+	let redoLog = name.get('redoLog')
+	// let array = Array.from(undoLog, ([value]) => ({ value }));
+	let undoLog = Array.from(name.get('undoLog').values());
+
+	for (let index = undoLog.length - 1; index >= 0; index--) {
+		let change = undoLog[index];
+		if (change && change != 'undo') {
+			let log = redoLog.get(change.index)
+
+			if (!log) {
+				if (log != 'redo') {
+					// undoLog.set(change.index, 'redo')
+
+					if (!change.value) {
+						change.length = 0;
+						change.value = change.removedValue
+						change.start += 1;
+					} else {
+						change.length = change.value.length
+						change.removedValue = change.value
+						change.value = '';
+					}
+					info = {...info, ...change};
+					delete info.clientId
+					redoLog.set(change.index, change)
+					insertChange(info)
+					return	console.log(change)
+				}
+			}
+		}
+	}
 }
 
 function broadcastChange(info){
@@ -342,7 +417,7 @@ action.init({
 	name: "undo",
 	endEvent: "undo",
 	callback: (btn, data) => {
-		undoChange(btn);
+		undoText(btn);
 	}
 });
 
@@ -350,8 +425,8 @@ action.init({
 	name: "redo",
 	endEvent: "redo",
 	callback: (btn, data) => {
-		redoChange(btn);
+		redoText(btn);
 	}
 });
 
-export default { init, getText, updateText, replaceText };
+export default { init, getText, updateText, replaceText, undoText, redoText };
