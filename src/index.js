@@ -2,7 +2,6 @@
 import crud from '@cocreate/crud-client';
 import message from '@cocreate/message-client';
 import uuid from '@cocreate/uuid';
-import action from '@cocreate/actions';
 
 const docs = new Map();
 const clientId = config.clientId || window.CoCreateSockets.clientId || uuid.generate(12);
@@ -84,7 +83,10 @@ async function generateText(info, flag) {
 		let string = '';
 		let changeLog = name.get('changeLog');
 		for (let change of changeLog) {
-			string = string.customSplice(change.start, change.length, change.value);
+			if (change || change !== null ) {
+				string = string.customSplice(change.start, change.length, change.value);
+			}		
+			// string = string.customSplice(change.start, change.length, change.value);
 		}
 		if (string === '' && info.read !== 'false'){
 			string = await checkDb(info, flag);
@@ -111,7 +113,7 @@ async function checkDb(info, flag) {
 	return string || '';
 }
 
-function insertChange(info, broadcast, flag) {
+function insertChange(info, flag) {
 	let docName = generateDocName(info);
 	let typeName = info.name;
 	let type = 'insert';
@@ -157,8 +159,15 @@ function insertChange(info, broadcast, flag) {
 			}
 		}
 	}
-	changeLog.push(change);
+	if (!change || change == null ) {
+		console.log('null change')
+		return
+	}
 	let string = name.get('text') || '';
+	if (change.length > 0)
+		change.removedValue = string.substr(change.start, change.length);
+	
+	changeLog.push(change);
 	name.set('text', string.customSplice(change.start, change.length, change.value));
 	string = {string: name.get('text')};
 	
@@ -174,83 +183,6 @@ function insertChange(info, broadcast, flag) {
 		
 	if (info.clientId == clientId && info.save != "false")
 		persistChange(info);
-}
-
-function undoText(info){
-	let docName = generateDocName(info);
-	let typeName = info.name;
-
-	let name = docs.get(docName).get(typeName);
-	let changeLog = name.get('changeLog');
-	let undoLog = name.get('undoLog')
-
-	for (let index = changeLog.length - 1; index >= 0; index--) {
-		let change = changeLog[index];
-		if (change && change.clientId == clientId){
-			let log = undoLog.get(index)
-			if (!log) {
-				if (log != 'undo') {
-					undoLog.set(index, 'undo')
-					change.index = changeLog.length += 1;
-					if (change.value && change.length == 0) {
-						change.length = change.value.length
-						change.removedValue = change.value
-						change.value = '';
-						// change.start += 1;
-						change.type = 'delete';
-					} else {
-						change.value = change.removedValue
-						change.length = 0;
-						change.type = 'insert';
-					}
-					info = {...info, ...change};
-					delete info.clientId
-					undoLog.set(change.index, change)
-					insertChange(info)
-					return	console.log(change)
-				}
-			}
-		}
-	}
-}
-
-function redoText(info){
-	let docName = generateDocName(info);
-	let typeName = info.name;
-
-	let name = docs.get(docName).get(typeName);
-	// let undoLog = name.get('undoLog')
-	let redoLog = name.get('redoLog')
-	// let array = Array.from(undoLog, ([value]) => ({ value }));
-	let undoLog = Array.from(name.get('undoLog').values());
-
-	for (let index = undoLog.length - 1; index >= 0; index--) {
-		let change = undoLog[index];
-		if (change && change != 'undo') {
-			let log = redoLog.get(change.index)
-
-			if (!log) {
-				if (log != 'redo') {
-					// undoLog.set(change.index, 'redo')
-
-					if (!change.value) {
-						change.length = 0;
-						change.value = change.removedValue
-						change.start += 1;
-					} else {
-						change.length = change.value.length
-						change.removedValue = change.value
-						change.value = '';
-					}
-					info = {...info, ...change};
-					delete info.clientId
-					redoLog.set(change.index, change)
-					insertChange(info)
-					return	console.log(change)
-				}
-			}
-		}
-	}
 }
 
 function broadcastChange(info){
@@ -373,7 +305,7 @@ async function updateText(info, flag) {
 	let doc = await getDoc(info);
 	if (doc) {
 		
-		insertChange(info, broadcast, flag);
+		insertChange(info, flag);
 		
 		if (info.crud != 'false' && info.save != 'false') {
 			let wholestring = await getText(info);
@@ -390,6 +322,76 @@ async function updateText(info, flag) {
 				broadcast_sender: info.broadcast_sender,
 				metadata: 'crdt-change'
 			});
+		}
+	}
+}
+
+function createChange(info, change){
+	if (change.value && change.length == 0) {
+		change.length = change.value.length
+		change.removedValue = change.value
+		change.value = '';
+		change.type = 'delete';
+	} else {
+		change.value = change.removedValue
+		change.length = 0;
+		change.type = 'insert';
+	}
+	info = {...info, ...change};
+	delete info.clientId
+	delete info.datetime
+	delete change.clientId
+	delete change.datetime
+	return {info, change}
+}
+
+function undoText(info){
+	let docName = generateDocName(info);
+	let typeName = info.name;
+
+	let name = docs.get(docName).get(typeName);
+	let changeLog = name.get('changeLog');
+	let undoLog = name.get('undoLog')
+
+	for (let index = changeLog.length - 1; index >= 0; index--) {
+		let change =  Object.assign({}, changeLog[index]);
+		if (change && change.clientId == clientId){
+			let log = undoLog.get(index)
+			if (!log) {
+				if (log != 'undo') {
+					undoLog.set(index, 'undo')
+					change.index = changeLog.length += 1;
+					let updated = createChange(info, change);
+					undoLog.set(updated.change.index, updated.change)
+					updateText(updated.info)
+					return
+				}
+			}
+		}
+	}
+}
+
+function redoText(info){
+	let docName = generateDocName(info);
+	let typeName = info.name;
+
+	let name = docs.get(docName).get(typeName);
+	let redoLog = name.get('redoLog')
+	let undoLog = Array.from(name.get('undoLog').values());
+
+	for (let index = undoLog.length - 1; index >= 0; index--) {
+		let change = Object.assign({}, undoLog[index]);
+		if (change && change != 'undo') {
+			let log = redoLog.get(change.index)
+
+			if (!log) {
+				if (log != 'redo') {
+					let updated = createChange(info, change);
+					redoLog.set(updated.change.index, updated.change)
+					updateText(updated.info)
+					return
+				}
+			}
 		}
 	}
 }
@@ -412,21 +414,5 @@ function generateDocName(info) {
 	return `${info.collection}${info.document_id}`;
 	// return btoa(JSON.stringify(docName));
 }
-
-action.init({
-	name: "undo",
-	endEvent: "undo",
-	callback: (btn, data) => {
-		undoText(btn);
-	}
-});
-
-action.init({
-	name: "redo",
-	endEvent: "redo",
-	callback: (btn, data) => {
-		redoText(btn);
-	}
-});
 
 export default { init, getText, updateText, replaceText, undoText, redoText };
