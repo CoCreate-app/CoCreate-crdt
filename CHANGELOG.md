@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.10.1...v1.11.0) (2022-06-11)
+
+
+### Features
+
+* undo and redo text ([3d0c74e](https://github.com/CoCreate-app/CoCreate-crdt/commit/3d0c74ef80b2cf1e9cfa6557007ac40a5ddc4949))
+
 ## [1.10.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.10.0...v1.10.1) (2022-05-23)
 
 
