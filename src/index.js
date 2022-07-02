@@ -396,6 +396,24 @@ function redoText(info){
 	}
 }
 
+async function viewVersion(data) {
+	try {
+		let name = docs.get(`${data.collection}${data.document_id}`).get(data.name);
+		let string = '';
+		let changeLog = name.get('changeLog');
+		let log = changeLog.slice(0, data.version)
+		for (let change of log) {
+			if (change || change !== null ) {
+				string = string.customSplice(change.start, change.length, change.value);
+			}		
+		}
+		return { ...data, ...string }
+	}
+	catch (e) {
+		console.error(e);
+	}
+}
+
 
 
 // function deleteDoc(docName) {
@@ -415,4 +433,4 @@ function generateDocName(info) {
 	// return btoa(JSON.stringify(docName));
 }
 
-export default { init, getText, updateText, replaceText, undoText, redoText };
+export default { init, getText, updateText, replaceText, undoText, redoText, viewVersion };
