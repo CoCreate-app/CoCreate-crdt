@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.11.2...v1.12.0) (2022-07-03)
+
+
+### Features
+
+* viewVersion function to return string of a specified version ([e652663](https://github.com/CoCreate-app/CoCreate-crdt/commit/e65266331c25baef10698e6234686a82b77ca4a6))
+
 ## [1.11.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.11.1...v1.11.2) (2022-06-18)
 
 
