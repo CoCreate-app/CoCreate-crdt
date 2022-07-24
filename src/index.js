@@ -19,6 +19,8 @@ function init(info){
 
 async function getDoc(info) {
 	try {
+		if (['_id', 'organization_id'].includes(info.name))
+			return
 		let docName = generateDocName(info);
 		let typeName = info.name;
 		let doc = docs.get(docName);
@@ -104,7 +106,7 @@ async function checkDb(info, flag) {
 	if (checkedDb.get(`${collection}${document_id}${name}`)) return;
 	checkedDb.set(`${collection}${document_id}${name}`, true);
 	let response = await crud.readDocument({ collection, document_id, name });
-	let string = response.data[name];
+	let string = crud.getObjectValueByPath(response.data, name);
 	if (string && flag != false) {
 		info.value = string;
 		info.start = 0;
