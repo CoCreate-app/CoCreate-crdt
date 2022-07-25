@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.12.0...v1.13.0) (2022-07-25)
+
+
+### Features
+
+* crud.getObjectValueByPath to return value using name containing a dotNotation string ([fd8bebf](https://github.com/CoCreate-app/CoCreate-crdt/commit/fd8bebf17722396a71d55affb297ec2718fb46a8))
+
 # [1.12.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.11.2...v1.12.0) (2022-07-03)
 
 
