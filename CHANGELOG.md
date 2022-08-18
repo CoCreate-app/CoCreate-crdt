@@ -1,3 +1,10 @@
+## [1.13.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.13.0...v1.13.1) (2022-08-18)
+
+
+### Bug Fixes
+
+* checkDb function requires for clientId to be added ([b5a1545](https://github.com/CoCreate-app/CoCreate-crdt/commit/b5a1545bb83a26b7eb9427a030081ec170688a6b))
+
 # [1.13.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.12.0...v1.13.0) (2022-07-25)
 
 
