@@ -110,6 +110,7 @@ async function checkDb(info, flag) {
 	if (string && flag != false) {
 		info.value = string;
 		info.start = 0;
+		info.clientId = clientId;
 		insertChange(info);
 	}
 	return string || '';
