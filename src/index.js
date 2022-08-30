@@ -191,7 +191,7 @@ function insertChange(info, flag) {
 function broadcastChange(info){
 	message.send({
 		room: "",
-		broadcast_sender: 'false',
+		broadcastSender: 'false',
 		message: "crdt",
 		data: info
 	});
@@ -220,7 +220,7 @@ function persistChange(info) {
 		namespace: info.namespace,
 		room: info.room,
 		broadcast: info.broadcast,
-		broadcast_sender: info.broadcast_sender,
+		broadcastSender: info.broadcastSender,
 		metadata: 'crdt-change'
 	});
 }
@@ -322,7 +322,7 @@ async function updateText(info, flag) {
 				namespace: info.namespace,
 				room: info.room,
 				broadcast: info.broadcast,
-				broadcast_sender: info.broadcast_sender,
+				broadcastSender: info.broadcastSender,
 				metadata: 'crdt-change'
 			});
 		}
