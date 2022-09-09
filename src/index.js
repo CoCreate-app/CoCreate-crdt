@@ -49,8 +49,8 @@ async function getDoc(info) {
 			if (info.read != 'false') {
 				let response = await crud.readDocuments({		      
 					collection: "crdt-transactions",
-					operator: {
-						filters: [{
+					filter: {
+						query: [{
 							name: 'docName',
 							operator: "$eq",
 							value: [docName]
