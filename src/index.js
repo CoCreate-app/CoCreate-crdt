@@ -53,7 +53,7 @@ async function getDoc(info) {
 						query: [{
 							name: 'docName',
 							operator: "$eq",
-							value: [docName]
+							value: docName
 						}]
 					}
 				});
@@ -213,6 +213,7 @@ function persistChange(info) {
 		collection: 'crdt-transactions',
 		document_id: info.document_id,
 		data: {
+			_id: info.document_id,
 			docName,
 			[typeName]: changeLog
 		},
