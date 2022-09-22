@@ -1,3 +1,12 @@
+## [1.13.4](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.13.3...v1.13.4) (2022-09-22)
+
+
+### Bug Fixes
+
+* bumped dependencies ([8cebe54](https://github.com/CoCreate-app/CoCreate-crdt/commit/8cebe5497ac9256c35f146bf42b79001b50b02dc))
+* readDocumnts - operator.filters renamed to filter.query ([dbad4f2](https://github.com/CoCreate-app/CoCreate-crdt/commit/dbad4f2a16d56f7edd12395c8c16ce156cd021d6))
+* update filter value to string and add data.data._id ([00d2715](https://github.com/CoCreate-app/CoCreate-crdt/commit/00d27152c115f1cf77e8c2dd6edbe39a736a8574))
+
 ## [1.13.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.13.2...v1.13.3) (2022-09-01)
 
 
