@@ -4,7 +4,7 @@ import message from '@cocreate/message-client';
 import uuid from '@cocreate/uuid';
 
 const docs = new Map();
-const clientId = config.clientId || window.CoCreateSockets.clientId || uuid.generate(12);
+const clientId = crud.socket.clientId || uuid.generate(12);
 const checkedDb = new Map();
 const isInit = new Map();
 
