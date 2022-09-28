@@ -1,3 +1,10 @@
+## [1.13.5](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.13.4...v1.13.5) (2022-09-28)
+
+
+### Bug Fixes
+
+* get clientId from socket object ([a2f5b68](https://github.com/CoCreate-app/CoCreate-crdt/commit/a2f5b68a7d8ba1ecee0f66d7d9254cc236deaeaf))
+
 ## [1.13.4](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.13.3...v1.13.4) (2022-09-22)
 
 
