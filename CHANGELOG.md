@@ -1,3 +1,10 @@
+## [1.13.11](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.13.10...v1.13.11) (2022-10-02)
+
+
+### Bug Fixes
+
+* bump @cocreate/hosting and @cocreate/socket-client ([4d687e6](https://github.com/CoCreate-app/CoCreate-crdt/commit/4d687e6b850dd55c0560e606117390d5810d7f2f))
+
 ## [1.13.10](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.13.9...v1.13.10) (2022-10-01)
 
 
