@@ -1,7 +1,13 @@
 /*globals config, atob, btoa, localStorage, CustomEvent*/
-import crud from '@cocreate/crud-client';
+import CRUD from '@cocreate/crud-client';
 import message from '@cocreate/message-client';
 import uuid from '@cocreate/uuid';
+
+let crud
+if(CRUD && CRUD.default)
+	crud = CRUD.default
+else
+	crud = CRUD
 
 const docs = new Map();
 const clientId = crud.socket.clientId || uuid.generate(12);
@@ -47,7 +53,7 @@ async function getDoc(info) {
 			type.set('redoLog', redoLog)
 			
 			if (info.read != 'false') {
-				let response = await crud.readDocuments({		      
+				let response = await crud.readDocument({		      
 					collection: "crdt-transactions",
 					filter: {
 						query: [{
@@ -105,8 +111,8 @@ async function checkDb(info, flag) {
 	let { collection, document_id, name } = info;
 	if (checkedDb.get(`${collection}${document_id}${name}`)) return;
 	checkedDb.set(`${collection}${document_id}${name}`, true);
-	let response = await crud.readDocument({ collection, document_id, name });
-	let string = crud.getObjectValueByPath(response.data, name);
+	let response = await crud.readDocument({ collection, data: {_id: document_id, name}});
+	let string = crud.getObjectValueByPath(response.data[0], name);
 	if (string && flag != false) {
 		info.value = string;
 		info.start = 0;
@@ -315,8 +321,8 @@ async function updateText(info, flag) {
 			let wholestring = await getText(info);
 			crud.updateDocument({
 				collection: info.collection,
-				document_id: info.document_id,
 				data: {
+					_id: info.document_id,
 					[info.name]: wholestring
 				},
 				upsert: info.upsert,
