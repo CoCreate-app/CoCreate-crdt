@@ -63,8 +63,8 @@ async function getDoc(info) {
 						}]
 					}
 				});
-				if (response.data.length && response.data[0][typeName]) {
-					changeLog = response.data[0][typeName];
+				if (response.document.length && response.document[0][typeName]) {
+					changeLog = response.document[0][typeName];
 				}
 				type.set('changeLog', changeLog);
 				await generateText(info, true);
@@ -111,8 +111,8 @@ async function checkDb(info, flag) {
 	let { collection, document_id, name } = info;
 	if (checkedDb.get(`${collection}${document_id}${name}`)) return;
 	checkedDb.set(`${collection}${document_id}${name}`, true);
-	let response = await crud.readDocument({ collection, data: {_id: document_id, name}});
-	let string = crud.getObjectValueByPath(response.data[0], name);
+	let response = await crud.readDocument({ collection, document: {_id: document_id, name}});
+	let string = crud.getObjectValueByPath(response.document[0], name);
 	if (string && flag != false) {
 		info.value = string;
 		info.start = 0;
@@ -218,7 +218,7 @@ function persistChange(info) {
 	crud.updateDocument({
 		collection: 'crdt-transactions',
 		document_id: info.document_id,
-		data: {
+		document: {
 			_id: info.document_id,
 			docName,
 			[typeName]: changeLog
@@ -321,7 +321,7 @@ async function updateText(info, flag) {
 			let wholestring = await getText(info);
 			crud.updateDocument({
 				collection: info.collection,
-				data: {
+				document: {
 					_id: info.document_id,
 					[info.name]: wholestring
 				},
