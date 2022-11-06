@@ -53,23 +53,24 @@ async function getDoc(info) {
 			type.set('redoLog', redoLog)
 			
 			if (info.read != 'false') {
-				let response = await crud.readDocument({		      
-					collection: "crdt-transactions",
-					filter: {
-						query: [{
-							name: 'docName',
-							operator: "$eq",
-							value: docName
-						}]
+				if (!info.newDocument) {
+					let response = await crud.readDocument({		      
+						collection: "crdt-transactions",
+						filter: {
+							query: [{
+								name: 'docName',
+								operator: "$eq",
+								value: docName
+							}]
+						}
+					});
+					if (response.document.length && response.document[0][typeName]) {
+						changeLog = response.document[0][typeName];
 					}
-				});
-				if (response.document.length && response.document[0][typeName]) {
-					changeLog = response.document[0][typeName];
 				}
 				type.set('changeLog', changeLog);
 				await generateText(info, true);
-			}
-
+			} 
 		}
 		else if (!type.has('text')){
 			await generateText(info, false);
@@ -94,9 +95,8 @@ async function generateText(info, flag) {
 			if (change || change !== null ) {
 				string = string.customSplice(change.start, change.length, change.value);
 			}		
-			// string = string.customSplice(change.start, change.length, change.value);
 		}
-		if (string === '' && info.read !== 'false'){
+		if (string === '' && info.read !== 'false') {
 			string = await checkDb(info, flag);
 		}
 		name.set('text', string);
@@ -111,8 +111,14 @@ async function checkDb(info, flag) {
 	let { collection, document_id, name } = info;
 	if (checkedDb.get(`${collection}${document_id}${name}`)) return;
 	checkedDb.set(`${collection}${document_id}${name}`, true);
-	let response = await crud.readDocument({ collection, document: {_id: document_id, name}});
-	let string = crud.getObjectValueByPath(response.document[0], name);
+
+	let string = ''
+	if (info.newDocument)
+		string = info.newDocument
+	else {
+		let response = await crud.readDocument({ collection, document: {_id: document_id, name}});
+		string = crud.getObjectValueByPath(response.document[0], name);
+	}
 	if (string && flag != false) {
 		info.value = string;
 		info.start = 0;
@@ -311,7 +317,6 @@ crdt.updateText({
 })
 */
 async function updateText(info, flag) {
-	let broadcast = true;
 	let doc = await getDoc(info);
 	if (doc) {
 		
