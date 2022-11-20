@@ -239,7 +239,7 @@ function persistChange(info) {
 }
 
 message.listen('crdt', function(response) {
-    let data = response.data
+	let data = response.data
 	if (docs.get(`${data.collection}${data.document_id}`)){
 		if (docs.get(`${data.collection}${data.document_id}`).get(data.name))
 		if (data.clientId !== clientId){
