@@ -150,6 +150,8 @@ function insertChange(info, flag) {
 	
 	let name = docs.get(docName).get(typeName);
 	let changeLog = name.get('changeLog');
+	if (!changeLog)
+		return
 
 	let lastChange = changeLog[changeLog.length - 1];
 	if (lastChange && change.datetime && lastChange.datetime){
