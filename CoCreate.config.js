@@ -10,7 +10,7 @@ module.exports = {
             "collection": "files",
             "document_id": "6019e6794eea0817df303b10",
             "key": "src",
-            "data": {
+            "document": {
                 "name": "index.html",
                 "path": "/docs/crdt/index.html",
                 "domains": [
