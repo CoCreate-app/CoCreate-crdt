@@ -1,3 +1,10 @@
+## [1.14.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.2...v1.14.3) (2022-11-21)
+
+
+### Bug Fixes
+
+* replaced document_id with document._id ([2c8951f](https://github.com/CoCreate-app/CoCreate-crdt/commit/2c8951f820edd8c97c115fc692bff0cafd9684ae))
+
 ## [1.14.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.1...v1.14.2) (2022-11-21)
 
 
