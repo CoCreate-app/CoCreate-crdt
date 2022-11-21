@@ -1,3 +1,17 @@
+# [1.14.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.13.12...v1.14.0) (2022-11-21)
+
+
+### Bug Fixes
+
+* if no changeLog return ([f49fe1b](https://github.com/CoCreate-app/CoCreate-crdt/commit/f49fe1b11df5dccd03dcc793cb7fb184ebaa7a9d))
+* renamed data.data to data.document ([c72f10c](https://github.com/CoCreate-app/CoCreate-crdt/commit/c72f10ce530c5ec3e3c7dad84af3c0b3f8cfbac9))
+* update crud functions to receive an array of objects as the response ([89e0713](https://github.com/CoCreate-app/CoCreate-crdt/commit/89e0713bff990100a0cb7e98dfd1258c16f51050))
+
+
+### Features
+
+* newDocument to set newValue or overide existing value. ([4a811c6](https://github.com/CoCreate-app/CoCreate-crdt/commit/4a811c66362c60138dc27d723168c4d2d54417cc))
+
 ## [1.13.12](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.13.11...v1.13.12) (2022-10-02)
 
 
