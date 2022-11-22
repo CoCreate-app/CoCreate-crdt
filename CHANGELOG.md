@@ -1,3 +1,11 @@
+## [1.14.5](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.4...v1.14.5) (2022-11-22)
+
+
+### Bug Fixes
+
+* apply src: {{source}} to CoCreate.config ([d4e7d83](https://github.com/CoCreate-app/CoCreate-crdt/commit/d4e7d8330d2db7554943cfc099b46af8b499e568))
+* workflow docs ([eb09f6a](https://github.com/CoCreate-app/CoCreate-crdt/commit/eb09f6a5e38426137bd160fdf17897439f1d7bdf))
+
 ## [1.14.4](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.3...v1.14.4) (2022-11-21)
 
 
