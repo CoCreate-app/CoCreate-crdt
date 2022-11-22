@@ -8,11 +8,11 @@ module.exports = {
         {
             "entry": "./docs/index.html",
             "collection": "files",
-            "document_id": "6019e6794eea0817df303b10",
-            "key": "src",
             "document": {
+                "_id": "6019e6794eea0817df303b10",
                 "name": "index.html",
                 "path": "/docs/crdt/index.html",
+                "src": "{{source}}",
                 "domains": [
                     "*",
                     "general.cocreate.app"
