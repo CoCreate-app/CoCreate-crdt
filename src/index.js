@@ -4,7 +4,7 @@ import message from '@cocreate/message-client';
 import uuid from '@cocreate/uuid';
 
 let crud
-if(CRUD && CRUD.default)
+if (CRUD && CRUD.default)
 	crud = CRUD.default
 else
 	crud = CRUD
@@ -133,7 +133,7 @@ function insertChange(info, flag) {
 	let typeName = info.name;
 	let type = 'insert';
 	
-	if(info.start == undefined) return;
+	if (info.start == undefined) return;
 	if (!info.value)
 		type = 'delete';
 	
@@ -188,7 +188,7 @@ function insertChange(info, flag) {
 	name.set('text', string.customSplice(change.start, change.length, change.value));
 	string = {string: name.get('text')};
 	
-	if(!info.clientId){
+	if (!info.clientId){
 		info['datetime'] = change.datetime;
 		info['clientId'] = change.clientId;
 		
