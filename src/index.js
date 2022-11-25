@@ -1,13 +1,7 @@
 /*globals config, atob, btoa, localStorage, CustomEvent*/
-import CRUD from '@cocreate/crud-client';
+import crud from '@cocreate/crud-client';
 import message from '@cocreate/message-client';
 import uuid from '@cocreate/uuid';
-
-let crud
-if (CRUD && CRUD.default)
-	crud = CRUD.default
-else
-	crud = CRUD
 
 const docs = new Map();
 const clientId = crud.socket.clientId || uuid.generate(12);
