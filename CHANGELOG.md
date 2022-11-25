@@ -1,3 +1,11 @@
+## [1.14.8](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.7...v1.14.8) (2022-11-25)
+
+
+### Bug Fixes
+
+* bump dependencies ([0343dca](https://github.com/CoCreate-app/CoCreate-crdt/commit/0343dcae083fc7fd4749ea55160ffee09fb41b91))
+* CoCreate.crud.default removed bug causing default object ([9579fb7](https://github.com/CoCreate-app/CoCreate-crdt/commit/9579fb7e6dc879b4e6a0628df2d073030246da8d))
+
 ## [1.14.7](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.6...v1.14.7) (2022-11-24)
 
 
