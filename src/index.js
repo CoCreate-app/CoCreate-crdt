@@ -200,6 +200,7 @@ function broadcastChange(info){
 	message.send({
 		room: "",
 		broadcastSender: 'false',
+		broadcastBrowser: 'once',
 		message: "crdt",
 		data: info
 	});
