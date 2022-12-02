@@ -8,21 +8,21 @@ const clientId = crud.socket.clientId || uuid.generate(12);
 const checkedDb = new Map();
 const isInit = new Map();
 
-function init(info){
-	getText(info).then(value => {
-		info.value = value;
-		info.start = 0;
-		info['clientId'] = clientId;
-		localChange(info);
+function init(data){
+	getText(data).then(value => {
+		data.value = value;
+		data.start = 0;
+		data['clientId'] = clientId;
+		localChange(data);
 	});
 }
 
-async function getDoc(info) {
+async function getDoc(data) {
 	try {
-		if (['_id', 'organization_id'].includes(info.name))
+		if (['_id', 'organization_id'].includes(data.name))
 			return
-		let docName = generateDocName(info);
-		let typeName = info.name;
+		let docName = generateDocName(data);
+		let typeName = data.name;
 		let doc = docs.get(docName);
 		
 		if (!doc) {
@@ -46,8 +46,8 @@ async function getDoc(info) {
 			let redoLog = new Map()
 			type.set('redoLog', redoLog)
 			
-			if (info.read != 'false') {
-				if (!info.newDocument) {
+			if (data.read != 'false') {
+				if (!data.newDocument) {
 					let response = await crud.readDocument({		      
 						collection: "crdt-transactions",
 						filter: {
@@ -63,11 +63,11 @@ async function getDoc(info) {
 					}
 				}
 				type.set('changeLog', changeLog);
-				await generateText(info, true);
+				await generateText(data, true);
 			} 
 		}
 		else if (!type.has('text')){
-			await generateText(info, false);
+			await generateText(data, false);
 		}
 		return true;
 	}
@@ -80,9 +80,9 @@ String.prototype.customSplice = function (index, absIndex, string) {
     return this.slice(0, index) + string+ this.slice(index + Math.abs(absIndex));
 };
 
-async function generateText(info, flag) {
+async function generateText(data, flag) {
 	try {
-		let name = docs.get(`${info.collection}${info.document_id}`).get(info.name);
+		let name = docs.get(`${data.collection}${data.document_id}`).get(data.name);
 		let string = '';
 		let changeLog = name.get('changeLog');
 		for (let change of changeLog) {
@@ -90,8 +90,8 @@ async function generateText(info, flag) {
 				string = string.customSplice(change.start, change.length, change.value);
 			}		
 		}
-		if (string === '' && info.read !== 'false') {
-			string = await checkDb(info, flag);
+		if (string === '' && data.read !== 'false') {
+			string = await checkDb(data, flag);
 		}
 		name.set('text', string);
 		return;
@@ -101,44 +101,44 @@ async function generateText(info, flag) {
 	}
 }
 
-async function checkDb(info, flag) {
-	let { collection, document_id, name } = info;
+async function checkDb(data, flag) {
+	let { collection, document_id, name } = data;
 	if (checkedDb.get(`${collection}${document_id}${name}`)) return;
 	checkedDb.set(`${collection}${document_id}${name}`, true);
 
 	let string = ''
-	if (info.newDocument)
-		string = info.newDocument
+	if (data.newDocument)
+		string = data.newDocument
 	else {
 		let response = await crud.readDocument({ collection, document: {_id: document_id, name}});
 		string = crud.getObjectValueByPath(response.document[0], name);
 	}
 	if (string && flag != false) {
-		info.value = string;
-		info.start = 0;
-		info.clientId = clientId;
-		insertChange(info);
+		data.value = string;
+		data.start = 0;
+		data.clientId = clientId;
+		insertChange(data);
 	}
 	return string || '';
 }
 
-function insertChange(info, flag) {
-	let docName = generateDocName(info);
-	let typeName = info.name;
+function insertChange(data, flag) {
+	let docName = generateDocName(data);
+	let typeName = data.name;
 	let type = 'insert';
 	
-	if (info.start == undefined) return;
-	if (!info.value)
+	if (data.start == undefined) return;
+	if (!data.value)
 		type = 'delete';
 	
 	let change = {
-		datetime: info.datetime || new Date().toISOString(),
-		value: info.value || '',
-		start: info.start,
-		end: info.end,
-		length: info.length || 0,
-		clientId: info.clientId || clientId,
-		user_id: info.user_id || localStorage.getItem("user_id"),
+		datetime: data.datetime || new Date().toISOString(),
+		value: data.value || '',
+		start: data.start,
+		end: data.end,
+		length: data.length || 0,
+		clientId: data.clientId || clientId,
+		user_id: data.user_id || localStorage.getItem("user_id"),
 		type
 	};
 	
@@ -160,11 +160,11 @@ function insertChange(info, flag) {
 				if (diff < 500) {
 					if (change.value.length == 1) {
 						change.start = lastChange.start + lastChange.value.length;
-						info.start = change.start;
+						data.start = change.start;
 					}
 					if (change.length == 1) {
 						change.start = lastChange.start - lastChange.length;
-						info.start = change.start;
+						data.start = change.start;
 					}
 				}
 			}
@@ -182,27 +182,27 @@ function insertChange(info, flag) {
 	name.set('text', string.customSplice(change.start, change.length, change.value));
 	string = {string: name.get('text')};
 	
-	if (!info.clientId){
-		info['datetime'] = change.datetime;
-		info['clientId'] = change.clientId;
+	if (!data.clientId){
+		data['datetime'] = change.datetime;
+		data['clientId'] = change.clientId;
 		
-		broadcastChange(info);
-		localChange(info, string);
+		broadcastChange(data);
+		localChange(data, string);
 	}
 	else
-		localChange(info, string);
+		localChange(data, string);
 		
-	if (info.clientId == clientId && info.save != "false")
-		persistChange(info);
+	if (data.clientId == clientId && data.save != "false")
+		persistChange(data);
 }
 
-function broadcastChange(info){
+function broadcastChange(data){
 	message.send({
 		room: "",
 		broadcastSender: 'false',
 		broadcastBrowser: 'once',
 		message: "crdt",
-		data: info
+		data
 	});
 }
 
@@ -213,26 +213,27 @@ function localChange(data, string) {
 	window.dispatchEvent(localChange);
 }
 
-function persistChange(info) {
-	let docName = generateDocName(info);
-	let typeName = info.name;
+function persistChange(data) {
+	let docName = generateDocName(data);
+	let typeName = data.name;
 	let name = docs.get(docName).get(typeName);
 	let changeLog = name.get('changeLog');
-	crud.updateDocument({
+	let Data = {
 		collection: 'crdt-transactions',
-		document_id: info.document_id,
 		document: {
-			_id: info.document_id,
+			_id: data.document_id,
 			docName,
 			[typeName]: changeLog
 		},
 		upsert: true,
-		namespace: info.namespace,
-		room: info.room,
-		broadcast: info.broadcast,
-		broadcastSender: info.broadcastSender,
+		namespace: data.namespace,
+		room: data.room,
+		broadcast: data.broadcast,
+		broadcastSender: data.broadcastSender,
 		metadata: 'crdt-change'
-	});
+	}
+
+	crud.updateDocument(Data);
 }
 
 message.listen('crdt', function(response) {
@@ -252,11 +253,11 @@ crdt.getText({
 	name: 'name'
 })
 */
-async function getText(info) {
+async function getText(data) {
 	try {
-		let docName = generateDocName(info);
-		let typeName = info.name;
-		let doc = await getDoc(info);
+		let docName = generateDocName(data);
+		let typeName = data.name;
+		let doc = await getDoc(data);
 		if (doc) {
 			let value = docs.get(docName).get(typeName).get('text')
 			return value;
@@ -283,18 +284,18 @@ crdt.replaceText({
 	metadata: "xxxx"
 })
 */
-async function replaceText(info) {
+async function replaceText(data) {
 	try {
-		let doc = await getDoc(info);
+		let doc = await getDoc(data);
 		if (doc) {
-			let oldValue = await getText(info);
+			let oldValue = await getText(data);
 			if (oldValue)
-				info.length = oldValue.length;
+				data.length = oldValue.length;
 			else 
-				info.length = 0;
+				data.length = 0;
 
-			info.start = 0;
-			updateText(info, 'replace');
+			data.start = 0;
+			updateText(data, 'replace');
 		}
 	}
 	catch (e) {
@@ -313,32 +314,32 @@ crdt.updateText({
 	length: 2, // length is used to define charcters that will be deleted
 })
 */
-async function updateText(info, flag) {
-	let doc = await getDoc(info);
+async function updateText(data, flag) {
+	let doc = await getDoc(data);
 	if (doc) {
 		
-		insertChange(info, flag);
+		insertChange(data, flag);
 		
-		if (info.crud != 'false' && info.save != 'false') {
-			let wholestring = await getText(info);
+		if (data.crud != 'false' && data.save != 'false') {
+			let wholestring = await getText(data);
 			crud.updateDocument({
-				collection: info.collection,
+				collection: data.collection,
 				document: {
-					_id: info.document_id,
-					[info.name]: wholestring
+					_id: data.document_id,
+					[data.name]: wholestring
 				},
-				upsert: info.upsert,
-				namespace: info.namespace,
-				room: info.room,
-				broadcast: info.broadcast,
-				broadcastSender: info.broadcastSender,
-				metadata: 'crdt-change'
+				upsert: data.upsert,
+				namespace: data.namespace,
+				room: data.room,
+				broadcast: data.broadcast,
+				broadcastSender: data.broadcastSender,
+				metadata: 'crdt-updateDocument'
 			});
 		}
 	}
 }
 
-function createChange(info, change){
+function createChange(data, change){
 	if (change.value && change.length == 0) {
 		change.length = change.value.length
 		change.removedValue = change.value
@@ -349,17 +350,17 @@ function createChange(info, change){
 		change.length = 0;
 		change.type = 'insert';
 	}
-	info = {...info, ...change};
-	delete info.clientId
-	delete info.datetime
+	data = {...data, ...change};
+	delete data.clientId
+	delete data.datetime
 	delete change.clientId
 	delete change.datetime
-	return {info, change}
+	return {data, change}
 }
 
-function undoText(info){
-	let docName = generateDocName(info);
-	let typeName = info.name;
+function undoText(data){
+	let docName = generateDocName(data);
+	let typeName = data.name;
 
 	let name = docs.get(docName).get(typeName);
 	let changeLog = name.get('changeLog');
@@ -373,9 +374,9 @@ function undoText(info){
 				if (log != 'undo') {
 					undoLog.set(index, 'undo')
 					change.index = changeLog.length += 1;
-					let updated = createChange(info, change);
+					let updated = createChange(data, change);
 					undoLog.set(updated.change.index, updated.change)
-					updateText(updated.info)
+					updateText(updated.data)
 					return
 				}
 			}
@@ -383,9 +384,9 @@ function undoText(info){
 	}
 }
 
-function redoText(info){
-	let docName = generateDocName(info);
-	let typeName = info.name;
+function redoText(data){
+	let docName = generateDocName(data);
+	let typeName = data.name;
 
 	let name = docs.get(docName).get(typeName);
 	let redoLog = name.get('redoLog')
@@ -398,9 +399,9 @@ function redoText(info){
 
 			if (!log) {
 				if (log != 'redo') {
-					let updated = createChange(info, change);
+					let updated = createChange(data, change);
 					redoLog.set(updated.change.index, updated.change)
-					updateText(updated.info)
+					updateText(updated.data)
 					return
 				}
 			}
@@ -439,9 +440,9 @@ async function viewVersion(data) {
 // 	this.docs[docName].socket.awareness.off('change', this._awarenessListener);
 // }
 
-function generateDocName(info) {
-	let docName = { collection: info.collection, document_id: info.document_id };
-	return `${info.collection}${info.document_id}`;
+function generateDocName(data) {
+	let docName = { collection: data.collection, document_id: data.document_id };
+	return `${data.collection}${data.document_id}`;
 	// return btoa(JSON.stringify(docName));
 }
 
