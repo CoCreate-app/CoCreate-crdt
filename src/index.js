@@ -111,7 +111,7 @@ async function checkDb(data, flag) {
 		string = data.newDocument
 	else {
 		let response = await crud.readDocument({ collection, document: {_id: document_id, name}});
-		string = crud.getObjectValueByPath(response.document[0], name);
+		string = crud.getValueFromObject(response.document[0], name);
 	}
 	if (string && flag != false) {
 		data.value = string;
