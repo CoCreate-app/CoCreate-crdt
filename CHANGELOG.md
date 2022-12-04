@@ -1,3 +1,11 @@
+## [1.14.15](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.14...v1.14.15) (2022-12-04)
+
+
+### Bug Fixes
+
+* bump dependencies ([5bf06fc](https://github.com/CoCreate-app/CoCreate-crdt/commit/5bf06fcc4ac7d75b6386433037a687281468f70f))
+* renamed getObjectValueByPath to getValueFromObject ([965b38e](https://github.com/CoCreate-app/CoCreate-crdt/commit/965b38ee84b07df3722f72eeb0cfc646cffc002f))
+
 ## [1.14.14](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.13...v1.14.14) (2022-12-02)
 
 
