@@ -1,3 +1,10 @@
+## [1.14.18](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.17...v1.14.18) (2022-12-09)
+
+
+### Bug Fixes
+
+* replaceText will overwirte current changeLog ([5a426a4](https://github.com/CoCreate-app/CoCreate-crdt/commit/5a426a4ac7291b70761edb5ed7f892832752234d))
+
 ## [1.14.17](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.16...v1.14.17) (2022-12-08)
 
 
