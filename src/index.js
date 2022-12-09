@@ -150,6 +150,7 @@ function insertChange(data, flag) {
 	let lastChange = changeLog[changeLog.length - 1];
 	if (lastChange && change.datetime && lastChange.datetime){
 		if (change.datetime < lastChange.datetime){
+			// ToDo: insert change at index position and update start and end postions for every element after insert
 			console.log('requires changeLog rebuild');
 		}
 		if (flag != 'replace') {
@@ -178,7 +179,14 @@ function insertChange(data, flag) {
 	if (change.length > 0)
 		change.removedValue = string.substr(change.start, change.length);
 	
-	changeLog.push(change);
+	if (flag == 'replace') {
+		// ToDo get current string and create new changeLog array then push new change
+		changeLog = [change];
+		name.set('changeLog', changeLog)
+	} else {
+		changeLog.push(change);
+	}
+
 	name.set('text', string.customSplice(change.start, change.length, change.value));
 	string = {string: name.get('text')};
 	
