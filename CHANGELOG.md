@@ -1,3 +1,10 @@
+## [1.14.23](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.22...v1.14.23) (2022-12-13)
+
+
+### Bug Fixes
+
+* removed un used devDependencies ([86eb2f4](https://github.com/CoCreate-app/CoCreate-crdt/commit/86eb2f4c3c327d7b10333548e104583553b4fade))
+
 ## [1.14.22](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.21...v1.14.22) (2022-12-13)
 
 
