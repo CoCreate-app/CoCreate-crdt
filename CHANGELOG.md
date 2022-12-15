@@ -1,3 +1,10 @@
+## [1.14.24](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.23...v1.14.24) (2022-12-15)
+
+
+### Bug Fixes
+
+* add missing dev dependency style-loader ([578db25](https://github.com/CoCreate-app/CoCreate-crdt/commit/578db2508371be6d3e50ba837b04d0da0149ad18))
+
 ## [1.14.23](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.22...v1.14.23) (2022-12-13)
 
 
