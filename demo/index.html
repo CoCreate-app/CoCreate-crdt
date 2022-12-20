@@ -9,19 +9,11 @@
 	<!--<iframe collection="apples" document_id="602c4dadb7fb6c9da35ca126" name='html' width="100%" height="300px"></iframe>-->
 
 		<br/>
-		CoCreate.crdt.init({
-			collection: "apples",
-			document_id: "602c4dadb7fb6c9da35ca126",
-			name: "html"
-		})
-		<br/>
 		CoCreate.crdt.replaceText({
 			collection: "apples",
 			document_id: "602c4dadb7fb6c9da35ca126",
 			name: "html",
-			value: `
-			testing new value
-		`,
+			value: 'testing new value'
 		})
 		<br/>
 		CoCreate.crdt.getText({
@@ -35,7 +27,7 @@
 			document_id: '602c4dadb7fb6c9da35ca126',
 			name: 'html'
 			value:'t',
-			position '0',
+			position '0'
 		})
 		<br/>
 		CoCreate.crdt.deleteText({
@@ -43,7 +35,7 @@
 			document_id: '602c4dadb7fb6c9da35ca126',
 			name: 'html',
 			position: '0',
-			length: 2,
+			length: 2
 		})
 		
 
