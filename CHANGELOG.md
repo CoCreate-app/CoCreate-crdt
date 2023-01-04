@@ -1,3 +1,12 @@
+## [1.15.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.15.0...v1.15.1) (2023-01-04)
+
+
+### Bug Fixes
+
+* add cdn to demo ([26e4302](https://github.com/CoCreate-app/CoCreate-crdt/commit/26e43026f178a74437146087142ce7e9e5cf696e))
+* string was returned as array in sttead of string ([e3314ba](https://github.com/CoCreate-app/CoCreate-crdt/commit/e3314ba703419f7a651d2572536c2891bbfac7c3))
+* typo tex to text ([adb8052](https://github.com/CoCreate-app/CoCreate-crdt/commit/adb80523e2f9b5b3d3b6594af6d9435ea10b67ab))
+
 # [1.15.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.35...v1.15.0) (2023-01-04)
 
 
