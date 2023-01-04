@@ -1,3 +1,15 @@
+# [1.15.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.35...v1.15.0) (2023-01-04)
+
+
+### Bug Fixes
+
+* bump cdn to 1.39.4 ([0fb1769](https://github.com/CoCreate-app/CoCreate-crdt/commit/0fb176942d89c52f78b33c6fcdca2330e869cabc))
+
+
+### Features
+
+* sync docName if on itit if server has changed ([a338782](https://github.com/CoCreate-app/CoCreate-crdt/commit/a3387820756d2a4ce4aa2bc97bf8011459b91b92))
+
 ## [1.14.35](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.14.34...v1.14.35) (2023-01-01)
 
 
