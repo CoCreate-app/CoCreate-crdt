@@ -71,7 +71,6 @@ String.prototype.customSplice = function (index, absIndex, string) {
 async function generateText(data, flag) {
 	try {
 		let doc = docs.get(getDocName(data))
-		console.log('docName1', doc)
 
 		let string = '';
 		let changeLog = doc.get('changeLog');
@@ -204,7 +203,7 @@ function broadcastChange(data){
 
 function localChange(data, string) {
 	const localChange = new CustomEvent('cocreate-crdt-update', {
-		detail: { ...data, ...string },
+		detail: { ...data, string },
 	});
 	window.dispatchEvent(localChange);
 }
@@ -213,7 +212,7 @@ function persistChange(data) {
 	let docName = getDocName(data);
 	let doc = docs.get(docName);
 	let changeLog = doc.get('changeLog');
-	let text = doc.get('tex');
+	let text = doc.get('text');
 	let Data = {
 		collection: 'crdt-transactions',
 		document: {
@@ -242,7 +241,6 @@ message.listen('crdt', function(response) {
 	let data = response.data
 	let docName = getDocName(data);
 	let doc = docs.get(docName);
-	console.log('doc2', doc)
 
 	if (doc){
 		if (data.clientId !== clientId){
@@ -258,11 +256,13 @@ crud.listen('sync', function(data) {
 			let docName = Data.docName;
 			let doc = docs.get(docName);
 			if (doc && Data.crud) {
-				Data.start = 0
-				Data.length = doc.set('text').length
+				Data.crud.value = Data.text
+				Data.crud.start = 0
+				Data.crud.length = doc.get('text').length
 
 				doc.set('changeLog', Data.changeLog)
 				doc.set('text', Data.text)
+				// ToDo: compare modified dates to check if arrays need to merged and orderd by date or if we just use server
 				localChange(Data.crud, Data.text)
 				console.log('crdtSync')
 			}
