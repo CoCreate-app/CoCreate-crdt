@@ -213,7 +213,7 @@ function persistChange(data) {
 	let docName = getDocName(data);
 	let doc = docs.get(docName);
 	let changeLog = doc.get('changeLog');
-	let text = doc.get('tex');
+	let text = doc.get('text');
 	let Data = {
 		collection: 'crdt-transactions',
 		document: {
