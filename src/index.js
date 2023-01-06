@@ -175,7 +175,7 @@ function insertChange(data, flag) {
 	}
 
 	doc.set('text', string.customSplice(change.start, change.length, change.value));
-	string = {string: doc.get('text')};
+	string = doc.get('text');
 	
 	if (!data.clientId){
 		data['datetime'] = change.datetime;
