@@ -1,3 +1,12 @@
+## [1.15.4](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.15.3...v1.15.4) (2023-01-06)
+
+
+### Bug Fixes
+
+* bump dependencies, worklow [@v3](https://github.com/v3) ([6ea0776](https://github.com/CoCreate-app/CoCreate-crdt/commit/6ea0776510f64a5e97dc3aedfbbf09b382f0b7cd))
+* string was sent as object ([14cc2b7](https://github.com/CoCreate-app/CoCreate-crdt/commit/14cc2b789b0131a4b3172e6389875f1e198c9a44))
+* test work flow ([dc43dee](https://github.com/CoCreate-app/CoCreate-crdt/commit/dc43dee02360e2f52fb9d241460246add9b60c38))
+
 ## [1.15.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.15.2...v1.15.3) (2023-01-05)
 
 
