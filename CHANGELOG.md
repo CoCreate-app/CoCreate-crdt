@@ -1,3 +1,10 @@
+## [1.15.6](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.15.5...v1.15.6) (2023-01-09)
+
+
+### Bug Fixes
+
+* if if typeof string not string return empty string ([350dc70](https://github.com/CoCreate-app/CoCreate-crdt/commit/350dc70ffacee869d4a719162429e8f8159a9fb0))
+
 ## [1.15.5](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.15.4...v1.15.5) (2023-01-09)
 
 
