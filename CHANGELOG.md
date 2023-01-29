@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.15.9...v1.16.0) (2023-01-29)
+
+
+### Features
+
+* import @cocreate/local-storage ([a5000ad](https://github.com/CoCreate-app/CoCreate-crdt/commit/a5000adbb007b65b25a03e429829c287f02dc15d))
+
 ## [1.15.9](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.15.8...v1.15.9) (2023-01-27)
 
 
