@@ -2,6 +2,7 @@
 import crud from '@cocreate/crud-client';
 import message from '@cocreate/message-client';
 import uuid from '@cocreate/uuid';
+import localStorage from '@cocreate/local-storage';
 
 const docs = new Map();
 const clientId = crud.socket.clientId || uuid.generate(12);
