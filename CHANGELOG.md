@@ -1,3 +1,11 @@
+## [1.17.4](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.17.3...v1.17.4) (2023-04-11)
+
+
+### Bug Fixes
+
+* bump cdn to 1.49.0' ([f615b23](https://github.com/CoCreate-app/CoCreate-crdt/commit/f615b23f1354582861dab43c396f338ded1575f8))
+* renamed domains to hosts ([435f6f3](https://github.com/CoCreate-app/CoCreate-crdt/commit/435f6f3139c313277b012417323b501bbe56dae7))
+
 ## [1.17.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.17.2...v1.17.3) (2023-03-30)
 
 
