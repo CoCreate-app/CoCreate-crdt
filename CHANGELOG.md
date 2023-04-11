@@ -1,3 +1,10 @@
+## [1.17.7](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.17.6...v1.17.7) (2023-04-11)
+
+
+### Bug Fixes
+
+* bump cdn to 1.49.2 ([c8b1f7c](https://github.com/CoCreate-app/CoCreate-crdt/commit/c8b1f7c72f479795dd55da8d2ef9eeb66a16d71f))
+
 ## [1.17.6](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.17.5...v1.17.6) (2023-04-11)
 
 
