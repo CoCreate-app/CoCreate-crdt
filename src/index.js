@@ -167,7 +167,7 @@ function insertChange(data, flag) {
 	}
 	let string = doc.get('text') || '';
 	if (change.length > 0)
-		change.removedValue = string.substr(change.start, change.length);
+		change.removedValue = string.substring(change.start, change.length);
 	
 	if (flag == 'replace') {
 		// ToDo get current string and create new changeLog array then push new change
