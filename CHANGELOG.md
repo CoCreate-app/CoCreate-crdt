@@ -1,3 +1,10 @@
+## [1.17.8](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.17.7...v1.17.8) (2023-04-13)
+
+
+### Bug Fixes
+
+* replaced substr with substring ([8cc4fd8](https://github.com/CoCreate-app/CoCreate-crdt/commit/8cc4fd847b9972f2fac6dcb8a200082593b31acc))
+
 ## [1.17.7](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.17.6...v1.17.7) (2023-04-11)
 
 
