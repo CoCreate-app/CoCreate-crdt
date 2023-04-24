@@ -1,3 +1,10 @@
+## [1.18.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.2...v1.18.3) (2023-04-24)
+
+
+### Bug Fixes
+
+* workflow node version updated  16 ([1da739c](https://github.com/CoCreate-app/CoCreate-crdt/commit/1da739c6519f48d374da4e3e7ca906f32f845bf6))
+
 ## [1.18.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.1...v1.18.2) (2023-04-24)
 
 
