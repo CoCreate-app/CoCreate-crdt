@@ -1,3 +1,11 @@
+## [1.18.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.0...v1.18.1) (2023-04-24)
+
+
+### Bug Fixes
+
+* bump cdn to 1.50.3 ([127f133](https://github.com/CoCreate-app/CoCreate-crdt/commit/127f133df9b55b97f3437eddddde329350866753))
+* removed uglifyjs-webpack-plugin ([8f402e9](https://github.com/CoCreate-app/CoCreate-crdt/commit/8f402e9fdd2e8e3bdf5518aa1b883dd2cf1aa98d))
+
 # [1.18.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.17.8...v1.18.0) (2023-04-24)
 
 
