@@ -1,3 +1,15 @@
+# [1.18.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.17.8...v1.18.0) (2023-04-24)
+
+
+### Bug Fixes
+
+* bump cdn to 1.50.0 ([7c11b2c](https://github.com/CoCreate-app/CoCreate-crdt/commit/7c11b2c3f304b31b2d8801ba22832d46602b3a89))
+
+
+### Features
+
+* added pwa manifest ([efb13fb](https://github.com/CoCreate-app/CoCreate-crdt/commit/efb13fb980e1d2feef9a5a1329d957b4aba9d0cd))
+
 ## [1.17.8](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.17.7...v1.17.8) (2023-04-13)
 
 
