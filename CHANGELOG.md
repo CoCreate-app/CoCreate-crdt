@@ -1,3 +1,10 @@
+## [1.18.6](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.5...v1.18.6) (2023-05-01)
+
+
+### Bug Fixes
+
+* replace fontawesome with svg ([50b61fe](https://github.com/CoCreate-app/CoCreate-crdt/commit/50b61fee5d256bbc00164ccf7864b92777cf016c))
+
 ## [1.18.5](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.4...v1.18.5) (2023-04-30)
 
 
