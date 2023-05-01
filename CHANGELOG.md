@@ -1,3 +1,10 @@
+## [1.18.7](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.6...v1.18.7) (2023-05-01)
+
+
+### Bug Fixes
+
+* update manifest.json to manifest.webmanifest ([2c132e1](https://github.com/CoCreate-app/CoCreate-crdt/commit/2c132e1c1f67353c0ffa1ff4bc7938b8d8212721))
+
 ## [1.18.6](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.5...v1.18.6) (2023-05-01)
 
 
