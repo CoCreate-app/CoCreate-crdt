@@ -1,3 +1,10 @@
+## [1.18.9](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.8...v1.18.9) (2023-05-10)
+
+
+### Bug Fixes
+
+* apikey renamed to key ([af207fd](https://github.com/CoCreate-app/CoCreate-crdt/commit/af207fd5073e1a08d7b7ae61e4a4384a56a14dab))
+
 ## [1.18.8](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.7...v1.18.8) (2023-05-06)
 
 
