@@ -140,7 +140,7 @@ function insertChange(data, flag) {
 	let lastChange = changeLog[changeLog.length - 1];
 	if (lastChange && change.datetime && lastChange.datetime){
 		if (change.datetime < lastChange.datetime){
-			// ToDo: insert change at index position and update start and end postions for every element after insert
+			// TODO: insert change at index position and update start and end postions for every element after insert
 			console.log('requires changeLog rebuild');
 		}
 		if (flag != 'replace') {
@@ -170,7 +170,7 @@ function insertChange(data, flag) {
 		change.removedValue = string.substring(change.start, change.length);
 	
 	if (flag == 'replace') {
-		// ToDo get current string and create new changeLog array then push new change
+		// TODO get current string and create new changeLog array then push new change
 		changeLog = [change];
 		doc.set('changeLog', changeLog)
 	} else {
@@ -265,7 +265,7 @@ crud.listen('sync', function(data) {
 
 				doc.set('changeLog', Data.changeLog)
 				doc.set('text', Data.text)
-				// ToDo: compare modified dates to check if arrays need to merged and orderd by date or if we just use server
+				// TODO: compare modified dates to check if arrays need to merged and orderd by date or if we just use server
 				localChange(Data.crud, Data.text)
 				console.log('crdtSync')
 			}
