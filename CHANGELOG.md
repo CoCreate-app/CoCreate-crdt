@@ -1,3 +1,10 @@
+## [1.18.10](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.9...v1.18.10) (2023-05-19)
+
+
+### Bug Fixes
+
+* update packages to latest version. This commit updates various packages in the dependencies section of the package.json file to their latest published versions, thereby fixing multiple bugs and improving overall performance. ([3502d86](https://github.com/CoCreate-app/CoCreate-crdt/commit/3502d8665bc432b780d6d76745c9b7469da28cc7))
+
 ## [1.18.9](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.8...v1.18.9) (2023-05-10)
 
 
