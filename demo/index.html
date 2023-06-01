@@ -1,48 +1,38 @@
+<!DOCTYPE html>
 <html>
-	<head>
-		<link rel="manifest" href="/manifest.webmanifest" />
-	</head>
-	<body>
-			
-	<textarea collection="apple" document_id="6193e3f6cbf74500119cfae8" name='test' width="100%" height="300px"></textarea>
-	<h1 collection="apple" document_id="6193e3f6cbf74500119cfae8" name='test'></h1>
-	<!-- <h5 collection="apple" document_id="6193e3f6cbf74500119cfae8" name='test' contenteditable></h5> -->
-	<!--<iframe collection="apples" document_id="602c4dadb7fb6c9da35ca126" name='html' width="100%" height="300px"></iframe>-->
+    <head>
+        <title>crdt demo</title>
+        <link rel="manifest" href="/manifest.webmanifest" />
+    </head>
+    <body>
+        <textarea
+            collection="apple"
+            document_id="6193e3f6cbf74500119cfae8"
+            name="test"
+            width="100%"
+            height="300px"></textarea>
+        <h1
+            collection="apple"
+            document_id="6193e3f6cbf74500119cfae8"
+            name="test"></h1>
+        <!-- <h5 collection="apple" document_id="6193e3f6cbf74500119cfae8" name='test' contenteditable></h5> -->
+        <!--<iframe collection="apples" document_id="602c4dadb7fb6c9da35ca126" name='html' width="100%" height="300px"></iframe>-->
 
-		<br/>
-		CoCreate.crdt.replaceText({
-			collection: "apples",
-			document_id: "602c4dadb7fb6c9da35ca126",
-			name: "test",
-			value: 'testing new value'
-		})
-		<br/>
-		CoCreate.crdt.getText({
-			collection: 'apples',
-			document_id: '602c4dadb7fb6c9da35ca126',
-			name: 'html'
-		})
-		<br/>
-		CoCreate.crdt.insertText({
-			collection: 'apples',
-			document_id: '602c4dadb7fb6c9da35ca126',
-			name: 'html'
-			value:'t',
-			position '0'
-		})
-		<br/>
-		CoCreate.crdt.deleteText({
-			collection: 'apples',
-			document_id: '602c4dadb7fb6c9da35ca126',
-			name: 'html',
-			position: '0',
-			length: 2
-		})
-		
+        <br />
+        CoCreate.crdt.replaceText({ collection: "apples", document_id:
+        "602c4dadb7fb6c9da35ca126", name: "test", value: 'testing new value' })
+        <br />
+        CoCreate.crdt.getText({ collection: 'apples', document_id:
+        '602c4dadb7fb6c9da35ca126', name: 'html' })
+        <br />
+        CoCreate.crdt.insertText({ collection: 'apples', document_id:
+        '602c4dadb7fb6c9da35ca126', name: 'html' value:'t', position '0' })
+        <br />
+        CoCreate.crdt.deleteText({ collection: 'apples', document_id:
+        '602c4dadb7fb6c9da35ca126', name: 'html', position: '0', length: 2 })
 
-		<!--<script src="../dist/CoCreate-crdt.js"></script>-->
-		<!-- <script src="https://cdn.cocreate.app/1.50.6/CoCreate.min.js" ></script> -->
-		<script src="https://cdn.cocreate.app/latest/CoCreate.min.js" ></script>
-	</body>
+        <!--<script src="../dist/CoCreate-crdt.js"></script>-->
+        <!-- <script src="https://cdn.cocreate.app/1.50.6/CoCreate.min.js"  ></script> -->
+        <script src="https://cdn.cocreate.app/latest/CoCreate.min.js"></script>
+    </body>
 </html>
-
