@@ -1,3 +1,10 @@
+## [1.18.12](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.11...v1.18.12) (2023-06-02)
+
+
+### Bug Fixes
+
+* format demo html ([66478c0](https://github.com/CoCreate-app/CoCreate-crdt/commit/66478c00b631efd2ffb9d28ed5dcfc24d211461c))
+
 ## [1.18.11](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.10...v1.18.11) (2023-05-21)
 
 
