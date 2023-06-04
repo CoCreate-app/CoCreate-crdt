@@ -1,3 +1,10 @@
+## [1.18.13](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.12...v1.18.13) (2023-06-04)
+
+
+### Bug Fixes
+
+* **semantic-release:** worklow error solved by running node version 14 ([cca10cd](https://github.com/CoCreate-app/CoCreate-crdt/commit/cca10cd37b357dbf96abc6dc23f1c15d35c1e6c1))
+
 ## [1.18.12](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.11...v1.18.12) (2023-06-02)
 
 
