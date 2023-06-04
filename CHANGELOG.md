@@ -1,3 +1,11 @@
+## [1.18.14](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.13...v1.18.14) (2023-06-04)
+
+
+### Bug Fixes
+
+* replaced secert GITHUB_TOKEN with GITHUB ([2b5cfec](https://github.com/CoCreate-app/CoCreate-crdt/commit/2b5cfec1a753e052478b443ea0c0a00cfeda7e75))
+* Update dependencies versions for [@cocreate](https://github.com/cocreate) libraries ([d57cc99](https://github.com/CoCreate-app/CoCreate-crdt/commit/d57cc99dd99efe72ba59de995b51c5427a1d1237))
+
 ## [1.18.13](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.12...v1.18.13) (2023-06-04)
 
 
