@@ -1,3 +1,10 @@
+## [1.18.20](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.19...v1.18.20) (2023-06-11)
+
+
+### Bug Fixes
+
+* postintall error ([67f2a2f](https://github.com/CoCreate-app/CoCreate-crdt/commit/67f2a2fe9c1afe7fe8af6afe0924474bb0892733))
+
 ## [1.18.19](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.18...v1.18.19) (2023-06-11)
 
 
