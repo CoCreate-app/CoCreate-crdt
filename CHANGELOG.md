@@ -1,3 +1,10 @@
+## [1.18.17](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.16...v1.18.17) (2023-06-11)
+
+
+### Bug Fixes
+
+* renamed hosts to host. the value can be a string or an array of strings ([9d1e833](https://github.com/CoCreate-app/CoCreate-crdt/commit/9d1e8339db11c9b4c844745b532a377c7faf789e))
+
 ## [1.18.16](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.15...v1.18.16) (2023-06-10)
 
 
