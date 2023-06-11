@@ -1,3 +1,10 @@
+## [1.18.19](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.18...v1.18.19) (2023-06-11)
+
+
+### Bug Fixes
+
+* @cocreate/cli moved to dependencies ([13c59b2](https://github.com/CoCreate-app/CoCreate-crdt/commit/13c59b2181f9057a7040206fcc5d4b0ee1f4a2ff))
+
 ## [1.18.18](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.17...v1.18.18) (2023-06-11)
 
 
