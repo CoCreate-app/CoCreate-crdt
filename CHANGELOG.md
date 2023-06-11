@@ -1,3 +1,10 @@
+## [1.18.25](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.24...v1.18.25) (2023-06-11)
+
+
+### Bug Fixes
+
+* testing workflow ([15a5160](https://github.com/CoCreate-app/CoCreate-crdt/commit/15a5160831b4344fb8fc069aa1906b04580de898))
+
 ## [1.18.24](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.23...v1.18.24) (2023-06-11)
 
 
