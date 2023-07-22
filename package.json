@@ -3,7 +3,7 @@
   "version": "1.18.28",
   "description": "CoCreate crdt",
   "author": "CoCreate LLC",
-  "license": "SEE LICENSE",
+  "license": "AGPL-3.0",
   "publishConfig": {
     "access": "public"
   },
