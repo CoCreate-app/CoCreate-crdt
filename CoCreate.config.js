@@ -4,8 +4,8 @@ module.exports = {
     "host": "",
     "sources": [
         {
-            "collection": "files",
-            "document": {
+            "array": "files",
+            "object": {
                 "_id": "6019e6794eea0817df303b10",
                 "name": "index.html",
                 "path": "/docs/crdt/index.html",

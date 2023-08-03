@@ -6,29 +6,26 @@
     </head>
     <body>
         <textarea
-            collection="apple"
-            document_id="6193e3f6cbf74500119cfae8"
+            array="apple"
+            object="6193e3f6cbf74500119cfae8"
             name="test"
             width="100%"
             height="300px"></textarea>
-        <h1
-            collection="apple"
-            document_id="6193e3f6cbf74500119cfae8"
-            name="test"></h1>
-        <!-- <h5 collection="apple" document_id="6193e3f6cbf74500119cfae8" name='test' contenteditable></h5> -->
-        <!--<iframe collection="apples" document_id="602c4dadb7fb6c9da35ca126" name='html' width="100%" height="300px"></iframe>-->
+        <h1 array="apple" object="6193e3f6cbf74500119cfae8" name="test"></h1>
+        <!-- <h5 array="apple" object="6193e3f6cbf74500119cfae8" name='test' contenteditable></h5> -->
+        <!--<iframe array="apples" object="602c4dadb7fb6c9da35ca126" name='html' width="100%" height="300px"></iframe>-->
 
         <br />
-        CoCreate.crdt.replaceText({ collection: "apples", document_id:
+        CoCreate.crdt.replaceText({ array: "apples", object:
         "602c4dadb7fb6c9da35ca126", name: "test", value: 'testing new value' })
         <br />
-        CoCreate.crdt.getText({ collection: 'apples', document_id:
+        CoCreate.crdt.getText({ array: 'apples', object:
         '602c4dadb7fb6c9da35ca126', name: 'html' })
         <br />
-        CoCreate.crdt.insertText({ collection: 'apples', document_id:
+        CoCreate.crdt.insertText({ array: 'apples', object:
         '602c4dadb7fb6c9da35ca126', name: 'html' value:'t', position '0' })
         <br />
-        CoCreate.crdt.deleteText({ collection: 'apples', document_id:
+        CoCreate.crdt.deleteText({ array: 'apples', object:
         '602c4dadb7fb6c9da35ca126', name: 'html', position: '0', length: 2 })
 
         <!--<script src="../dist/CoCreate-crdt.js"></script>-->
