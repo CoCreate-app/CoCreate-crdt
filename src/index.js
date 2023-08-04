@@ -42,7 +42,7 @@ function init(data) {
 
 async function getDoc(data) {
     try {
-        if (['_id', 'organization_id'].includes(data.name))
+        if (['_id', 'organization_id'].includes(data.key))
             return
         let docName = getDocName(data);
         let doc = docs.get(docName);
@@ -64,7 +64,7 @@ async function getDoc(data) {
                         array: "crdt-transactions",
                         filter: {
                             query: [{
-                                name: 'docName',
+                                key: 'docName',
                                 operator: "$eq",
                                 value: docName
                             }]
@@ -115,16 +115,16 @@ async function generateText(data, flag) {
 }
 
 async function checkDb(data, flag) {
-    let { array, object, name } = data;
-    if (checkedDb.get(`${array}${object}${name}`)) return;
-    checkedDb.set(`${array}${object}${name}`, true);
+    let { array, object, key } = data;
+    if (checkedDb.get(`${array}${object}${key}`)) return;
+    checkedDb.set(`${array}${object}${key}`, true);
 
     let string = ''
     if (data.newObject)
         string = data.newObject
     else {
-        let response = await crud.send({ method: 'read.object', array, object: { _id: object, name } });
-        string = crud.getValueFromObject(response.object[0], name);
+        let response = await crud.send({ method: 'read.object', array, object: { _id: object, key } });
+        string = crud.getValueFromObject(response.object[0], key);
     }
     if (string && typeof string !== 'string')
         string = ""
@@ -250,7 +250,7 @@ function persistChange(data) {
             crud: {
                 array: data.array,
                 object: data.object,
-                name: data.name
+                key: data.key
             }
         },
         upsert: true,
@@ -302,7 +302,7 @@ crud.listen('sync', function (data) {
 crdt.getText({
     array: 'modules',
     object: '5e4802ce3ed96d38e71fc7e5',
-    name: 'name'
+    key: 'name'
 })
 */
 async function getText(data) {
@@ -327,7 +327,7 @@ async function getText(data) {
 crdt.replaceText({
     array: "module",
     object: "",
-    name: "",
+    key: "",
     value: "",
     crud: true | false,
     element: dom_object,
@@ -357,7 +357,7 @@ async function replaceText(data) {
 crdt.updateText({
     array: 'module_activities',
     object: '5e4802ce3ed96d38e71fc7e5',
-    name: 'name',
+    key: 'name',
     value: 'T',
     start: '8',
     attributes: {bold: true} 
@@ -377,7 +377,7 @@ async function updateText(data, flag) {
                 array: data.array,
                 object: {
                     _id: data.object,
-                    [data.name]: wholestring
+                    [data.key]: wholestring
                 },
                 upsert: data.upsert,
                 namespace: data.namespace,
@@ -490,7 +490,7 @@ async function viewVersion(data) {
 // }
 
 function getDocName(data) {
-    return `${data.array}${data.object}${data.name}`;
+    return `${data.array}${data.object}${data.key}`;
 }
 
 export default { init, getText, updateText, replaceText, undoText, redoText, viewVersion };
