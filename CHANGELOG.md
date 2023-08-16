@@ -1,3 +1,17 @@
+# [1.19.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.28...v1.19.0) (2023-08-16)
+
+
+### Bug Fixes
+
+* crud attributes renamed ([0018d14](https://github.com/CoCreate-app/CoCreate-crdt/commit/0018d14eaac9e1d913850fca1a810f2557d3f799))
+* replace -target -selector ([8e5f098](https://github.com/CoCreate-app/CoCreate-crdt/commit/8e5f09866e623e94a1239e1699d1bd4538a178a0))
+* webpack.config and package.json make use of mode=production instead of process.env ([59bbcf7](https://github.com/CoCreate-app/CoCreate-crdt/commit/59bbcf703b48dccc925118cffb855d299165106e))
+
+
+### Features
+
+* name attribute and variable renamed to key ([7a549dd](https://github.com/CoCreate-app/CoCreate-crdt/commit/7a549dd8e33d7e1996bb0714ce3313636694fa1c))
+
 ## [1.18.28](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.18.27...v1.18.28) (2023-06-14)
 
 
