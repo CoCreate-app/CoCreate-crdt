@@ -62,12 +62,14 @@ async function getDoc(data) {
                     let response = await crud.send({
                         method: "read.object",
                         array: "crdt-transactions",
-                        filter: {
-                            query: [{
-                                key: 'docName',
-                                operator: "$eq",
-                                value: docName
-                            }]
+                        object: {
+                            $filter: {
+                                query: [{
+                                    key: 'docName',
+                                    operator: "$eq",
+                                    value: docName
+                                }]
+                            }
                         }
                     });
                     if (response.object && response.object[0] && response.object[0].changeLog) {
