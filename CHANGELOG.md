@@ -1,3 +1,10 @@
+## [1.21.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.21.1...v1.21.2) (2023-09-17)
+
+
+### Bug Fixes
+
+* renamed filter to $filter and use as object.$filter ([ee6eba4](https://github.com/CoCreate-app/CoCreate-crdt/commit/ee6eba4444cfe48dae6aae1b8d1d0adf4e26e047))
+
 ## [1.21.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.21.0...v1.21.1) (2023-08-21)
 
 
