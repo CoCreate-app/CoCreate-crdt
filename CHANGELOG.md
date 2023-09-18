@@ -1,3 +1,11 @@
+## [1.21.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.21.2...v1.21.3) (2023-09-18)
+
+
+### Bug Fixes
+
+*  Add path and pathname ([3fd06fc](https://github.com/CoCreate-app/CoCreate-crdt/commit/3fd06fc415e47d37ce29fe534e24cf6b67a1706f))
+* Update CoCreate depndencies to latest versions ([d525769](https://github.com/CoCreate-app/CoCreate-crdt/commit/d525769cdd84852752bff0b707c5ba8101df3470))
+
 ## [1.21.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.21.1...v1.21.2) (2023-09-17)
 
 
