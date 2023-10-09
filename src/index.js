@@ -222,8 +222,8 @@ function insertChange(data, flag) {
 function broadcastChange(data) {
     message.send({
         room: "",
-        broadcastSender: 'false',
-        broadcastBrowser: 'once',
+        broadcastSender: false,
+        broadcastBrowser: true,
         message: "crdt",
         data
     });
@@ -278,7 +278,10 @@ message.listen('crdt', function (response) {
     }
 });
 
-crud.listen('sync', function (data) {
+crud.listen('update.object', (data) => sync(data))
+crud.listen('delete.object', (data) => sync(data))
+
+function sync(data) {
     if (data.array.includes('crdt-transactions')) {
         if (data.object && data.object[0]) {
             let Data = data.object[0];
@@ -297,8 +300,8 @@ crud.listen('sync', function (data) {
             }
         }
     }
-});
 
+}
 
 /*
 crdt.getText({
