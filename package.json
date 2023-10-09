@@ -40,9 +40,9 @@
     "webpack-log": "^3.0.1"
   },
   "dependencies": {
-    "@cocreate/crud-client": "^1.28.3",
-    "@cocreate/local-storage": "^1.10.4",
-    "@cocreate/message-client": "^1.8.2",
-    "@cocreate/utils": "^1.25.2"
+    "@cocreate/crud-client": "^1.28.4",
+    "@cocreate/local-storage": "^1.10.5",
+    "@cocreate/message-client": "^1.8.3",
+    "@cocreate/utils": "^1.25.3"
   }
 }
