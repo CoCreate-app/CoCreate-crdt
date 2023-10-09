@@ -1,3 +1,10 @@
+## [1.22.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.22.0...v1.22.1) (2023-10-09)
+
+
+### Bug Fixes
+
+* added listener for update and create ([86c3f43](https://github.com/CoCreate-app/CoCreate-crdt/commit/86c3f43da5027d5a72a4ba4f20e815b53bffc3ad))
+
 # [1.22.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.21.3...v1.22.0) (2023-09-19)
 
 
