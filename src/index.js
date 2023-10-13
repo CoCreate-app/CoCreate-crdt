@@ -100,7 +100,7 @@ async function generateText(data, flag) {
         let string = '';
         let changeLog = doc.get('changeLog');
         for (let change of changeLog) {
-            if (change || change !== null) {
+            if (change) {
                 string = string.customSplice(change.start, change.length, change.value);
             }
         }
@@ -288,7 +288,13 @@ function sync(data) {
             if (doc && Data.crud) {
                 Data.crud.value = Data.text
                 Data.crud.start = 0
-                Data.crud.length = doc.get('text').length
+
+                let length = doc.get('text')
+                if (length)
+                    length = length.length
+                else
+                    length = 0
+                Data.crud.length = length
 
                 doc.set('changeLog', Data.changeLog)
                 doc.set('text', Data.text)
