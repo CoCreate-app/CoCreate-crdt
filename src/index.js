@@ -68,7 +68,8 @@ async function getDoc(data) {
                                     key: 'docName',
                                     operator: "$eq",
                                     value: docName
-                                }]
+                                }],
+                                limit: 1
                             }
                         }
                     });
@@ -79,13 +80,11 @@ async function getDoc(data) {
                 doc.set('changeLog', changeLog);
                 await generateText(data, true);
             }
-        }
-        else if (!doc.has('text')) {
+        } else if (!doc.has('text')) {
             await generateText(data, false);
         }
         return doc;
-    }
-    catch (e) {
+    } catch (e) {
         console.log('Invalid param', e);
     }
 }
@@ -110,8 +109,7 @@ async function generateText(data, flag) {
         }
         doc.set('text', string);
         return;
-    }
-    catch (e) {
+    } catch (e) {
         console.error(e);
     }
 }
@@ -128,6 +126,7 @@ async function checkDb(data, flag) {
         let response = await crud.send({ method: 'read.object', array, object: { _id: object, key } });
         string = crud.getValueFromObject(response.object[0], key);
     }
+
     if (string && typeof string !== 'string')
         string = ""
     if (string && typeof string === 'string' && flag != false) {
@@ -211,8 +210,7 @@ function insertChange(data, flag) {
 
         broadcastChange(data);
         localChange(data, string);
-    }
-    else
+    } else
         localChange(data, string);
 
     if (data.clientId == clientId && data.save != "false")
@@ -316,12 +314,10 @@ async function getText(data) {
         if (doc) {
             let value = doc.get('text')
             return value;
-        }
-        else {
+        } else {
             console.log('undefined')
         }
-    }
-    catch (e) {
+    } catch (e) {
         console.error(e);
         return "";
     }
@@ -352,8 +348,7 @@ async function replaceText(data) {
             data.start = 0;
             updateText(data, 'replace');
         }
-    }
-    catch (e) {
+    } catch (e) {
         console.error(e);
     }
 }
@@ -475,8 +470,7 @@ async function viewVersion(data) {
             }
         }
         return { ...data, ...string }
-    }
-    catch (e) {
+    } catch (e) {
         console.error(e);
     }
 }
