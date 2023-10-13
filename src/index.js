@@ -27,7 +27,7 @@ import uuid from '@cocreate/uuid';
 import localStorage from '@cocreate/local-storage';
 
 const docs = new Map();
-const clientId = crud.socket.clientId || uuid.generate(12);
+const frameId = crud.socket.frameId || uuid.generate(12);
 const checkedDb = new Map();
 const isInit = new Map();
 
@@ -35,7 +35,7 @@ function init(data) {
     getText(data).then(value => {
         data.value = value;
         data.start = 0;
-        data['clientId'] = clientId;
+        data['frameId'] = frameId;
         localChange(data);
     });
 }
@@ -104,11 +104,13 @@ async function generateText(data, flag) {
                 string = string.customSplice(change.start, change.length, change.value);
             }
         }
+
         if (string === '' && data.read !== 'false') {
-            string = await checkDb(data, flag);
+            string = await checkDb(data, flag) || ''
         }
+
         doc.set('text', string);
-        return;
+        return string;
     } catch (e) {
         console.error(e);
     }
@@ -132,10 +134,11 @@ async function checkDb(data, flag) {
     if (string && typeof string === 'string' && flag != false) {
         data.value = string;
         data.start = 0;
-        data.clientId = clientId;
+        data.frameId = frameId;
         insertChange(data);
     }
-    return string || '';
+
+    return string;
 }
 
 function insertChange(data, flag) {
@@ -156,7 +159,7 @@ function insertChange(data, flag) {
         start: data.start,
         end: data.end,
         length: data.length || 0,
-        clientId: data.clientId || clientId,
+        frameId: data.frameId || frameId,
         user_id: data.user_id || localStorage.getItem("user_id"),
         type
     };
@@ -204,22 +207,21 @@ function insertChange(data, flag) {
     doc.set('text', string.customSplice(change.start, change.length, change.value));
     string = doc.get('text');
 
-    if (!data.clientId) {
+    if (!data.frameId) {
         data['datetime'] = change.datetime;
-        data['clientId'] = change.clientId;
+        data['frameId'] = change.frameId;
 
         broadcastChange(data);
         localChange(data, string);
     } else
         localChange(data, string);
 
-    if (data.clientId == clientId && data.save != "false")
+    if (data.frameId == frameId && data.save != "false")
         persistChange(data);
 }
 
 function broadcastChange(data) {
     message.send({
-        room: "",
         broadcastSender: false,
         broadcastBrowser: true,
         message: "crdt",
@@ -258,6 +260,7 @@ function persistChange(data) {
         room: data.room,
         broadcast: data.broadcast,
         broadcastSender: data.broadcastSender,
+        broadcastBrowser: false,
         metadata: 'crdt-change'
     }
 
@@ -270,7 +273,7 @@ message.listen('crdt', function (response) {
     let doc = docs.get(docName);
 
     if (doc) {
-        if (data.clientId !== clientId) {
+        if (data.frameId !== frameId) {
             insertChange(data);
         }
     }
@@ -280,27 +283,31 @@ crud.listen('update.object', (data) => sync(data))
 crud.listen('delete.object', (data) => sync(data))
 
 function sync(data) {
+    if (data.frameId === frameId)
+        return
     if (data.array.includes('crdt-transactions')) {
         if (data.object && data.object[0]) {
             let Data = data.object[0];
             let docName = Data.docName;
             let doc = docs.get(docName);
             if (doc && Data.crud) {
+                // let text = doc.get('text')
+                // if (!text && text !== '') {
+                //     setTimeout(function () {
+                //         console.log("text empty timout set");
+                //         sync(data)
+                //     }, 1000); // Delayed action after 2 seconds
+                // } else {
                 Data.crud.value = Data.text
                 Data.crud.start = 0
-
-                let length = doc.get('text')
-                if (length)
-                    length = length.length
-                else
-                    length = 0
-                Data.crud.length = length
+                Data.crud.length = doc.get('text').length
 
                 doc.set('changeLog', Data.changeLog)
                 doc.set('text', Data.text)
                 // TODO: compare modified dates to check if arrays need to merged and orderd by date or if we just use server
                 localChange(Data.crud, Data.text)
                 console.log('crdtSync')
+                // }
             }
         }
     }
@@ -408,9 +415,9 @@ function createChange(data, change) {
         change.type = 'insert';
     }
     data = { ...data, ...change };
-    delete data.clientId
+    delete data.frameId
     delete data.datetime
-    delete change.clientId
+    delete change.frameId
     delete change.datetime
     return { data, change }
 }
@@ -423,7 +430,7 @@ function undoText(data) {
 
     for (let index = changeLog.length - 1; index >= 0; index--) {
         let change = Object.assign({}, changeLog[index]);
-        if (change && change.clientId == clientId) {
+        if (change && change.frameId == frameId) {
             let log = undoLog.get(index)
             if (!log) {
                 if (log != 'undo') {
