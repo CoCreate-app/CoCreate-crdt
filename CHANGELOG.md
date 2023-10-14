@@ -1,3 +1,17 @@
+# [1.23.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.22.4...v1.23.0) (2023-10-14)
+
+
+### Bug Fixes
+
+* bump dependencies ([65ce3b5](https://github.com/CoCreate-app/CoCreate-crdt/commit/65ce3b55b9a0d60f4d1dd3f1af13736f1a2eddb3))
+* set $filter.limit ([c4d0d81](https://github.com/CoCreate-app/CoCreate-crdt/commit/c4d0d8138cc8a922890146ee079ec606c4b646c8))
+* text.length ([fa80d0d](https://github.com/CoCreate-app/CoCreate-crdt/commit/fa80d0d6e9181957417c6fd66fc3006a0395cbf6))
+
+
+### Features
+
+* frameId to manage frames ([e6a8776](https://github.com/CoCreate-app/CoCreate-crdt/commit/e6a8776db0b4731a3b10502b6451df0d794ae235))
+
 ## [1.22.4](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.22.3...v1.22.4) (2023-10-09)
 
 
