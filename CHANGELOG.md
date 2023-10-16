@@ -1,3 +1,10 @@
+## [1.23.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.23.0...v1.23.1) (2023-10-16)
+
+
+### Bug Fixes
+
+* broadcastBrowser true on updateText ([dabfba1](https://github.com/CoCreate-app/CoCreate-crdt/commit/dabfba1488385534c782d95d2914ec65e111dead))
+
 # [1.23.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.22.4...v1.23.0) (2023-10-14)
 
 
