@@ -396,7 +396,8 @@ async function updateText(data, flag) {
                 namespace: data.namespace,
                 room: data.room,
                 broadcast: data.broadcast,
-                broadcastSender: data.broadcastSender,
+                broadcastSender: false,
+                broadcastBrowser: true,
                 metadata: 'crdt-updateobject'
             });
         }
