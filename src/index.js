@@ -61,6 +61,7 @@ async function getDoc(data) {
                 if (!data.newObject) {
                     let response = await crud.send({
                         method: "read.object",
+                        status: "resolve",
                         array: "crdt-transactions",
                         object: {
                             $filter: {
@@ -125,7 +126,7 @@ async function checkDb(data, flag) {
     if (data.newObject)
         string = data.newObject
     else {
-        let response = await crud.send({ method: 'read.object', array, object: { _id: object, key } });
+        let response = await crud.send({ method: 'read.object', status: "resolve", array, object: { _id: object, key } });
         string = crud.getValueFromObject(response.object[0], key);
     }
 
