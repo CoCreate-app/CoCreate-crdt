@@ -1,6 +1,6 @@
 {
   "name": "@cocreate/crdt",
-  "version": "1.23.1",
+  "version": "1.23.2",
   "description": "CoCreate crdt",
   "author": "CoCreate LLC",
   "license": "AGPL-3.0",
