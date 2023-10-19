@@ -1,3 +1,10 @@
+## [1.23.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.23.2...v1.23.3) (2023-10-19)
+
+
+### Bug Fixes
+
+* removed @cocreate/message-client ([8cd41ca](https://github.com/CoCreate-app/CoCreate-crdt/commit/8cd41ca5059e0b2852aa9d0cf7038eb087eab996))
+
 ## [1.23.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.23.1...v1.23.2) (2023-10-17)
 
 
