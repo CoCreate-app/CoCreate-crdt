@@ -22,7 +22,6 @@
 
 /*globals config, atob, btoa, localStorage, CustomEvent*/
 import crud from '@cocreate/crud-client';
-import message from '@cocreate/message-client';
 import uuid from '@cocreate/uuid';
 import localStorage from '@cocreate/local-storage';
 
@@ -222,10 +221,10 @@ function insertChange(data, flag) {
 }
 
 function broadcastChange(data) {
-    message.send({
+    crud.socket.send({
+        method: "crdt",
         broadcastSender: false,
         broadcastBrowser: true,
-        message: "crdt",
         data
     });
 }
@@ -268,7 +267,7 @@ function persistChange(data) {
     crud.send(Data);
 }
 
-message.listen('crdt', function (response) {
+crud.socket.listen('crdt', function (response) {
     let data = response.data
     let docName = getDocName(data);
     let doc = docs.get(docName);
