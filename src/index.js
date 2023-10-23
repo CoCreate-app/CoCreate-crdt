@@ -25,11 +25,10 @@ import crud from '@cocreate/crud-client';
 import uuid from '@cocreate/uuid';
 import localStorage from '@cocreate/local-storage';
 
-const docs = new Map();
+const objects = {}
 const clientId = crud.socket.clientId || uuid.generate(12);
 const frameId = crud.socket.frameId || uuid.generate(12);
 const checkedDb = new Map();
-const isInit = new Map();
 
 function init(data) {
     getText(data).then(value => {
@@ -40,35 +39,34 @@ function init(data) {
     });
 }
 
-async function getDoc(data) {
+async function getObject(data) {
     try {
         if (['_id', 'organization_id'].includes(data.key))
             return
-        let docName = getDocName(data);
-        let doc = docs.get(docName);
+        let name = getName(data);
+        let object = objects[name];
 
-        if (!doc) {
-            docs.set(docName, new Map());
-            doc = docs.get(docName);
+        if (!object) {
+            objects[name] = object = {}
         }
 
-        if (!doc.has('changeLog')) {
+        if (!object['changeLog']) {
             let changeLog = [];
-            doc.set('undoLog', new Map())
-            doc.set('redoLog', new Map())
+            object['undoLog'] = new Map()
+            object['redoLog'] = new Map()
+
 
             if (data.read != 'false') {
                 if (!data.newObject) {
                     let response = await crud.send({
                         method: "read.object",
-                        status: "resolve",
                         array: "crdt",
                         object: {
                             $filter: {
                                 query: [{
-                                    key: 'docName',
+                                    key: 'name',
                                     operator: "$eq",
-                                    value: docName
+                                    value: name
                                 }],
                                 limit: 1
                             }
@@ -78,13 +76,13 @@ async function getDoc(data) {
                         changeLog = response.object[0].changeLog;
                     }
                 }
-                doc.set('changeLog', changeLog);
+                object['changeLog'] = changeLog
                 await generateText(data, true);
             }
-        } else if (!doc.has('text')) {
+        } else if (!object['text']) {
             await generateText(data, false);
         }
-        return doc;
+        return object;
     } catch (e) {
         console.log('Invalid param', e);
     }
@@ -96,22 +94,20 @@ String.prototype.customSplice = function (index, absIndex, string) {
 
 async function generateText(data, flag) {
     try {
-        let doc = docs.get(getDocName(data))
-
-        let string = '';
-        let changeLog = doc.get('changeLog');
-        for (let change of changeLog) {
+        let name = getName(data)
+        let object = objects[name]
+        object['text'] = ''
+        for (let change of object['changeLog']) {
             if (change) {
-                string = string.customSplice(change.start, change.length, change.value);
+                object['text'] = object['text'].customSplice(change.start, change.length, change.value);
             }
         }
 
-        if (string === '' && data.read !== 'false') {
-            string = await checkDb(data, flag) || ''
+        if (object['text'] === '' && data.read !== 'false') {
+            object['text'] = await checkDb(data, flag) || ''
         }
 
-        doc.set('text', string);
-        return string;
+        return object['text'];
     } catch (e) {
         console.error(e);
     }
@@ -138,16 +134,17 @@ async function checkDb(data, flag) {
         data.frameId = frameId;
         insertChange(data);
     }
-
-    return string;
+    return string || '';
 }
 
 function insertChange(data, flag) {
-    let docName = getDocName(data);
-    let doc = docs.get(docName);
-    let changeLog = doc.get('changeLog');
+    let name = getName(data);
+    let object = objects[name];
+    let changeLog = object.changeLog;
     if (!changeLog)
         return
+
+    object.text = object.text || ''
 
     let type = 'insert';
     if (data.start == undefined) return;
@@ -194,29 +191,26 @@ function insertChange(data, flag) {
         console.log('null change')
         return
     }
-    let string = doc.get('text') || '';
     if (change.length > 0)
-        change.removedValue = string.substring(change.start, change.length);
+        change.removedValue = object['text'].substring(change.start, change.length);
 
     if (flag == 'replace') {
         // TODO get current string and create new changeLog array then push new change
         changeLog = [change];
-        doc.set('changeLog', changeLog)
     } else {
         changeLog.push(change);
     }
 
-    doc.set('text', string.customSplice(change.start, change.length, change.value));
-    string = doc.get('text');
+    object['text'].customSplice(change.start, change.length, change.value);
 
     if (!data.frameId) {
         data['datetime'] = change.datetime;
         data['frameId'] = change.frameId;
 
         broadcastChange(data);
-        localChange(data, string);
+        localChange(data, object['text']);
     } else
-        localChange(data, string);
+        localChange(data, object['text']);
 
     if (data.frameId == frameId && data.save != "false")
         persistChange(data, change);
@@ -240,12 +234,12 @@ function localChange(data, string) {
 
 
 function persistChange(data, change) {
-    let docName = getDocName(data);
+    let name = getName(data);
     let Data = {
         method: 'update.object',
         array: 'crdt',
         object: {
-            docName,
+            name,
             '$push.changeLog': change,
             crud: {
                 array: data.array,
@@ -255,7 +249,7 @@ function persistChange(data, change) {
         },
         $filter: {
             query: [
-                { key: 'docName', value: docName, operator: '$eq', index: true }
+                { key: 'name', value: name, operator: '$eq', index: true }
             ],
             limit: 1
         },
@@ -274,10 +268,10 @@ function persistChange(data, change) {
 
 crud.socket.listen('crdt', function (response) {
     let data = response.data
-    let docName = getDocName(data);
-    let doc = docs.get(docName);
+    let name = getName(data);
+    let object = objects[name]
 
-    if (doc) {
+    if (object) {
         if (data.frameId !== frameId) {
             insertChange(data);
         }
@@ -293,10 +287,10 @@ function sync(data) {
     if (data.array.includes('crdt')) {
         if (data.object && data.object[0]) {
             let Data = data.object[0];
-            let docName = Data.docName;
-            let doc = docs.get(docName);
-            if (doc && Data.crud) {
-                // let text = doc.get('text')
+            let name = Data.name;
+            let object = objects[name];
+            if (object && Data.crud) {
+                // let text = object['text']
                 // if (!text && text !== '') {
                 //     setTimeout(function () {
                 //         console.log("text empty timout set");
@@ -305,11 +299,11 @@ function sync(data) {
                 // } else {
                 Data.crud.value = Data.text
                 Data.crud.start = 0
-                Data.crud.length = doc.get('text').length
+                Data.crud.length = object['text'].length
 
-                doc.set('changeLog', Data.changeLog)
-                doc.set('text', Data.text)
-                // TODO: compare modified dates to check if arrays need to merged and orderd by date or if we just use server
+
+                object['changeLog'] = Data.changeLog
+                object['text'] = Data.text                // TODO: compare modified dates to check if arrays need to merged and orderd by date or if we just use server
                 localChange(Data.crud, Data.text)
                 console.log('crdtSync')
                 // }
@@ -328,9 +322,9 @@ crdt.getText({
 */
 async function getText(data) {
     try {
-        let doc = await getDoc(data);
-        if (doc) {
-            let value = doc.get('text')
+        let object = await getObject(data);
+        if (object) {
+            let value = object.text
             return value;
         } else {
             console.log('undefined')
@@ -355,8 +349,8 @@ crdt.replaceText({
 */
 async function replaceText(data) {
     try {
-        let doc = await getDoc(data);
-        if (doc) {
+        let object = await getObject(data);
+        if (object) {
             let oldValue = await getText(data);
             if (oldValue)
                 data.length = oldValue.length;
@@ -383,8 +377,8 @@ crdt.updateText({
 })
 */
 async function updateText(data, flag) {
-    let doc = await getDoc(data);
-    if (doc) {
+    let object = await getObject(data);
+    if (object) {
 
         insertChange(data, flag);
 
@@ -429,10 +423,10 @@ function createChange(data, change) {
 }
 
 function undoText(data) {
-    let docName = getDocName(data);
-    let doc = docs.get(docName);
-    let changeLog = doc.get('changeLog');
-    let undoLog = doc.get('undoLog')
+    let name = getName(data);
+    let object = objects[name];
+    let changeLog = object.changeLog;
+    let undoLog = object.undoLog;
 
     for (let index = changeLog.length - 1; index >= 0; index--) {
         let change = Object.assign({}, changeLog[index]);
@@ -453,10 +447,10 @@ function undoText(data) {
 }
 
 function redoText(data) {
-    let docName = getDocName(data);
-    let doc = docs.get(docName);
-    let redoLog = doc.get('redoLog')
-    let undoLog = Array.from(doc.get('undoLog').values());
+    let name = getName(data);
+    let object = objects[name];
+    let redoLog = object.redoLog
+    let undoLog = Array.from(object.undoLog.values());
 
     for (let index = undoLog.length - 1; index >= 0; index--) {
         let change = Object.assign({}, undoLog[index]);
@@ -477,9 +471,9 @@ function redoText(data) {
 
 async function viewVersion(data) {
     try {
-        let docName = getDocName(data);
-        let doc = docs.get(docName);
-        let changeLog = doc.get('changeLog');
+        let name = getName(data);
+        let object = objects[name];
+        let changeLog = object.changeLog;
         let string = '';
 
         let log = changeLog.slice(0, data.version)
@@ -494,21 +488,14 @@ async function viewVersion(data) {
     }
 }
 
-
-
-// function deleteDoc(docName) {
-// 	if (this.docs[docName]) {
-// 		delete this.docs[docName];
+// function deleteObject(name) {
+// 	if (objects[name]) {
+// 		delete objects[name];
 // 	}
 // }
 
-// function destroyObserver(docName, typeName) {
-// 	this.docs[docName].doc.getText(typeName).unobserve((event) => {});
-// 	this.docs[docName].socket.awareness.off('change', this._awarenessListener);
-// }
-
-function getDocName(data) {
+function getName(data) {
     return `${data.array}${data.object}${data.key}`;
 }
 
-export default { init, getText, updateText, replaceText, undoText, redoText, viewVersion };
+export default { init, getName, getText, updateText, replaceText, undoText, redoText, viewVersion };
