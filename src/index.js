@@ -26,6 +26,7 @@ import uuid from '@cocreate/uuid';
 import localStorage from '@cocreate/local-storage';
 
 const docs = new Map();
+const clientId = crud.socket.clientId || uuid.generate(12);
 const frameId = crud.socket.frameId || uuid.generate(12);
 const checkedDb = new Map();
 const isInit = new Map();
@@ -61,7 +62,7 @@ async function getDoc(data) {
                     let response = await crud.send({
                         method: "read.object",
                         status: "resolve",
-                        array: "crdt-transactions",
+                        array: "crdt",
                         object: {
                             $filter: {
                                 query: [{
@@ -159,6 +160,7 @@ function insertChange(data, flag) {
         start: data.start,
         end: data.end,
         length: data.length || 0,
+        clientId: data.clientId || clientId,
         frameId: data.frameId || frameId,
         user_id: data.user_id || localStorage.getItem("user_id"),
         type
@@ -217,7 +219,7 @@ function insertChange(data, flag) {
         localChange(data, string);
 
     if (data.frameId == frameId && data.save != "false")
-        persistChange(data);
+        persistChange(data, change);
 }
 
 function broadcastChange(data) {
@@ -236,24 +238,26 @@ function localChange(data, string) {
     window.dispatchEvent(localChange);
 }
 
-function persistChange(data) {
+
+function persistChange(data, change) {
     let docName = getDocName(data);
-    let doc = docs.get(docName);
-    let changeLog = doc.get('changeLog');
-    let text = doc.get('text');
     let Data = {
         method: 'update.object',
-        array: 'crdt-transactions',
+        array: 'crdt',
         object: {
-            _id: data.object,
             docName,
-            changeLog,
-            text,
+            '$push.changeLog': change,
             crud: {
                 array: data.array,
                 object: data.object,
                 key: data.key
             }
+        },
+        $filter: {
+            query: [
+                { key: 'docName', value: docName, operator: '$eq', index: true }
+            ],
+            limit: 1
         },
         upsert: true,
         namespace: data.namespace,
@@ -266,6 +270,7 @@ function persistChange(data) {
 
     crud.send(Data);
 }
+
 
 crud.socket.listen('crdt', function (response) {
     let data = response.data
@@ -283,9 +288,9 @@ crud.listen('update.object', (data) => sync(data))
 crud.listen('delete.object', (data) => sync(data))
 
 function sync(data) {
-    if (data.frameId === frameId)
+    if (data.clientId === clientId)
         return
-    if (data.array.includes('crdt-transactions')) {
+    if (data.array.includes('crdt')) {
         if (data.object && data.object[0]) {
             let Data = data.object[0];
             let docName = Data.docName;
