@@ -1,3 +1,16 @@
+# [1.24.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.23.3...v1.24.0) (2023-10-24)
+
+
+### Bug Fixes
+
+* update to dotnotation ([64da6bf](https://github.com/CoCreate-app/CoCreate-crdt/commit/64da6bfd05ee3ebea1de623add45d7c4fd111aab))
+
+
+### Features
+
+* persistChange() uses crud $push operator ([7e032a7](https://github.com/CoCreate-app/CoCreate-crdt/commit/7e032a7d9c9e7d04a65a74184f04f04668cd682e))
+* replace maps() with object to make crdt objects portable ([fac31c5](https://github.com/CoCreate-app/CoCreate-crdt/commit/fac31c580a3b4ed420dc2eb2223f9198487a2b8e))
+
 ## [1.23.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.23.2...v1.23.3) (2023-10-19)
 
 
