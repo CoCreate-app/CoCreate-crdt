@@ -50,10 +50,10 @@ async function getObject(data) {
             objects[name] = object = {}
         }
 
-        if (!object['changeLog']) {
+        if (!object.changeLog) {
             let changeLog = [];
-            object['undoLog'] = new Map()
-            object['redoLog'] = new Map()
+            object.undoLog = new Map()
+            object.redoLog = new Map()
 
 
             if (data.read != 'false') {
@@ -76,10 +76,13 @@ async function getObject(data) {
                         changeLog = response.object[0].changeLog;
                     }
                 }
-                object['changeLog'] = changeLog
-                await generateText(data, true);
+                object.changeLog = changeLog
+                // await generateText(data, true);
+                if (!object.text) {
+                    await generateText(data, true);
+                }
             }
-        } else if (!object['text']) {
+        } else if (!object.text) {
             await generateText(data, false);
         }
         return object;
@@ -115,14 +118,15 @@ async function generateText(data, flag) {
 
 async function checkDb(data, flag) {
     let { array, object, key } = data;
-    if (checkedDb.get(`${array}${object}${key}`)) return;
+    if (checkedDb.get(`${array}${object}${key}`))
+        return;
     checkedDb.set(`${array}${object}${key}`, true);
 
     let string = ''
     if (data.newObject)
         string = data.newObject
     else {
-        let response = await crud.send({ method: 'read.object', status: "resolve", array, object: { _id: object, key } });
+        let response = await crud.send({ method: 'read.object', array, object: { _id: object, key } });
         string = crud.getValueFromObject(response.object[0], key);
     }
 
@@ -134,6 +138,7 @@ async function checkDb(data, flag) {
         data.frameId = frameId;
         insertChange(data);
     }
+
     return string || '';
 }
 
@@ -192,7 +197,7 @@ function insertChange(data, flag) {
         return
     }
     if (change.length > 0)
-        change.removedValue = object['text'].substring(change.start, change.length);
+        change.removedValue = object.text.substring(change.start, change.length);
 
     if (flag == 'replace') {
         // TODO get current string and create new changeLog array then push new change
@@ -201,16 +206,16 @@ function insertChange(data, flag) {
         changeLog.push(change);
     }
 
-    object['text'].customSplice(change.start, change.length, change.value);
+    object.text = object.text.customSplice(change.start, change.length, change.value);
 
     if (!data.frameId) {
-        data['datetime'] = change.datetime;
-        data['frameId'] = change.frameId;
+        data.datetime = change.datetime;
+        data.frameId = change.frameId;
 
         broadcastChange(data);
-        localChange(data, object['text']);
+        localChange(data, object.text);
     } else
-        localChange(data, object['text']);
+        localChange(data, object.text);
 
     if (data.frameId == frameId && data.save != "false")
         persistChange(data, change);
@@ -224,6 +229,7 @@ function broadcastChange(data) {
         data
     });
 }
+
 
 function localChange(data, string) {
     const localChange = new CustomEvent('cocreate-crdt-update', {
@@ -498,4 +504,4 @@ function getName(data) {
     return `${data.array}${data.object}${data.key}`;
 }
 
-export default { init, getName, getText, updateText, replaceText, undoText, redoText, viewVersion };
+export default { init, objects, getName, getText, updateText, replaceText, undoText, redoText, viewVersion };
