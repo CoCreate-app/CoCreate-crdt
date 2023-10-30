@@ -59,7 +59,7 @@ async function getObject(data) {
             if (data.read != 'false') {
                 if (!data.newObject) {
                     let response = await crud.send({
-                        method: "read.object",
+                        method: "object.read",
                         array: "crdt",
                         object: {
                             $filter: {
@@ -126,7 +126,7 @@ async function checkDb(data, flag) {
     if (data.newObject)
         string = data.newObject
     else {
-        let response = await crud.send({ method: 'read.object', array, object: { _id: object, key } });
+        let response = await crud.send({ method: 'object.read', array, object: { _id: object, key } });
         string = crud.getValueFromObject(response.object[0], key);
     }
 
@@ -242,7 +242,7 @@ function localChange(data, string) {
 function persistChange(data, change) {
     let name = getName(data);
     let Data = {
-        method: 'update.object',
+        method: 'object.update',
         array: 'crdt',
         object: {
             name,
@@ -391,7 +391,7 @@ async function updateText(data, flag) {
         if (data.crud != 'false' && data.save != 'false') {
             let wholestring = await getText(data);
             crud.send({
-                method: 'update.object',
+                method: 'object.update',
                 array: data.array,
                 object: {
                     _id: data.object,
