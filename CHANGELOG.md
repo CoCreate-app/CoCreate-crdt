@@ -1,3 +1,11 @@
+## [1.24.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.24.1...v1.24.2) (2023-11-03)
+
+
+### Bug Fixes
+
+* update dependencies to the lates versions ([3a160fe](https://github.com/CoCreate-app/CoCreate-crdt/commit/3a160fe299c52b8ab5d52920ceb68a6eb04115e7))
+* update method to use object.update etc ([66b1157](https://github.com/CoCreate-app/CoCreate-crdt/commit/66b1157298c5b2ac09404064db95a562af4a9bb6))
+
 ## [1.24.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.24.0...v1.24.1) (2023-10-25)
 
 
