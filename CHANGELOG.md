@@ -1,3 +1,12 @@
+## [1.24.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.24.2...v1.24.3) (2023-11-09)
+
+
+### Bug Fixes
+
+* meta name typo ([0e01617](https://github.com/CoCreate-app/CoCreate-crdt/commit/0e01617c895120133defbe13dc43f592944a5aed))
+* update crud methods ([6f7e8a0](https://github.com/CoCreate-app/CoCreate-crdt/commit/6f7e8a0fe5f35a2a41eedd249fa661724b3401ab))
+* update host ([0b56142](https://github.com/CoCreate-app/CoCreate-crdt/commit/0b561421a5e09b1ed8404b4cdd3b5931ecd4e28a))
+
 ## [1.24.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.24.1...v1.24.2) (2023-11-03)
 
 
