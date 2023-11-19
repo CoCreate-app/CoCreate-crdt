@@ -1,3 +1,10 @@
+# [1.25.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.24.4...v1.25.0) (2023-11-19)
+
+
+### Features
+
+* update dependecies for th latest features and bug fixes ([e307756](https://github.com/CoCreate-app/CoCreate-crdt/commit/e3077563c7ba2882bfaf1f8691b788799b4a6a4a))
+
 ## [1.24.4](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.24.3...v1.24.4) (2023-11-12)
 
 
