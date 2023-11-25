@@ -1,3 +1,15 @@
+# [1.26.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.25.0...v1.26.0) (2023-11-25)
+
+
+### Bug Fixes
+
+* update nav, edit button and css path ([2858098](https://github.com/CoCreate-app/CoCreate-crdt/commit/2858098bff10c3b0b16e56822efb7b7c7befd10f))
+
+
+### Features
+
+* upgrade dependencies for latest features and fixes ([b0cef51](https://github.com/CoCreate-app/CoCreate-crdt/commit/b0cef51237dcb47da52f1d0f4f3e0b8220360490))
+
 # [1.25.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.24.4...v1.25.0) (2023-11-19)
 
 
