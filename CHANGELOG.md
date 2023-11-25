@@ -1,3 +1,15 @@
+# [1.27.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.26.0...v1.27.0) (2023-11-25)
+
+
+### Bug Fixes
+
+* update licensing details ([d16c020](https://github.com/CoCreate-app/CoCreate-crdt/commit/d16c020d63053e298a0c95c34d4b4ad556ce7f95))
+
+
+### Features
+
+* upgrade dependencies for latest features and fixes ([515fb0a](https://github.com/CoCreate-app/CoCreate-crdt/commit/515fb0a717a6db4602cc311630ec0515b3a5f5f6))
+
 # [1.26.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.25.0...v1.26.0) (2023-11-25)
 
 
