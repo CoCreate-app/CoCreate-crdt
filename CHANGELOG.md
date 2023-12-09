@@ -1,3 +1,10 @@
+## [1.27.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.27.0...v1.27.1) (2023-12-09)
+
+
+### Bug Fixes
+
+* typo ([d0c6c59](https://github.com/CoCreate-app/CoCreate-crdt/commit/d0c6c59d75df4b970698d715714df7abfe9bd84f))
+
 # [1.27.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.26.0...v1.27.0) (2023-11-25)
 
 
