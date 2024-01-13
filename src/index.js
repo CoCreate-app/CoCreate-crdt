@@ -63,11 +63,7 @@ async function getObject(data) {
                         array: "crdt",
                         object: {
                             $filter: {
-                                query: [{
-                                    key: 'name',
-                                    operator: "$eq",
-                                    value: name
-                                }],
+                                query: { name },
                                 limit: 1
                             }
                         }
@@ -254,9 +250,7 @@ function persistChange(data, change) {
             }
         },
         $filter: {
-            query: [
-                { key: 'name', value: name, operator: '$eq', index: true }
-            ],
+            query: { name },
             limit: 1
         },
         upsert: true,
