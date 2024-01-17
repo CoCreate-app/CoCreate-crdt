@@ -1,3 +1,10 @@
+## [1.27.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.27.1...v1.27.2) (2024-01-17)
+
+
+### Bug Fixes
+
+* update to support new query system ([2eeba4e](https://github.com/CoCreate-app/CoCreate-crdt/commit/2eeba4e722c4ffdfef1a1ba6e59153d0d77eb6a5))
+
 ## [1.27.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.27.0...v1.27.1) (2023-12-09)
 
 
