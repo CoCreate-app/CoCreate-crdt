@@ -278,8 +278,8 @@ crud.socket.listen('crdt', function (response) {
     }
 });
 
-crud.listen('object.update', (data) => sync(data))
-crud.listen('object.delete', (data) => sync(data))
+// crud.listen('object.update', (data) => sync(data))
+// crud.listen('object.delete', (data) => sync(data))
 
 function sync(data) {
     if (data.clientId === clientId)
