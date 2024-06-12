@@ -1,3 +1,12 @@
+## [1.27.5](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.27.4...v1.27.5) (2024-06-12)
+
+
+### Bug Fixes
+
+* bump cocreate dependencies ([678a8de](https://github.com/CoCreate-app/CoCreate-crdt/commit/678a8de38744e313b07afb8f4c54677c0e0bdc86))
+* comment sync due to bug ([7bfc744](https://github.com/CoCreate-app/CoCreate-crdt/commit/7bfc744e4af53cafc2564d0d81e16860374174f3))
+* svg icon class ([dade9df](https://github.com/CoCreate-app/CoCreate-crdt/commit/dade9dfc4db9f377aacf0d1ed6fee61fa49e5792))
+
 ## [1.27.4](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.27.3...v1.27.4) (2024-04-29)
 
 
