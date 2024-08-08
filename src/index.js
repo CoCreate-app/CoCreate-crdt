@@ -383,6 +383,8 @@ async function updateText(data, flag) {
         insertChange(data, flag);
 
         if (data.crud != 'false' && data.save != 'false') {
+            if (data.upsert === undefined)
+                data.upsert = true
             let wholestring = await getText(data);
             crud.send({
                 method: 'object.update',
