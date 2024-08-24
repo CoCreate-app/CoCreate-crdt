@@ -1,3 +1,10 @@
+## [1.27.6](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.27.5...v1.27.6) (2024-08-24)
+
+
+### Bug Fixes
+
+* if upsert undefined set true ([a50f5eb](https://github.com/CoCreate-app/CoCreate-crdt/commit/a50f5eb8e5ac1ff6d1d086f5c2aed6e3d769324d))
+
 ## [1.27.5](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.27.4...v1.27.5) (2024-06-12)
 
 
