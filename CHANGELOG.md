@@ -1,3 +1,15 @@
+# [1.28.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.27.6...v1.28.0) (2024-11-04)
+
+
+### Bug Fixes
+
+* pretier.config.js and file formating ([f4a4b93](https://github.com/CoCreate-app/CoCreate-crdt/commit/f4a4b93cbf220ec8744f327e516f6986bd247d03))
+
+
+### Features
+
+* add prettier.config.js and format files ([b510864](https://github.com/CoCreate-app/CoCreate-crdt/commit/b510864e5ed475765de5c82d774f65aae75936af))
+
 ## [1.27.6](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.27.5...v1.27.6) (2024-08-24)
 
 
