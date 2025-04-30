@@ -1,3 +1,13 @@
+## [1.28.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.28.0...v1.28.1) (2025-04-30)
+
+
+### Bug Fixes
+
+* added css-loader ([c8f5f94](https://github.com/CoCreate-app/CoCreate-crdt/commit/c8f5f94110b92df35c47c3c3c42729f01b058398))
+* update query attributes ([5c5333d](https://github.com/CoCreate-app/CoCreate-crdt/commit/5c5333d7b22f45658af0fae7d2bc8f10ac46bc33))
+* updated cocreate modules versions ([c488e35](https://github.com/CoCreate-app/CoCreate-crdt/commit/c488e35995bbb43f2633d7ea91a5a8f5b9fd38e1))
+* webpack.config and devdependencies ([7502d88](https://github.com/CoCreate-app/CoCreate-crdt/commit/7502d88d12b890ebfd1cad61cc6172f405d5db33))
+
 # [1.28.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.27.6...v1.28.0) (2024-11-04)
 
 
