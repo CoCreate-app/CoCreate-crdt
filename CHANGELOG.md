@@ -1,3 +1,10 @@
+## [1.28.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.28.1...v1.28.2) (2025-05-01)
+
+
+### Bug Fixes
+
+* update [@cocreate](https://github.com/cocreate) dependencies ([171cb6b](https://github.com/CoCreate-app/CoCreate-crdt/commit/171cb6b54175c2065ff1d74dcefd44d2a274c388))
+
 ## [1.28.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.28.0...v1.28.1) (2025-04-30)
 
 
