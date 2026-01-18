@@ -1,3 +1,10 @@
+## [1.28.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.28.2...v1.28.3) (2026-01-18)
+
+
+### Bug Fixes
+
+* update worklow ([fa7bde5](https://github.com/CoCreate-app/CoCreate-crdt/commit/fa7bde5568a9174d3996fdbda371f381f4390e93))
+
 ## [1.28.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.28.1...v1.28.2) (2025-05-01)
 
 
