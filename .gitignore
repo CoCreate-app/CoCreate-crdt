@@ -1,14 +1,94 @@
-# ignore
-node_modules
-dist
+# ==============================================================================
+# 1. Core Dependency Folders
+# ==============================================================================
+node_modules/
+jspm_packages/
+.pnp/
+.pnp.*
+
+# ==============================================================================
+# 2. Package Manager Specifics (Lock Files & Overrides Ignored)
+# ==============================================================================
+
+# npm
+.npm/
+anon-doc-*.txt
+npm-debug.log*
 package-lock.json
-yarn.lock
+
+# pnpm
+.pnpm-store/
+store.lock
 pnpm-lock.yaml
 
-logs
-*.log
-npm-debug.log*
+# Yarn Classic (v1) & Yarn Berry (v2+)
 yarn-debug.log*
 yarn-error.log*
+yarn.lock
+
+# Yarn Berry / Modern (v2+) Specifics
+.yarn/cache/
+.yarn/build-errors.log
+.yarn/install-state.gz
+
+# Bun (Modern runtime & package manager)
+bun.lockb
+bun.lock
+.bun/
+
+# Lerna
 lerna-debug.log*
-.pnpm-debug.log*
+
+# ==============================================================================
+# 3. Build Outputs & Bundlers (Rollup, Vite, Webpack, etc.)
+# ==============================================================================
+dist/
+build/
+out/
+.next/
+.nuxt/
+.docusaurus/
+.turbo/
+.cache/
+.parcel-cache/
+.rollup.cache/
+
+# TypeScript
+*.tsbuildinfo
+
+# ==============================================================================
+# 4. Logs, Runtime Data & System Files
+# ==============================================================================
+logs/
+*.log
+pid
+*.pid
+*.seed
+*.pid.lock
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# ==============================================================================
+# 5. Security & Local Configurations (CRITICAL)
+# ==============================================================================
+.npmrc
+.yarnrc
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+
+# IDEs and Editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
