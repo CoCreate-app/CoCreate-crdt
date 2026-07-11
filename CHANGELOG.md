@@ -1,3 +1,12 @@
+## [1.28.4](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.28.3...v1.28.4) (2026-07-11)
+
+
+### Bug Fixes
+
+* bump package versions ([ece0aad](https://github.com/CoCreate-app/CoCreate-crdt/commit/ece0aad7126f84f1ef912a2664b0410ca3d8c6eb))
+* removed post install and add add packages to apprved list ([4425076](https://github.com/CoCreate-app/CoCreate-crdt/commit/4425076433e5b1173a5f0662a97193deef8fe944))
+* semantic version handling ([85f2ea0](https://github.com/CoCreate-app/CoCreate-crdt/commit/85f2ea02306b93aeb8365d4f9d6929a790dcd7a3))
+
 ## [1.28.3](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.28.2...v1.28.3) (2026-01-18)
 
 
