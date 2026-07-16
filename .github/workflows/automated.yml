@@ -1,8 +1,10 @@
 name: Automated Workflow
+
 on:
   push:
     branches:
       - master
+
 jobs:
   about:
     runs-on: ubuntu-latest
@@ -18,26 +20,37 @@ jobs:
         with:
           direction: overwrite-github
           githubToken: "${{ secrets.GITHUB }}"
+
   release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Required so semantic-release can trace git tags/history
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22 # Required for the latest semantic-release plugins
-      - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v4 # Update to v4 for better Node 20+ support
-        id: semantic
-        with:
-          extra_plugins: |
-            @semantic-release/changelog
+          node-version: 22
+
+      - name: Install Semantic Release & Plugins
+        # Installs semantic-release and its plugins on the runner
+        run: |
+          npm install -g semantic-release \
+            @semantic-release/changelog \
+            @semantic-release/npm \
+            @semantic-release/github \
             @semantic-release/git
-            @semantic-release/github
+
+      - name: Run Semantic Release (Native)
+        id: semantic
+        # This will automatically pick up your export default config file in the repository root
+        run: npx semantic-release
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" # Use the built-in token if possible
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          NPM_TOKEN: "${{ secrets.NPM_TOKEN }}"
+
     outputs:
       new_release_published: "${{ steps.semantic.outputs.new_release_published }}"
       new_release_version: "${{ steps.semantic.outputs.new_release_version }}"
-

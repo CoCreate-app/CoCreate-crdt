@@ -10,11 +10,20 @@ module.exports = {
         changelogFile: "CHANGELOG.md",
       },
     ],
-    "@semantic-release/github",
+    "@semantic-release/npm", 
     [
-      "@semantic-release/git",
+      "@semantic-release/github", 
       {
+        successComment: false,
+        failTitle: false,
+      },
+    ],
+    [
+      "@semantic-release/git", 
+      {
+        // Only stage and commit the changelog and package.json
         assets: ["CHANGELOG.md", "package.json"],
+        message: "chore(release): ${nextRelease.version} [skip ci]",
       },
     ],
   ],
