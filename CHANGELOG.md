@@ -1,3 +1,10 @@
+# [1.29.0](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.28.4...v1.29.0) (2026-07-17)
+
+
+### Features
+
+* update automated workflow and release configuration for improved semantic release handling ([4ddc4ce](https://github.com/CoCreate-app/CoCreate-crdt/commit/4ddc4ce0d3f48c77de61a1451f52b1f8b8a86cd1))
+
 ## [1.28.4](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.28.3...v1.28.4) (2026-07-11)
 
 
