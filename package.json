@@ -8,9 +8,9 @@
     "access": "public"
   },
   "scripts": {
-    "start": "npx webpack --config webpack.config.js",
-    "build": "npx webpack --mode=production --config webpack.config.js",
-    "dev": "npx webpack --config webpack.config.js --watch"
+    "start": "webpack --config webpack.config.js",
+    "build": "webpack --mode=production --config webpack.config.js",
+    "dev": "webpack --config webpack.config.js --watch"
   },
   "repository": {
     "type": "git",
@@ -26,12 +26,12 @@
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@cocreate/crud-client": "^1.34.6",
-    "@cocreate/local-storage": "^1.16.5",
-    "@cocreate/utils": "^1.42.2"
+    "@cocreate/crud-client": "^1.35.0",
+    "@cocreate/local-storage": "^1.17.0",
+    "@cocreate/utils": "^1.44.0"
   },
   "devDependencies": {
-    "@cocreate/webpack": "^1.4.3"
+    "@cocreate/webpack": "^1.6.0"
   },
   "allowScripts": {
     "@cocreate/actions@1.21.4": true,
