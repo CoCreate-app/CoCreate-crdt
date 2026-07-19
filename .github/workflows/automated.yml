@@ -3,7 +3,7 @@ name: Automated Workflow
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   about:
