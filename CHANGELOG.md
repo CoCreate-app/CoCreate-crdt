@@ -1,3 +1,10 @@
+## [1.29.2](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.29.1...v1.29.2) (2026-07-19)
+
+
+### Bug Fixes
+
+* set default branch to main ([3fa967f](https://github.com/CoCreate-app/CoCreate-crdt/commit/3fa967f58aa040a66e1eec1df8791df806a33828))
+
 ## [1.29.1](https://github.com/CoCreate-app/CoCreate-crdt/compare/v1.29.0...v1.29.1) (2026-07-17)
 
 
