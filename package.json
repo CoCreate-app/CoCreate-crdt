@@ -48,7 +48,6 @@
     "@cocreate/render@1.46.1": true,
     "@cocreate/socket-client@1.40.5": true,
     "@cocreate/utils@1.42.2": true,
-    "@cocreate/uuid@1.12.4": true,
     "@cocreate/webpack@1.4.3": true
   }
 }
