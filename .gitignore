@@ -10,6 +10,11 @@ jspm_packages/
 # 2. Package Manager Specifics (Lock Files & Overrides Ignored)
 # ==============================================================================
 
+# Deno
+.deno/
+deno.lock
+vendor/
+
 # npm
 .npm/
 anon-doc-*.txt
