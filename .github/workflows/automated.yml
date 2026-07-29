@@ -9,33 +9,36 @@ jobs:
   about:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: Jaid/action-sync-node-meta
-        uses: jaid/action-sync-node-meta@v1.4.0
-        with:
-          direction: overwrite-github
-          githubToken: "${{ secrets.GITHUB }}"
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Sync package.json description to GitHub About
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB }}
+        run: |
+          DESC=$(jq -r '.description // empty' package.json)
+          if [ -n "$DESC" ]; then
+            echo "Updating repository description to: $DESC"
+            gh api -X PATCH repos/${{ github.repository }} -f description="$DESC"
+          else
+            echo "No description found in package.json."
+          fi
 
   release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v7
         with:
-          fetch-depth: 0 # Required so semantic-release can trace git tags/history
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB }} # Authenticates git CLI for tag/commit pushes
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: '24'
 
       - name: Install Semantic Release & Plugins
-        # Installs semantic-release and its plugins on the runner
         run: |
           npm install -g semantic-release \
             @semantic-release/changelog \
@@ -43,12 +46,11 @@ jobs:
             @semantic-release/github \
             @semantic-release/git
 
-      - name: Run Semantic Release (Native)
+      - name: Run Semantic Release
         id: semantic
-        # This will automatically pick up your export default config file in the repository root
         run: npx semantic-release
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_TOKEN: "${{ secrets.GITHUB }}"
           NPM_TOKEN: "${{ secrets.NPM_TOKEN }}"
 
     outputs:
