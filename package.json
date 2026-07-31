@@ -28,7 +28,7 @@
   "dependencies": {
     "@cocreate/crud-client": "^1.36.0",
     "@cocreate/local-storage": "^1.18.0",
-    "@cocreate/utils": "^1.50.0"
+    "@cocreate/utils": "^1.50.3"
   },
   "devDependencies": {
     "@cocreate/webpack": "^1.7.0"
